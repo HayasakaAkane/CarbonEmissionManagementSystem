@@ -12,6 +12,9 @@ import 'element-plus/dist/index.css';
 import { Axios } from 'axios'
 import reductionProject from './components/reduction_project.vue'
 import emissionData from './components/emission_data.vue'
+import CCER from './components/fang_chi_hao/CCER.vue'
+import CCER_2 from './components/fang_chi_hao/CCER_2.vue'
+import CCER_3 from './components/fang_chi_hao/CCER_3.vue'
 
 
 //配置路由规则
@@ -20,7 +23,10 @@ const routes = [
     {path:"/notfound",component:NotFound},
     {path:"/emissionSourceSketch",component:emissionSourceSketch},
     {path:"/reductionProject",component:reductionProject},
-    {path:"/emissionData",component:emissionData}
+    {path:"/emissionData",component:emissionData},
+    {path:"/CCER",component:CCER},
+    {path:"/CCER_2",component:CCER_2},
+    {path:"/CCER_3",component:CCER_3},
 ]
 
 //创建路由器
