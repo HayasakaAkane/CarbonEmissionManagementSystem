@@ -15,7 +15,7 @@
           <el-scrollbar style="height: 100%;background-color: rgb(52, 73, 94)">
             <!-- 设置路由属性 = true -->
             <el-menu :router="true">
-              <el-sub-menu index="1">
+              <el-sub-menu index="100">
                 <template #title>
                   碳排放资产管理
                 </template>
@@ -24,8 +24,8 @@
                   <template #title>排放源管控</template>
                   <!-- index属性对应路由路径 /about -->
                   <el-menu-item index="/emissionSourceSketch">排放源概览</el-menu-item>
-                  <el-menu-item index="/emissionData">排放数据展示</el-menu-item>
-                  <el-menu-item index="/reductionProject">减排信息</el-menu-item>
+                  <!-- <el-menu-item index="/emissionData">排放数据展示</el-menu-item> -->
+                  <el-menu-item index="/reductionProject">减排资产</el-menu-item>
                 </el-sub-menu>
 
                 <el-sub-menu index="2">
@@ -39,6 +39,47 @@
                 </el-sub-menu>
 
               </el-sub-menu>
+
+              <el-sub-menu index="200">
+                <template #title>
+                  CCER项目管理
+                </template>
+
+                <el-sub-menu index="200-1">
+                  <template #title>房池浩</template>
+                  <!-- index属性对应路由路径 /about -->
+                  <el-menu-item index="/CCER">CCER</el-menu-item>
+                  <!-- <el-menu-item index="/emissionData">排放数据展示</el-menu-item> -->
+                  <el-menu-item index="/CCER_2">CCER-2</el-menu-item>
+                </el-sub-menu>
+
+                <el-sub-menu index="200-2">
+                  <template #title>2-1</template>
+                  <el-menu-item index="/CCER_3">CCER-3</el-menu-item>
+                </el-sub-menu>
+
+              </el-sub-menu>
+
+              <el-sub-menu index="300">
+                <template #title>
+                  数据统计分析
+                </template>
+
+                <el-sub-menu index="300-1">
+                  <template #title>徐威</template>
+                  <!-- index属性对应路由路径 /about -->
+                  <el-menu-item index="/emissionSourceSketch">1-1</el-menu-item>
+                  <!-- <el-menu-item index="/emissionData">排放数据展示</el-menu-item> -->
+                  <el-menu-item index="/reductionProject">1-2</el-menu-item>
+                </el-sub-menu>
+
+                <el-sub-menu index="300-2">
+                  <template #title>2-1</template>
+                  <el-menu-item index="/notfound">2-2</el-menu-item>
+                </el-sub-menu>
+
+              </el-sub-menu>
+
             </el-menu>
           </el-scrollbar>
         </el-aside>
