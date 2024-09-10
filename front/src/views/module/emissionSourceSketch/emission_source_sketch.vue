@@ -321,6 +321,7 @@ function drawChart() {
 }
 
 
+
 onMounted(() => {
   // getData()
   drawChart()
