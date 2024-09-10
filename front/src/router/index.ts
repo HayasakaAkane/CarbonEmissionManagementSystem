@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Layout from "../layout/index.vue";
+import { hydrateOnIdle } from 'vue';
 
 
 const routes = [
@@ -10,13 +11,15 @@ const routes = [
 		redirect: "/module/home",
 		meta: {
 			title: "首页",
+			hidden:false
 		},
 		children: [
 			{
 				path: "/module/home",
 				component: () => import("@/views/module/home/Home.vue"),
 				meta:{
-					title:"主页"
+					title:"主页",
+					hidden:false
 				}
 			}, // 访问/home url跳到Home界面
 
@@ -24,14 +27,16 @@ const routes = [
 				path: "/module/about",
 				component: () => import("@/views/AboutView.vue"),
 				meta:{
-					title:"about"
+					title:"about",
+					hidden:false
 				}
 			}, 
 			{
 				path: "/module/data_analysis",
 				component: () => import("@/views/module/data_analysis/data_analysis.vue"),
 				meta:{
-					title:"数据分析"
+					title:"数据分析",
+					hidden:false
 				}
 			}, 
 
@@ -48,21 +53,24 @@ const routes = [
 				path: "/module/emissionSourceSketch",
 				component: () => import("@/views/module/emissionSourceSketch/emission_source_sketch.vue"),
 				meta:{
-					title:"排放源概览"
+					title:"排放源概览",
+					hidden:false
 				}
 			},
 			{
 				path: "/module/reductionProject",
 				component: () => import("@/views/module/reductionProject/reduction_project.vue"),
 				meta:{
-					title:"减排资产"
+					title:"减排资产",
+					hidden:false
 				}
 			},
 			{
 				path: "/module/emissionData",
 				component: () => import("@/views/module/emissionData/emission_data.vue"),
 				meta:{
-					title:"排放数据"
+					title:"排放数据",
+					hidden:false
 				}
 			},
 		]
@@ -140,6 +148,7 @@ const routes = [
 		redirect:'/login',
 		meta:{
 			title:'login',
+			hidden:true
 		}
 	},
 
@@ -151,6 +160,7 @@ const routes = [
 		meta: {
 			title: "login",
 			requireAuth:false,
+			hidden:true
 		},
 		
 	},
