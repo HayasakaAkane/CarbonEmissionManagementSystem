@@ -3,10 +3,10 @@ import './assets/main.css'
 import Home from "@/components/Home.vue"
 import NotFound from "@/components/NotFound.vue"
 import emissionSourceSketch from "@/components/emission_source_sketch.vue"
-import { createApp} from 'vue'
+import { createApp } from 'vue'
 
 import App from './App.vue'
-import { createRouter ,createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import { Axios } from 'axios'
@@ -16,22 +16,30 @@ import CCER from './components/fang_chi_hao/CCER.vue'
 import CCER_2 from './components/fang_chi_hao/CCER_2.vue'
 import CCER_3 from './components/fang_chi_hao/CCER_3.vue'
 
+import Login from './views/Login.vue';
+import Register from './views/Register.vue';
+
+import EmissionDataMap from './components/xu_wei/emission_data_map.vue'
 
 //配置路由规则
 const routes = [
-    {path:"/home",component:Home}, // 访问/home url跳到Home界面
-    {path:"/notfound",component:NotFound},
-    {path:"/emissionSourceSketch",component:emissionSourceSketch},
-    {path:"/reductionProject",component:reductionProject},
-    {path:"/emissionData",component:emissionData},
-    {path:"/CCER",component:CCER},
-    {path:"/CCER_2",component:CCER_2},
-    {path:"/CCER_3",component:CCER_3},
+    { path: "/home", component: Home }, // 访问/home url跳到Home界面
+    { path: "/notfound", component: NotFound },
+    { path: "/emissionSourceSketch", component: emissionSourceSketch },
+    { path: "/reductionProject", component: reductionProject },
+    { path: "/emissionData", component: emissionData },
+    { path: "/CCER", component: CCER },
+    { path: "/CCER_2", component: CCER_2 },
+    { path: "/CCER_3", component: CCER_3 },
+    {path:"/",redirect:"/login"},
+    { path: "/login", component: Login },
+    { path: "/register", component: Register },
+    { path: "/content", component: EmissionDataMap },
 ]
 
 //创建路由器
 const router = createRouter({
-    history:createWebHistory(),  //路由工作模式
+    history: createWebHistory(),  //路由工作模式
     routes
 })
 
