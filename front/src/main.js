@@ -4,16 +4,13 @@ import Home from "@/views/module/home/Home.vue"
 import NotFound from "@/views/NotFound.vue"
 import emissionSourceSketch from "@/views/module/emissionSourceSketch/emission_source_sketch.vue"
 import { createApp} from 'vue'
+
 import App from './App.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter ,createWebHistory} from 'vue-router'
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import { Axios } from 'axios'
 
-import Login from './views/Login.vue';
-import Register from './views/Register.vue';
-
-import EmissionDataMap from './components/xu_wei/emission_data_map.vue'
 
 import router from '@/router/index'
 
@@ -40,6 +37,7 @@ import router from '@/router/index'
 //     history:createWebHistory(),  //路由工作模式
 //     routes
 // })
+
 //加载路由器
 
 let app = createApp(App)
