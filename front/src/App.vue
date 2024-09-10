@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 // import { RouterLink } from 'vue-router';
-import home from '@/components/Home.vue'
+import home from './views/module/home/Home.vue'
 </script>
 
 <template>
@@ -14,6 +14,22 @@ import home from '@/components/Home.vue'
 
 <style>
 html, body {
+  width: 100%;
+  height: 100%;
+}
+</style> -->
+
+
+<template>
+  <router-view></router-view>
+</template>
+
+<script lang="ts" setup>
+</script>
+
+<style>
+html,
+body {
   width: 100%;
   height: 100%;
 }
