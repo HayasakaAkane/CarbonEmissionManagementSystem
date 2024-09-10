@@ -45,16 +45,17 @@ const option = ref({
     containLabel: true
   },
   xAxis: {
+    name: "时间",
     type: 'category',
     boundaryGap: false,
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    data: [ 2016,2017,2018,2019,2020,2021,2022]
   },
   yAxis: {
     type: 'value'
   },
   series: [
     {
-      name: 'Email',
+      name: 'CEER',
       type: 'line',
       stack: 'Total',
       data: [120, 132, 101, 134, 90, 230, 210]
@@ -91,6 +92,8 @@ const option = ref({
 <style  scoped>
 .chart {
   height: 500px;
-  width: 500px;
+  width: 700px;
 }
+
+
 </style>

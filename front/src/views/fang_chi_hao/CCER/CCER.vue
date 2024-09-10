@@ -4,15 +4,13 @@
       <h1>CCER项目数据分析</h1>
     </div>
     <div class="lable">
-      <div class="pie"><pie /></div>
-      <div class="pie"><Line /></div>
+      <div class="pie1"><pie /></div>
+      <div class="pie2"><Line /></div>
     </div>
     <div><h1>项目汇总</h1></div>
     <div class="table">
       <tableshow />
-      <div style="margin-top: 20px; text-align: center; width: 100%;">
-        <a href="#" v-for="i in 6" :key="i">{{ i }}</a>
-      </div>
+      
     </div>
   </div>
 </template>
@@ -32,10 +30,19 @@ import Line from "../conponents/line.vue";
   display: flex;
   margin-bottom: 50px;
 }
-.pie {
-  width: 300px;
+.pie1 {
+  display: flex;
+  text-align: center;
+  width: 400px;
   height: 300px;
-  margin-left: 200px;
+  padding-left: 100px;
+}
+.pie2 {
+  display: flex;
+  text-align: center;
+  width: 800px;
+  height: 300px;
+  margin-left: 50px;
 }
 .table {
 }
