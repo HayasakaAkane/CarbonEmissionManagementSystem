@@ -68,7 +68,6 @@ const routes = [
 		]
 	},
 
-
 	{
 		path: "/fang_chi_hao",
 		component: Layout,
