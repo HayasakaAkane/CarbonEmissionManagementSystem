@@ -7,4 +7,5 @@ export default interface Project{
     Status: string          //项目状态
     RegistrationDate: string  //项目注册日期
     ValidUntil: string        //项目有效期
+
 }
