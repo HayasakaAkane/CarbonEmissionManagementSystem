@@ -27,9 +27,7 @@
                     <!-- <el-icon>
                       <component :is="subItem.icon"></component>
                     </el-icon> -->
-                    <!-- 隐藏显示 -->
-                    <span v-show="!subItem.meta.hidden">{{ subItem.meta.title }}</span>
-
+                    <span>{{ subItem.meta.title }}</span>
                   </template>
                   <SubItem :menuList="subItem.children" />
                 </el-sub-menu>
@@ -38,7 +36,7 @@
                     <component :is="subItem.icon"></component>
                   </el-icon> -->
                   <template v-if="!subItem.isLink" #title>
-                    <span v-show="!subItem.meta.hidden">{{ subItem.meta.title }}</span>
+                    <span>{{ subItem.meta.title }}</span>
                   </template>
                   <template v-else #title>
                     <a class="menu-href" :href="subItem.isLink" target="_blank">{{ subItem.title }}</a>
