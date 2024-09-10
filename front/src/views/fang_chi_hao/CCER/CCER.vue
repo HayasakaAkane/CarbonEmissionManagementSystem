@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import tableshow from "@/components/fang_chi_hao/table.vue"
+import tableshow from "@/views/fang_chi_hao/table.vue"
 
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
