@@ -16,7 +16,7 @@ import {
   GridComponent
 } from "echarts/components";
 import VChart, { THEME_KEY } from "vue-echarts";
-import { ref ,provide, onMounted} from "vue";
+import { ref ,provide} from "vue";
 
 use([ 
   TitleComponent,
@@ -33,24 +33,16 @@ provide(THEME_KEY, "white");
 
 const option = ref({
   title: {
-    text: 'Stacked Line'
+    text: 'CCER项目减排量'
   },
   tooltip: {
     trigger: 'axis'
-  },
-  legend: {
-    data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
   },
   grid: {
     left: '3%',
     right: '4%',
     bottom: '3%',
     containLabel: true
-  },
-  toolbox: {
-    feature: {
-      saveAsImage: {}
-    }
   },
   xAxis: {
     type: 'category',

@@ -8,7 +8,7 @@
       <th>状态</th>
       <th>注册日期</th>
       <th>有效期至</th>
-      <th>有效期至</th>
+      <th>备注</th>
     </tr>
     <tr v-for="d in data" :key="d.ProjectID">
       <td>{{ d.ProjectID }}</td>
