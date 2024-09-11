@@ -23,10 +23,7 @@ import Line from "../conponents/line.vue";
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-.pie{
-  width: 300px;
-=======
+
 .lable {
   overflow: hidden;
   width: "100%";
@@ -38,7 +35,6 @@ import Line from "../conponents/line.vue";
   display: flex;
   text-align: center;
   width: 400px;
->>>>>>> FCH
   height: 300px;
   padding-left: 100px;
 }

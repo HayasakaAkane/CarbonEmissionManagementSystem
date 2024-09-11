@@ -34,6 +34,16 @@ import { onBeforeMount, reactive,  } from "vue";
 
 let data = reactive<projectOverview>([
   {
+    
+    Project: 1,
+    ProjectName: "可再生能源",
+    ProjectType: "项目A",
+    Location: "北京",
+    Status: "进行中",
+    RegistrationDate: "2021-01-01",
+    ValidUntil: "2021-01-01"
+    },
+    {
     ProjectID: 1,
     ProjectName: "可再生能源",
     ProjectType: "项目A",
@@ -79,6 +89,8 @@ onBeforeMount(()=>{
     // GetProject()
 })
 
+
+
 </script>
 
 
@@ -116,4 +128,5 @@ a{
     justify-content: center;
     margin-top: 10px;
 }
+
 </style>
