@@ -73,7 +73,7 @@ const routes = [
 		component: Layout,
 		redirect: "/fang_chi_hao/CCER",
 		meta: {
-			title: "CCER",
+			title: "CCER项目管理",
 		},
 		children: [
 			{
@@ -86,18 +86,29 @@ const routes = [
 
 			{
 				path: "/fang_chi_hao/CCER_2",
-				component: () => import("@/views/fang_chi_hao/CCER_2/CCER_2.vue"),
+				// component: Layout,
+				redirect: "/fang_chi_hao/CCER_3",
 				meta:{
 					title:"CCER_2"
-				}
+				},
+				children:[
+					{
+						path: "/fang_chi_hao/CCER_3",
+						component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
+						meta:{
+							title:"CCER_3"
+						}
+					},
+					{
+						path: "/fang_chi_hao/CCER_4",
+						component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
+						meta:{
+							title:"CCER_4"
+						}
+					},
+				]
 			}, 
-			{
-				path: "/fang_chi_hao/CCER_3",
-				component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
-				meta:{
-					title:"CCER_3"
-				}
-			},
+			
 		]
 	},
 

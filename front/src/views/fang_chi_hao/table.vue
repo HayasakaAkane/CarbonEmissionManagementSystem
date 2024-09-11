@@ -21,14 +21,16 @@
       <td><a href="#">详细</a></td>
     </tr>
   </table>
-  <div style="margin-top: 10px; display: flex; justify-content: center; width: 100%;">
+  <div class="number" style="margin-top: 10px; display: flex; justify-content: center; width: 100%;">
         <a href="#" v-for="i in 6" :key="i" class="pagination">{{ i }}</a>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { type projectOverview } from "@/views/fang_chi_hao/utils/projectOverview";
-import { reactive } from "vue";
+import { onBeforeMount, reactive,  } from "vue";
+
+import CCERProjects from "./API/CCERProjects"
 
 let data = reactive<projectOverview>([
   {
@@ -59,6 +61,24 @@ let data = reactive<projectOverview>([
     ValidUntil: "2021-01-01",
   },
 ]);
+
+// let Data: projectOverview[]
+
+// function GetProject(){
+//   CCERProjects.getProject({}).then((result) => {
+//     console.log(result)
+//   }).catch((err) => {
+//     alert("请求失败")
+//   });
+
+
+
+// }
+
+onBeforeMount(()=>{
+    // GetProject()
+})
+
 </script>
 
 
