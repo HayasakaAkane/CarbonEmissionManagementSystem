@@ -62,7 +62,7 @@ export default {
                             // console.log(res)
                             if (res.code == 0) {
                                 // console.log(this.form);
-                                const token = '';
+                                const token = '123';
                                 localStorage.setItem('token', token);
                                 this.$message.success('登录成功');
                             }

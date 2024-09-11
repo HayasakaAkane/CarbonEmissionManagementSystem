@@ -11,13 +11,27 @@
                 </el-form-item>
                 <el-form-item label="确认你的密码" prop="confirmPassword">
                     <el-input type="password" v-model="form.confirmPassword" placeholder="确认你的密码"></el-input>
+
                 </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="handleRegister">注册</el-button>
-                    <el-button @click="goToLogin">返回登录</el-button>
+
+                <el-form-item label="选择你的公司" prop="company">
+                    <el-select v-model="value" :rules="rules.value" placeholder="请选择">
+                        <el-option aria-label="asdf" v-for="item in options" :key="item.value" :label="item.label"
+                            :value="item.value">
+                        </el-option>
+                    </el-select>
+
                 </el-form-item>
+
+
             </el-form>
+            <el-form-item>
+                <el-button type="primary" @click="handleRegister">注册</el-button>
+                <el-button @click="goToLogin">返回登录</el-button>
+            </el-form-item>
+
         </el-card>
+
     </div>
 </template>
 
@@ -52,8 +66,32 @@ export default {
                 ],
                 confirmPassword: [
                     { validator: validatePassword, trigger: blur }
+                ],
+                value: [
+                    { required: true, message: '请选择你的公司', trigger: 'blur' }
                 ]
-            }
+            },
+            options: [
+                {
+                    value: 'company1',
+                    label: '百度'
+                },
+                {
+                    value: 'company2',
+                    label: '百度2'
+                }, {
+                    value: 'company3',
+                    label: '百度3'
+                }, {
+                    value: 'company4',
+                    label: '百度4'
+                }, {
+                    value: 'company1',
+                    label: '百度'
+                },
+
+            ],
+            value: ''
         };
     },
     methods: {
@@ -61,8 +99,10 @@ export default {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     // 模拟注册成功
+                    console.log('register success');
+                    console.log(this.value);
                     let api = "http://localhost:5173/register"
-                    axios.post(api, { username: this.form.username, password: this.form.password })
+                    axios.post(api, { username: this.form.username, password: this.form.password, company: this.value })
                         .then((res) => {
                             // console.log(res)
                             if (res.code == 0) {
