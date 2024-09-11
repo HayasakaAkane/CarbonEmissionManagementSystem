@@ -30,7 +30,7 @@
 import { type projectOverview } from "@/views/fang_chi_hao/utils/projectOverview";
 import { onBeforeMount, reactive,  } from "vue";
 
-import CCERProjects from "./API/CCERProjects"
+// import CCERProjects from "./API/CCERProjects"
 
 let data = reactive<projectOverview>([
   {

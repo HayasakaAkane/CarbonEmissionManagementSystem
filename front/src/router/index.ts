@@ -80,7 +80,7 @@ const routes = [
 				path: "/fang_chi_hao/CCER",
 				component: () => import("@/views/fang_chi_hao/CCER/CCER.vue"),
 				meta:{
-					title:"CCER_1"
+					title:"项目数据分析"
 				}
 			}, 
 
@@ -89,21 +89,21 @@ const routes = [
 				// component: Layout,
 				redirect: "/fang_chi_hao/CCER_3",
 				meta:{
-					title:"CCER_2"
+					title:"项目管理"
 				},
 				children:[
 					{
 						path: "/fang_chi_hao/CCER_3",
 						component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
 						meta:{
-							title:"CCER_3"
+							title:"项目立项"
 						}
 					},
 					{
 						path: "/fang_chi_hao/CCER_4",
 						component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
 						meta:{
-							title:"CCER_4"
+							title:"项目审核"
 						}
 					},
 				]
