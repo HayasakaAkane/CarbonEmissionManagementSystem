@@ -15,20 +15,31 @@
                 </el-form-item>
 
                 <el-form-item label="选择你的公司" prop="company">
-                    <el-select v-model="value" :rules="rules.value" placeholder="请选择">
-                        <el-option aria-label="asdf" v-for="item in options" :key="item.value" :label="item.label"
-                            :value="item.value">
+                    <el-select v-model="companyId" :rules="rules.companyId" placeholder="请选择">
+                        <el-option v-for="item in companies" :key="item.companyId" :label="item.companyName"
+                            :formCompanyId="item.companyId">
                         </el-option>
                     </el-select>
 
                 </el-form-item>
 
+                <el-form-item>
+                    <el-row>
+                        <el-col :span="12">
+                            <div class="grid-content bg-purple">
+                                <el-button type="primary" @click="handleRegister">注册</el-button>
+                            </div>
+                        </el-col>
+                        <el-col :span="12">
+                            <div class="grid-content bg-purple-light">
+                                <el-button @click="goToLogin">返回登录</el-button>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </el-form-item>
+
 
             </el-form>
-            <el-form-item>
-                <el-button type="primary" @click="handleRegister">注册</el-button>
-                <el-button @click="goToLogin">返回登录</el-button>
-            </el-form-item>
 
         </el-card>
 
@@ -67,42 +78,66 @@ export default {
                 confirmPassword: [
                     { validator: validatePassword, trigger: blur }
                 ],
-                value: [
+                companyId: [
                     { required: true, message: '请选择你的公司', trigger: 'blur' }
                 ]
             },
-            options: [
+            // companies: [],
+            companies: [
                 {
-                    value: 'company1',
-                    label: '百度'
+                    companyId: 'company1',
+                    companyName: '百度'
                 },
                 {
-                    value: 'company2',
-                    label: '百度2'
-                }, {
-                    value: 'company3',
-                    label: '百度3'
-                }, {
-                    value: 'company4',
-                    label: '百度4'
-                }, {
-                    value: 'company1',
-                    label: '百度'
+                    companyId: 'company1',
+                    companyName: '百度'
+                },
+                {
+                    companyId: 'company1',
+                    companyName: '百度'
+                },
+                {
+                    companyId: 'company1',
+                    companyName: '百度'
+                },
+                {
+                    companyId: 'company1',
+                    companyName: '百度'
                 },
 
             ],
-            value: ''
+            selectCompanyId: ''
         };
     },
+    mounted() {
+        this.getCompanis()
+    },
     methods: {
+        getCompanis() {
+            let api = 'http://localhost:5173/getCompanis';
+            // 向给定ID的用户发起请求
+            axios.get(api)
+                .then(function (response) {
+                    this.companies = response.data
+                })
+                .catch(function (error) {
+                    // 处理错误情况
+                    console.log(error);
+                })
+                .finally(function () {
+                    // 总是会执行
+                });
+
+
+        },
         handleRegister() {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     // 模拟注册成功
                     console.log('register success');
-                    console.log(this.value);
+                    console.log(this.companyId);
                     let api = "http://localhost:5173/register"
-                    axios.post(api, { username: this.form.username, password: this.form.password, company: this.value })
+                    axios.post(api, { username: this.form.username, password: this.form.password, company: this.companyId })
                         .then((res) => {
                             // console.log(res)
                             if (res.code == 0) {
@@ -122,6 +157,24 @@ export default {
         },
         goToLogin() {
             this.$router.push('/login');
+        },
+        getCompany() {
+            let api = "http://localhost:5173/login"
+            //2.使用axios 进行get请求
+            // let url = '';
+            axios.get(api, this.form)
+                .then((res) => {
+                    if (res.code == 0) {
+                        this
+                    }
+                    else {
+                        this.$message.error(res.msg)
+                    }
+                }).catch((err) => {
+                    //请求失败的回调函数
+                    console.log(err)
+                })
+
         }
     }
 }
