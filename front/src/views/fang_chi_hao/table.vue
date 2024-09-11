@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type projectOverview } from "@/views/fang_chi_hao/utils/projectOverview";
+import CCERProjects from "./API/CCERProjects"
 import { reactive,onBeforeMount } from "vue";
 
 let data = reactive<projectOverview>([
@@ -71,16 +71,16 @@ let data = reactive<projectOverview>([
 
 // let Data: projectOverview[]
 
-// function GetProject(){
-//   CCERProjects.getProject({}).then((result) => {
-//     console.log(result)
-//   }).catch((err) => {
-//     alert("请求失败")
-//   });
-// }
+function GetProject(){
+  CCERProjects.getProjects().then((result) => {
+    console.log(result)
+  }).catch((err) => {
+    alert("请求失败")
+  });
+}
 
 onBeforeMount(()=>{
-    // GetProject()
+    GetProject()
 })
 
 </script>
