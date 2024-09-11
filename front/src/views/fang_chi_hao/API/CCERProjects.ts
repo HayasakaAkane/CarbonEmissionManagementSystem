@@ -20,3 +20,11 @@ export function getProjectReductionAmounts(){
         url: "/ccer/projectReductionAmounts",
     })
 }
+
+const CCERProjects = {
+    getProjects,
+    getProjectAmounts,
+    getProjectReductionAmounts
+};
+
+export default CCERProjects;
