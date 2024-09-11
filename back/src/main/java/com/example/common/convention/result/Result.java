@@ -24,7 +24,8 @@ public class Result<T> implements Serializable {
     /**
      * 正确返回码
      */
-    public static final String SUCCESS_CODE = "0";
+    public static final String SUCCESS_CODE = "200";
+    public static final String FAILURE_CODE = "208";
 
     /**
      * 返回码
