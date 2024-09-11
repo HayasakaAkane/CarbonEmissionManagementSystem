@@ -1,7 +1,10 @@
 <template>
-    <div id="chart-panel"
-        style="width: calc(80vw);height:calc(80vh); padding: 100px; margin: 0 auto;">
+    <div id="chart-panel" style="width: calc(90%);height:calc(80vh); padding: 50px; margin: 0 auto;">
     </div>
+
+    <!-- <div id="main-panel" style="width: calc(80vw);height:calc(80vh); padding: 100px; margin: 0 auto;">
+    </div> -->
+    <!-- <div id="main" style="width: 200px; height: 200px;"></div> -->
 </template>
 
 <script>
@@ -496,9 +499,31 @@ export default {
     },
     mounted() {
         this.initChart();
-        console.log(this.uploadedDataURL);
+        // console.log(this.uploadedDataURL);
+        // this.drawChart2()
     },
     methods: {
+        drawChart2() {
+            var myChart = echarts.init(document.getElementById('main'));
+            const option = {
+                xAxis: {
+                    type: 'category',
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        data: [120, 200, 150, 80, 70, 110, 130],
+                        type: 'bar'
+                    }
+                ]
+            };
+            // option && myChart.setOption(option);
+            myChart.setOption(option)
+
+        },
         initChart() {
             const myChart = echarts.init(document.getElementById('chart-panel'));
             const year = ["2017", "2018", "2019", "2020", "2021", "2022", "2023"];
@@ -660,7 +685,7 @@ export default {
                     backgroundColor: '#013954',
                     title: [
                         {
-                            text: '跨境电商百度指数',
+                            text: '全国碳排放量',
                             left: '25%',
                             top: '7%',
                             textStyle: {
