@@ -83,7 +83,6 @@ function draw_year_emission_bar_chart() {
             datasetIndex: 1
         }
     };
-
     option && myChart.setOption(option);
 }
 
