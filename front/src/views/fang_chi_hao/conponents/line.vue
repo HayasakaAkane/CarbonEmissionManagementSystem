@@ -16,7 +16,7 @@ import {
   GridComponent
 } from "echarts/components";
 import VChart, { THEME_KEY } from "vue-echarts";
-import { ref ,provide, onMounted} from "vue";
+import { ref ,provide} from "vue";
 
 use([ 
   TitleComponent,
@@ -33,13 +33,10 @@ provide(THEME_KEY, "white");
 
 const option = ref({
   title: {
-    text: 'Stacked Line'
+    text: 'CCER项目减排量'
   },
   tooltip: {
     trigger: 'axis'
-  },
-  legend: {
-    data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
   },
   grid: {
     left: '3%',
@@ -47,22 +44,18 @@ const option = ref({
     bottom: '3%',
     containLabel: true
   },
-  toolbox: {
-    feature: {
-      saveAsImage: {}
-    }
-  },
   xAxis: {
+    name: "时间",
     type: 'category',
     boundaryGap: false,
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    data: [ 2016,2017,2018,2019,2020,2021,2022]
   },
   yAxis: {
     type: 'value'
   },
   series: [
     {
-      name: 'Email',
+      name: 'CEER',
       type: 'line',
       stack: 'Total',
       data: [120, 132, 101, 134, 90, 230, 210]
@@ -99,6 +92,8 @@ const option = ref({
 <style  scoped>
 .chart {
   height: 500px;
-  width: 500px;
+  width: 700px;
 }
+
+
 </style>

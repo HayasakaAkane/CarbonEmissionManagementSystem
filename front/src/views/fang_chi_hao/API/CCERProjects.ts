@@ -1,9 +1,22 @@
 import request from "../utils/request";
 
-function getProjects(params={}){
+export  function getProjects(){
     return request({
         method:"GET",
-        url:"/ccer/projects",
-        params
+        url:"/ccer/projects"
+    })
+}
+
+export function getProjectAmounts(){
+    return request({
+        method: "GET",
+        url: "/ccer/projectAmounts",
+    })
+}
+
+export function getProjectReductionAmounts(){
+    return request({
+        method: "GET",
+        url: "/ccer/projectReductionAmounts",
     })
 }

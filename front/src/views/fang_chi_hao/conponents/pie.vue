@@ -29,7 +29,7 @@ const option = ref({
   title: {
     text: "CCER项目数量统计",
     left: "center",
-    padding: [50,0]
+    padding: [7,0]
   },
   //鼠标浮动显示
   tooltip: {
