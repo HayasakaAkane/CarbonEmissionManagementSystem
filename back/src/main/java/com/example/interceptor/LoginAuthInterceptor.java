@@ -36,21 +36,21 @@ public class LoginAuthInterceptor implements HandlerInterceptor {
             return true;
         }
         // 2.从请求头获取token
-        String token = request.getHeader("token");
+        // String token = request.getHeader("token");
         // 3.如果token为空，返回错误提示
-        if(StrUtil.isEmpty(token)){
-            responseNoLoginInfo(response);
-            return false;
-        }
+        // if(StrUtil.isEmpty(token)){
+        //     responseNoLoginInfo(response);
+        //     return false;
+        // }
 
         // 4.如果token不为空，拿着token查询redis
-        String sysJson = redisTemplate.opsForValue().get("user:login" + token);
+        // String sysJson = redisTemplate.opsForValue().get("user:login" + token);
 
         // 5.如果redis查询不到数据，返回错误提示
-        if(StrUtil.isEmpty(sysJson)){
-            responseNoLoginInfo(response);
-            return false;
-        }
+        // if(StrUtil.isEmpty(sysJson)){
+        //     responseNoLoginInfo(response);
+        //     return false;
+        // }
 
         // 6.如果redis查询到用户信息，把用户信息放到ThreadLocal里面
         // SysUser sysUser = JSON.parseObject(sysJson, SysUser.class);

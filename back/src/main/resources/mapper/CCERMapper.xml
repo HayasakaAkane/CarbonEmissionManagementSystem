@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.mapper.CCERMapper">
+
+
+    <select id="getAllProject" resultType="com.example.dto.resp.CCERProjectDto">
+        select project_id, project_name, project_type, location, status, registration_date, valid_until
+        from ccer_projects
+    </select>
+    <select id="getProjectAmounts" resultType="com.example.dto.resp.CCERProjectAmountsDto">
+        select project_type, count(1) as projectAmount
+        from ccer_projects
+        group by project_type
+    </select>
+    <select id="getReductionAmounts" resultType="com.example.dto.resp.CCERProjectReductionAmountsDto">
+        select project_type, sum(reduction_amount) as projectReductionAmount
+        from ccer_projects pro
+        join ccer_project_emission_reductions emi
+        where pro.project_id = emi.project_id
+        group by project_type
+    </select>
+</mapper>
