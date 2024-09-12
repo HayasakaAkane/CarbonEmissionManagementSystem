@@ -3,9 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.mapper.UserMapper">
+    <insert id="insertUser">
+        insert into users(role_id, password, user_name, company_id)
+        values(2, #{password}, #{username}, #{companyId})
+    </insert>
 
-<select id="getAllUser" resultType="com.example.dao.entity.UserDo">
+    <select id="getAllUser" resultType="com.example.dto.req.UserDto">
     select user_name as username, password from users
 </select>
+    <select id="getPasswordByUsername" resultType="java.lang.String">
+        select password
+        from users
+        where user_name = #{username}
+    </select>
+    <select id="getUserByUsername" resultType="java.lang.Integer">
+        select count(*)
+        from users
+        where user_name = #{username}
+    </select>
+    <select id="getCompanyIdByCompanyName" resultType="java.lang.Integer">
+        select company_id
+        from companies
+        where company_name = #{companyName}
+    </select>
 
 </mapper>
