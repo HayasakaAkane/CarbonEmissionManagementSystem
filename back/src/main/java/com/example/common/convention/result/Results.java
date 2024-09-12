@@ -30,6 +30,9 @@ public final class Results {
         return new Result<T>().setCode(Result.SUCCESS_CODE).setData(data);
     }
 
+    public static <T> Result<T> failure(T data) {
+        return new Result<T>().setCode(Result.FAILURE_CODE).setData(data);
+    }
     /**
      * 构建服务端失败响应
      */

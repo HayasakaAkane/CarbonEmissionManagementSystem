@@ -1,4 +1,4 @@
-package com.example.dao.entity;
+package com.example.dto.req;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -19,8 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("user")
-public class UserDo {
+public class UserDto {
 
     private String username;
     private String password;

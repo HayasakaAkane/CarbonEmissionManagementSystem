@@ -1,8 +1,8 @@
 package com.example.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.dao.entity.UserDo;
-import org.apache.ibatis.annotations.Select;
+import com.example.dto.req.UserDto;
+import com.example.dto.req.UserRegisterDto;
 
 import java.util.List;
 
@@ -15,7 +15,15 @@ import java.util.List;
  * @Create 2024/9/11 10:05
  * @Version 1.0
  */
-public interface UserMapper extends BaseMapper<UserDo> {
+public interface UserMapper extends BaseMapper<UserDto> {
 
-    List<UserDo> getAllUser();
+    List<UserDto> getAllUser();
+
+    String getPasswordByUsername(String username);
+
+    int getUserByUsername(String username);
+
+    int insertUser(UserRegisterDto requestParam);
+
+    int getCompanyIdByCompanyName(String company);
 }

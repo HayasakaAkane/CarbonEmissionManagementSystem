@@ -1,13 +1,14 @@
 package com.example.service.impl;
 
-import com.example.dao.entity.UserDo;
+import com.example.common.convention.exception.ClientException;
+import com.example.dto.req.UserDto;
 import com.example.dao.mapper.UserMapper;
+import com.example.dto.req.UserRegisterDto;
 import com.example.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.UUID;
 
 /**
  * ClassName: UserServiceImpl
@@ -25,7 +26,30 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public List<UserDo> getAllUser() {
-        return userMapper.getAllUser();
+    public String login(UserDto userDto) {
+        String password = userMapper.getPasswordByUsername(userDto.getUsername());
+        if(password == null) {
+            return "用户不存在";
+        } else if(!userDto.getPassword().equals(password)) {
+            return "密码错误";
+        }
+
+        String uuid = UUID.randomUUID().toString();
+        return uuid;
+    }
+
+    @Override
+    public void register(UserRegisterDto requestParam) {
+        int count = userMapper.getUserByUsername(requestParam.getUsername());
+        if(count != 0) {
+            throw new ClientException("用户已存在");
+        }
+
+        requestParam.setCompanyId(userMapper.getCompanyIdByCompanyName(requestParam.getCompany()));
+
+        int insert = userMapper.insertUser(requestParam);
+        if(insert < 1){
+            throw new ClientException("用户记录新增失败");
+        }
     }
 }
