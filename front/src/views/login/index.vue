@@ -64,6 +64,7 @@ export default {
                                 // console.log(this.form);
                                 const token = '123';
                                 localStorage.setItem('token', token);
+                                this.$router.push('/module');
                                 this.$message.success('登录成功');
                             }
                             else {

@@ -1,6 +1,6 @@
 
-export  interface Project{
-    projectID: number       //项目ID    
+export  default interface Project{
+    projectId: number       //项目ID    
     projectName: string     //项目名称
     projectType: string     //项目类型
     location: string        //项目地址

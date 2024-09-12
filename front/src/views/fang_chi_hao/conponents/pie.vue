@@ -1,5 +1,7 @@
 <template>
+  <div>
     <v-chart class="chart" :option="option" />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -13,7 +15,8 @@ import {
   LegendComponent
 } from "echarts/components";
 import VChart, { THEME_KEY } from "vue-echarts";
-import { ref, provide } from "vue";
+import { ref, provide, reactive, onMounted } from "vue";
+import CCERProjects from "../API/CCERProjects";
 
 use([
   CanvasRenderer,
@@ -24,6 +27,14 @@ use([
 ]);
 
 provide(THEME_KEY, "white");
+
+type pieData={
+  value: number,
+  name:string
+}
+
+let data =reactive([])
+let Data =reactive<pieData[]>([])
 
 const option = ref({
   title: {
@@ -37,12 +48,7 @@ const option = ref({
     formatter: "{a} <br/>{b} : {c} ({d}%)",
     confine: true
   },
-  //图标说明
-  // legend: {
-  //   orient: "vertical",
-  //   left: "left",
-  //   data: ["可再生能源", "林业碳汇", "甲烷利用", "能源效率提升 ", "碳捕集与封存"]
-  // },
+ 
   //图标样式设定
   series: [
     {
@@ -50,13 +56,7 @@ const option = ref({
       type: "pie",
       radius: "55%",
       center: ["50%", "60%"],
-      data: [
-        { value: 723, name: "可再生能源" },
-        { value: 67, name: "林业碳汇" },
-        { value: 123, name: "甲烷利用" },
-        { value: 87, name: "能源效率提升" },
-        { value: 145, name: "碳捕集与封存" }
-      ],
+      data: Data,
       emphasis: {
         itemStyle: {
           shadowBlur: 10,
@@ -68,6 +68,25 @@ const option = ref({
   ]
 });
 
+
+
+function GetProjectAmounts(){
+  CCERProjects.getProjectAmounts().then((result)=>{
+    Object.assign(data,result.data.data)
+
+    for(let d in data)
+       {
+         Data.push({value: data[d].projectAmount ,name: data[d].projectType})
+      }
+
+  }).catch((err)=>{
+    alert("请求失败")
+  })
+}
+
+onMounted(()=>{
+  GetProjectAmounts()
+})
 
 
 </script>

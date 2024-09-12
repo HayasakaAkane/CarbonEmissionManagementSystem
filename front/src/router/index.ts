@@ -143,38 +143,7 @@ const routes = [
             },
         ]
     },
-    // {
-    // 	path: "/xu_wei",
-    // 	component: Layout,
-    // 	redirect: "/fang_chi_hao/CCER",
-    // 	meta: {
-    // 		title: "CCER",
-    // 	},
-    // 	children: [
-    // 		{
-    // 			path: "/fang_chi_hao/CCER",
-    // 			component: () => import("@/views/fang_chi_hao/CCER/CCER.vue"),
-    // 			meta:{
-    // 				title:"主页"
-    // 			}
-    // 		}, 
-
-    // 		{
-    // 			path: "/fang_chi_hao/CCER_2",
-    // 			component: () => import("@/views/fang_chi_hao/CCER_2/CCER_2.vue"),
-    // 			meta:{
-    // 				title:"about"
-    // 			}
-    // 		}, 
-    // 		{
-    // 			path: "/fang_chi_hao/CCER_3",
-    // 			component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
-    // 			meta:{
-    // 				title:"排放源概览"
-    // 			}
-    // 		},
-    // 	]
-    // },
+  
     {
         path: '/',
         redirect: '/login',
@@ -216,16 +185,16 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
-    // 验证token，只有存在token的时候，才能跳转到内容页
-    let token = localStorage.getItem("token");
-    if (token || to.path == '/login') {
-        next();
-    }
-    else {
-        next('/login');
-    }
+// router.beforeEach((to, from, next) => {
+//     // 验证token，只有存在token的时候，才能跳转到内容页
+//     let token = localStorage.getItem("token");
+//     if (token || to.path == '/login') {
+//         next();
+//     }
+//     else {
+//         next('/login');
+//     }
 
-})
+// })
 
 export default router;
