@@ -67,11 +67,12 @@ export default {
                                 this.$message.success('登录成功');
                             }
                             else {
-                                this.$message.error(res.msg)
+                                this.$message.error(res.data.data)
                             }
                         }).catch((err) => {
                             //请求失败的回调函数
                             console.log(err)
+                            console.log("asdfas")
                         })
 
                 } else {
