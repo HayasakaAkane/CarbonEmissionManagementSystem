@@ -4,65 +4,28 @@ import Layout from "../layout/index.vue";
 
 
 const routes = [
+
     {
-        path: "/module",
-        component: Layout,
-        redirect: "/module/home",
-        meta: {
-            title: "首页",
-            hidden:false,
-        },
-        children: [
-            {
-                path: "/module/home",
-                component: () => import("@/views/module/home/Home.vue"),
-                meta: {
-                    title: "主页",
-                    hidden:false,
-                }
-            }, // 访问/home url跳到Home界面
+		path: "/home",
+		component: Layout,
+		redirect: "/home/home",
+		// component: () => import("@/views/module/home/Home.vue"),
 
-            {
-                path: "/module/about",
-                component: () => import("@/views/AboutView.vue"),
-                meta: {
-                    title: "about",
-                    hidden:false,
-                }
-            },
-            {
-                path: "/module/data_analysis",
-                component: () => import("@/views/module/data_analysis/data_analysis.vue"),
-                meta: {
-                    title: "数据分析",
-                    hidden:false,
-                }
-            },
-
-            {
-                path: "/module/emissionSourceSketch",
-                component: () => import("@/views/module/emissionSourceSketch/emission_source_sketch.vue"),
-                meta: {
-                    title: "排放源概览",
-                    hidden:false,
-                }
-            },
-            {
-                path: "/module/reductionProject",
-                component: () => import("@/views/module/reductionProject/reduction_project.vue"),
-                meta: {
-                    title: "减排资产"
-                }
-            },
-            {
-                path: "/module/emissionData",
-                component: () => import("@/views/module/emissionData/emission_data.vue"),
-                meta: {
-                    title: "排放数据"
-                }
-            },
-        ]
-    },
+		meta: {
+			title: "主页",
+			hidden: false,
+		},
+		children: [
+			{
+				path: "/home/home",
+				component: () => import("@/views/home/home.vue"),
+				meta: {
+					title: "主页",
+					hidden: false,
+				}
+			},
+		]
+	}, // 访问/home url跳到Home界面
 
     {
         path: "/fang_chi_hao",
@@ -139,57 +102,6 @@ const routes = [
             },
         ]
     },
-
-    {
-        path: '/',
-        redirect: '/login',
-        meta: {
-            title: 'login',
-        }
-    },
-    {
-
-        path: "/login",
-        name: 'login',
-        component: () => import('@/views/login/index.vue'),
-        meta: {
-            title: "login",
-            requireAuth: false,
-        },
-
-    },
-    {
-
-        path: "/register",
-        name: 'register',
-        component: () => import('@/views/login/Register.vue'),
-        meta: {
-            title: "register",
-            requireAuth: false,
-        },
-
-    },
-	{
-		path: "/home",
-		component: Layout,
-		redirect: "/home/home",
-		// component: () => import("@/views/module/home/Home.vue"),
-
-		meta: {
-			title: "主页",
-			hidden: false,
-		},
-		children: [
-			{
-				path: "/home/home",
-				component: () => import("@/views/home/home.vue"),
-				meta: {
-					title: "主页",
-					hidden: false,
-				}
-			},
-		]
-	}, // 访问/home url跳到Home界面
 	{
 		path: "/carbonEmission",
 		component: Layout,
@@ -210,7 +122,7 @@ const routes = [
 				}
 			},
 		]
-	}, // 访问/home url跳到Home界面
+	}, 
 	{
 		path: "/module",
 		component: Layout,
@@ -282,25 +194,11 @@ const routes = [
 
 ];
 
-// router.beforeEach((to, from) => {
-
-// })
 
 const router = createRouter({
     history: createWebHashHistory(),
     routes
 });
 
-// router.beforeEach((to, from, next) => {
-//     // 验证token，只有存在token的时候，才能跳转到内容页
-//     let token = localStorage.getItem("token");
-//     if (token || to.path == '/login') {
-//         next();
-//     }
-//     else {
-//         next('/login');
-//     }
-
-// })
 
 export default router;
