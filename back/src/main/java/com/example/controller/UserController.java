@@ -31,7 +31,10 @@ public class UserController {
     @PostMapping("/user/login")
     public Result<String> login(@RequestBody UserDto userDto) {
         String token = userService.login(userDto);
-        return Results.success(token);
+        if(token.length() > 6) {
+            return Results.success(token);
+        }
+        return Results.failure(token);
     }
 
     @PostMapping("/user/register")
