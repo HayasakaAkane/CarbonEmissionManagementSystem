@@ -114,7 +114,9 @@ export default {
     },
     methods: {
         getCompanis() {
-            let api = 'http://localhost:5173/getCompanis';
+
+            let api = "http://localhost:8080/"
+            api += 'user/register'
             // 向给定ID的用户发起请求
             axios.get(api)
                 .then(function (response) {
@@ -128,19 +130,20 @@ export default {
                     // 总是会执行
                 });
 
-
         },
         handleRegister() {
             this.$refs.form.validate(valid => {
                 if (valid) {
                     // 模拟注册成功
-                    console.log('register success');
+
+                    let api = "http://localhost:8080/"
+                    api += 'user/register'
+
                     console.log(this.companyId);
-                    let api = "http://localhost:5173/register"
                     axios.post(api, { username: this.form.username, password: this.form.password, company: this.companyId })
                         .then((res) => {
                             // console.log(res)
-                            if (res.code == 0) {
+                            if (res.code == "200") {
                                 this.$router.push('/login');
                                 this.$message.success('注册成功');
                             }

@@ -1,85 +1,85 @@
 <template>
-  <table>
-    <tr>
-      <th>项目ID</th>
-      <th>项目名称</th>
-      <th>项目类型</th>
-      <th>地点</th>
-      <th>状态</th>
-      <th>注册日期</th>
-      <th>有效期至</th>
-      <th>备注</th>
-    </tr>
-    <tr v-for="d in data" :key="d.ProjectID">
-      <td>{{ d.ProjectID }}</td>
-      <td>{{ d.ProjectName }}</td>
-      <td>{{ d.ProjectType }}</td>
-      <td>{{ d.Location }}</td>
-      <td>{{ d.Status }}</td>
-      <td>{{ d.RegistrationDate }}</td>
-      <td>{{ d.ValidUntil }}</td>
-      <td><a href="#">详细</a></td>
-    </tr>
-  </table>
-  <div class="number" style="margin-top: 10px; display: flex; justify-content: center; width: 100%;">
+    <table>
+        <tr>
+            <th>项目ID</th>
+            <th>项目名称</th>
+            <th>项目类型</th>
+            <th>地点</th>
+            <th>状态</th>
+            <th>注册日期</th>
+            <th>有效期至</th>
+            <th>备注</th>
+        </tr>
+        <tr v-for="d in data" :key="d.ProjectID">
+            <td>{{ d.ProjectID }}</td>
+            <td>{{ d.ProjectName }}</td>
+            <td>{{ d.ProjectType }}</td>
+            <td>{{ d.Location }}</td>
+            <td>{{ d.Status }}</td>
+            <td>{{ d.RegistrationDate }}</td>
+            <td>{{ d.ValidUntil }}</td>
+            <td><a href="#">详细</a></td>
+        </tr>
+    </table>
+    <div class="number" style="margin-top: 10px; display: flex; justify-content: center; width: 100%;">
         <a href="#" v-for="i in 6" :key="i" class="pagination">{{ i }}</a>
-  </div>
+    </div>
 </template>
 
 <script lang="ts" setup>
 import CCERProjects from "./API/CCERProjects"
-import { reactive,onBeforeMount } from "vue";
+import { reactive, onBeforeMount } from "vue";
 
 let data = reactive<projectOverview>([
-  {
-    Project: 1,
-    ProjectName: "可再生能源",
-    ProjectType: "项目A",
-    Location: "北京",
-    Status: "进行中",
-    RegistrationDate: "2021-01-01",
-    ValidUntil: "2021-01-01"
+    {
+        Project: 1,
+        ProjectName: "可再生能源",
+        ProjectType: "项目A",
+        Location: "北京",
+        Status: "进行中",
+        RegistrationDate: "2021-01-01",
+        ValidUntil: "2021-01-01"
     },
     {
-    ProjectID: 1,
-    ProjectName: "可再生能源",
-    ProjectType: "项目A",
-    Location: "北京",
-    Status: "进行中",
-    RegistrationDate: "2021-01-01",
-    ValidUntil: "2021-01-01",
-  },
-  {
-    ProjectID: 1,
-    ProjectName: "可再生能源",
-    ProjectType: "项目A",
-    Location: "北京",
-    Status: "进行中",
-    RegistrationDate: "2021-01-01",
-    ValidUntil: "2021-01-01",
-  },
-  {
-    ProjectID: 1,
-    ProjectName: "可再生能源",
-    ProjectType: "项目A",
-    Location: "北京",
-    Status: "进行中",
-    RegistrationDate: "2021-01-01",
-    ValidUntil: "2021-01-01",
-  },
+        ProjectID: 1,
+        ProjectName: "可再生能源",
+        ProjectType: "项目A",
+        Location: "北京",
+        Status: "进行中",
+        RegistrationDate: "2021-01-01",
+        ValidUntil: "2021-01-01",
+    },
+    {
+        ProjectID: 1,
+        ProjectName: "可再生能源",
+        ProjectType: "项目A",
+        Location: "北京",
+        Status: "进行中",
+        RegistrationDate: "2021-01-01",
+        ValidUntil: "2021-01-01",
+    },
+    {
+        ProjectID: 1,
+        ProjectName: "可再生能源",
+        ProjectType: "项目A",
+        Location: "北京",
+        Status: "进行中",
+        RegistrationDate: "2021-01-01",
+        ValidUntil: "2021-01-01",
+    },
 ]);
 
 // let Data: projectOverview[]
 
-function GetProject(){
-  CCERProjects.getProjects().then((result) => {
-    console.log(result)
-  }).catch((err) => {
-    alert("请求失败")
-  });
+function GetProject() {
+    CCERProjects.getProjects().then((result) => {
+        console.log(result)
+    }).catch((err) => {
+        alert("请求失败")
+    });
 }
 
-onBeforeMount(()=>{
+onBeforeMount(() => {
     GetProject()
 })
 
@@ -88,28 +88,32 @@ onBeforeMount(()=>{
 
 <style scoped>
 table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
+
 table,
 th,
 td {
-  border: 1px solid black;
+    border: 1px solid black;
 }
+
 th,
 td {
-  padding: 8px;
-  text-align: center;
+    padding: 8px;
+    text-align: center;
 }
+
 th {
-  background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
-a{
-  color: rgb(86, 86, 84);
+
+a {
+    color: rgb(86, 86, 84);
 }
 
 
-.pagination  {
+.pagination {
     color: #009879;
     padding: 8px 16px;
     text-decoration: none;
@@ -121,5 +125,4 @@ a{
     justify-content: center;
     margin-top: 10px;
 }
-
 </style>
