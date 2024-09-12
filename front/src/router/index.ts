@@ -3,66 +3,89 @@ import Layout from "../layout/index.vue";
 
 
 const routes = [
-	
 	{
-		path: "/module",
+		path: "/home",
 		component: Layout,
-		redirect: "/module/home",
+		redirect: "/home/home",
+		// component: () => import("@/views/module/home/Home.vue"),
+
 		meta: {
-			title: "首页",
+			title: "主页",
+			hidden: false,
 		},
 		children: [
 			{
-				path: "/module/home",
-				component: () => import("@/views/module/home/Home.vue"),
-				meta:{
-					title:"主页"
+				path: "/home/home",
+				component: () => import("@/views/home/home.vue"),
+				meta: {
+					title: "主页",
+					hidden: false,
 				}
-			}, // 访问/home url跳到Home界面
+			},
+		]
+	}, // 访问/home url跳到Home界面
+	{
+		path: "/carbonEmission",
+		component: Layout,
+		redirect: "/carbonEmission/carbon_emission",
+		// component: () => import("@/views/module/home/Home.vue"),
 
+		meta: {
+			title: "碳排放管理",
+			hidden: false,
+		},
+		children: [
 			{
-				path: "/module/about",
-				component: () => import("@/views/AboutView.vue"),
-				meta:{
-					title:"about"
+				path: "/carbonEmission/carbon_emission",
+				component: () => import("@/views/carbonEmission/carbon_emission.vue"),
+				meta: {
+					title: "碳排放数据展示",
+					hidden: false,
 				}
-			}, 
-			{
-				path: "/module/data_analysis",
-				component: () => import("@/views/module/data_analysis/data_analysis.vue"),
-				meta:{
-					title:"数据分析"
-				}
-			}, 
-
-
-			// {
-			// 	path: "/module/notfound",
-			// 	component: () => import("@/views/NotFound.vue"),
-			// 	meta:{
-			// 		title:"无法访问"
-			// 	}
-			// },
+			},
+		]
+	}, // 访问/home url跳到Home界面
+	{
+		path: "/module",
+		component: Layout,
+		redirect: "/module/emissionSourceSketch",
+		meta: {
+			title: "碳资产管理",
+			hidden: false,
+		},
+		children: [
 
 			{
 				path: "/module/emissionSourceSketch",
 				component: () => import("@/views/module/emissionSourceSketch/emission_source_sketch.vue"),
-				meta:{
-					title:"排放源概览"
+				meta: {
+					title: "排放源概览",
+					hidden: false,
 				}
 			},
 			{
-				path: "/module/reductionProject",
-				component: () => import("@/views/module/reductionProject/reduction_project.vue"),
-				meta:{
-					title:"减排资产"
+				path: "/module/data_analysis",
+				component: () => import("@/views/module/data_analysis/data_analysis.vue"),
+				meta: {
+					title: "排放数据分析",
+					hidden: false,
 				}
 			},
+
 			{
 				path: "/module/emissionData",
 				component: () => import("@/views/module/emissionData/emission_data.vue"),
-				meta:{
-					title:"排放数据"
+				meta: {
+					title: "排放数据",
+					hidden: false,
+				}
+			},
+			{
+				path: "/module/asset_transaction",
+				component: () => import("@/views/module/asset_transaction/asset_transaction.vue"),
+				meta: {
+					title: "交易统计",
+					hidden: false,
 				}
 			},
 		]
@@ -79,82 +102,51 @@ const routes = [
 			{
 				path: "/fang_chi_hao/CCER",
 				component: () => import("@/views/fang_chi_hao/CCER/CCER.vue"),
-				meta:{
-					title:"CCER_1"
+				meta: {
+					title: "CCER_1"
 				}
-			}, 
+			},
 
 			{
 				path: "/fang_chi_hao/CCER_2",
 				component: () => import("@/views/fang_chi_hao/CCER_2/CCER_2.vue"),
-				meta:{
-					title:"CCER_2"
+				meta: {
+					title: "CCER_2"
 				}
-			}, 
+			},
 			{
 				path: "/fang_chi_hao/CCER_3",
 				component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
-				meta:{
-					title:"CCER_3"
+				meta: {
+					title: "CCER_3"
 				}
 			},
 		]
 	},
 
-	// {
-	// 	path: "/xu_wei",
-	// 	component: Layout,
-	// 	redirect: "/fang_chi_hao/CCER",
-	// 	meta: {
-	// 		title: "CCER",
-	// 	},
-	// 	children: [
-	// 		{
-	// 			path: "/fang_chi_hao/CCER",
-	// 			component: () => import("@/views/fang_chi_hao/CCER/CCER.vue"),
-	// 			meta:{
-	// 				title:"主页"
-	// 			}
-	// 		}, 
-
-	// 		{
-	// 			path: "/fang_chi_hao/CCER_2",
-	// 			component: () => import("@/views/fang_chi_hao/CCER_2/CCER_2.vue"),
-	// 			meta:{
-	// 				title:"about"
-	// 			}
-	// 		}, 
-	// 		{
-	// 			path: "/fang_chi_hao/CCER_3",
-	// 			component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
-	// 			meta:{
-	// 				title:"排放源概览"
-	// 			}
-	// 		},
-	// 	]
-	// },
-
 
 	{
-		path:'/',
-		redirect:'/login',
-		meta:{
-			title:'login',
+		path: '/',
+		redirect: '/login',
+		meta: {
+			title: 'login',
+			hidden: true,
 		}
 	},
 
 	{
-		
+
 		path: "/login",
-		name:'login',
-		component:()=>import('@/views/login/index.vue') ,
+		name: 'login',
+		component: () => import('@/views/login/index.vue'),
 		meta: {
 			title: "login",
-			requireAuth:false,
+			requireAuth: false,
+			hidden: true
 		},
-		
+
 	},
-	
+
 
 ];
 

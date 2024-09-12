@@ -1,3 +1,4 @@
+
 <template>
   <div class="emissionSourceSketch" style="margin: 0;padding: 0;height: 100%;width: auto;">
 
@@ -23,9 +24,9 @@
     <div style="height: 45%;width: 55%;" id="main"></div>
 
 
-    <el-pagination style="align-items: center;justify-content: center;height: 5%;" v-model:current-page="currentPage" v-model:page-size="pageSize"
-      :page-sizes="[10, 5, 8]" layout="total, sizes, prev, pager, next, jumper" :total="total"
-      @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+    <el-pagination style="align-items: center;justify-content: center;height: 5%;" v-model:current-page="currentPage"
+      v-model:page-size="pageSize" :page-sizes="[10, 5, 8]" layout="total, sizes, prev, pager, next, jumper"
+      :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
   </div>
 </template>
 
@@ -154,25 +155,23 @@ const tableData = ref([])
 tableData.value = msg.value
 
 let total = tableData.value.length
-
+let baseUrl = 'http://localhost:8080'
 //获取所有的数据
 function getData() {
-  let api = "http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1";
-  // let api = "http://localhost:5173/getAllEmissionSource"
+  // let api = "http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1";
+
+  let api = baseUrl +"/getAllEmissionSource"
   //2.使用axios 进行get请求
   axios.get(api)
     .then((res) => {
       //请求成功的回调函数
-
       //把数据传给tableData数组
+      console.log(res.data.result)
       msg.value = res.data.result
-
       //获取数据的总条数
       total = msg.value.length
-
       //获取当前页的数据
       getPageData()
-
       // console.log(res)
     }).catch((err) => {
       //请求失败的回调函数
@@ -246,16 +245,17 @@ function drawChart() {
   var chartDom = document.getElementById('main');
   var myChart = echarts.init(chartDom);
   var option;
+
   option = {
     title: {
-      text: '实际排量vs预期排量',
-      // subtext: ''
+      text: 'Rainfall vs Evaporation',
+      subtext: 'Fake Data'
     },
     tooltip: {
       trigger: 'axis'
     },
     legend: {
-      data: ['实际排放', '预期排放']
+      data: ['Rainfall', 'Evaporation']
     },
     toolbox: {
       show: true,
@@ -271,7 +271,6 @@ function drawChart() {
       {
         type: 'category',
         // prettier-ignore
-        //改为排放源
         data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       }
     ],
@@ -284,7 +283,6 @@ function drawChart() {
       {
         name: 'Rainfall',
         type: 'bar',
-        //改为实际排量
         data: [
           2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3
         ],
@@ -301,7 +299,6 @@ function drawChart() {
       {
         name: 'Evaporation',
         type: 'bar',
-        //改为预期排量
         data: [
           2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
         ],
@@ -318,13 +315,14 @@ function drawChart() {
     ]
   };
   option && myChart.setOption(option);
+
 }
 
 
 
 onMounted(() => {
   // getData()
-  drawChart()
+  // drawChart()
 })
 
 
