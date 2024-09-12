@@ -1,6 +1,7 @@
 package com.example.service;
 
-import com.example.dao.entity.UserDo;
+import com.example.dto.req.UserDto;
+import com.example.dto.req.UserRegisterDto;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * @Version 1.0
  */
 public interface UserService {
+    String login(UserDto userDto);
 
-    List<UserDo> getAllUser();
-
+    void register(UserRegisterDto requestParam);
 }

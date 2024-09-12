@@ -54,14 +54,14 @@ export default {
         handleLogin() {
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    let api = "http://localhost:5173/login"
+                    let api = "http://localhost:8080/user/login"
                     //2.使用axios 进行get请求
                     // let url = '';
                     axios.post(api, this.form)
                         .then((res) => {
-                            // console.log(res)
-                            if (res.code == 0) {
-                                // console.log(this.form);
+                            console.log(res)
+                            if (res.data.code == "200") {
+                                console.log(res.data);
                                 const token = '123';
                                 localStorage.setItem('token', token);
                                 this.$message.success('登录成功');
