@@ -56,7 +56,7 @@ const routes = [
                 children: [
                     {
                         path: "/fang_chi_hao/CCER_3",
-                        component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
+                        component: () => import("@/views/fang_chi_hao/CCER_2/CCER_2.vue"),
                         meta: {
                             title: "项目立项",
                             hidden:false,

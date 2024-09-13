@@ -27,7 +27,6 @@ import Bar from "@/views/fang_chi_hao/conponents/bar.vue";
 div {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
   font-family: Arial, sans-serif;
   color: #333;
 }
@@ -38,7 +37,6 @@ div {
 
 .header h1, .summary h1 {
   font-size: 26px;
-  margin-bottom: 10px;
   color: #2c3e50; /* 深蓝色 */
   border-bottom: 2px solid #009879; /* 边框下划线 */
   padding-bottom: 5px;
@@ -48,7 +46,6 @@ div {
 .charts-container {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 40px;
 }
 
 .chart {
