@@ -2,7 +2,7 @@
     <div class="login-container">
 
         <el-card class="box-card">
-            <h2 class="login-title">登录</h2>
+            <h2 class="login-title">欢迎使用碳排放管理系统</h2>
             <el-form :model="form" :rules="rules" ref="form" label-width="100px">
                 <el-form-item label="用户名" prop="username">
                     <el-input v-model="form.username" placeholder="输入你的用户名"></el-input>

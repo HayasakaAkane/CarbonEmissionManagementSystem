@@ -3,10 +3,11 @@ import './assets/main.css'
 import Home from "@/views/module/home/Home.vue"
 import NotFound from "@/views/NotFound.vue"
 import emissionSourceSketch from "@/views/module/emissionSourceSketch/emission_source_sketch.vue"
-import { createApp} from 'vue'
+import { createApp } from 'vue'
+
 
 import App from './App.vue'
-import { createRouter ,createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import { Axios } from 'axios'
@@ -42,5 +43,6 @@ import router from '@/router/index'
 
 let app = createApp(App)
 app.config.globalProperties.Axios = Axios
+// app.config.productionTip = false
 app.use(router).use(ElementPlus)
 app.mount('#app')

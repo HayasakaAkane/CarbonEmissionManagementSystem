@@ -85,11 +85,10 @@ export default {
     mounted() {
         getData().then((data) => {
             // console.log(data);
+            console.log(data.data);
             this.TableData = data.data.getStatisticalData.data.tableData
             // echarts图表
-
             // 折线图
-
             // 基于准备好的dom，初始化echarts实例
             const echarts1 = echarts.init(this.$refs.echarts1)
             var echarts1Option = order

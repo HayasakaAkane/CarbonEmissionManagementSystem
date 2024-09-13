@@ -67,7 +67,6 @@ const routes = [
             },
         ]
     },
-
     {
         path: "/fang_chi_hao",
         component: Layout,
@@ -126,55 +125,30 @@ const routes = [
                     title: "全国碳排放量"
                 }
             },
+            {
+                path: "/data_analysis/home",
+                component: () => import("@/views/data_analysis/home/Home.vue"),
+                meta: {
+                    title: "主页"
+                }
+            },
+            {
+                path: "/data_analysis/user",
+                component: () => import("@/views/data_analysis/user/User.vue"),
+                meta: {
+                    title: "查看碳排放数据总量"
+                }
+            },
+            {
+                path: "/data_analysis/score",
+                component: () => import("@/views/data_analysis/score/score.vue"),
+                meta: {
+                    title: "查看分类数据总量"
+                }
+            },
 
-            {
-                path: "/fang_chi_hao/CCER_2",
-                component: () => import("@/views/fang_chi_hao/CCER_2/CCER_2.vue"),
-                meta: {
-                    title: "about"
-                }
-            },
-            {
-                path: "/fang_chi_hao/CCER_3",
-                component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
-                meta: {
-                    title: "排放源概览"
-                }
-            },
         ]
     },
-    // {
-    // 	path: "/xu_wei",
-    // 	component: Layout,
-    // 	redirect: "/fang_chi_hao/CCER",
-    // 	meta: {
-    // 		title: "CCER",
-    // 	},
-    // 	children: [
-    // 		{
-    // 			path: "/fang_chi_hao/CCER",
-    // 			component: () => import("@/views/fang_chi_hao/CCER/CCER.vue"),
-    // 			meta:{
-    // 				title:"主页"
-    // 			}
-    // 		}, 
-
-    // 		{
-    // 			path: "/fang_chi_hao/CCER_2",
-    // 			component: () => import("@/views/fang_chi_hao/CCER_2/CCER_2.vue"),
-    // 			meta:{
-    // 				title:"about"
-    // 			}
-    // 		}, 
-    // 		{
-    // 			path: "/fang_chi_hao/CCER_3",
-    // 			component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
-    // 			meta:{
-    // 				title:"排放源概览"
-    // 			}
-    // 		},
-    // 	]
-    // },
     {
         path: '/',
         redirect: '/login',
