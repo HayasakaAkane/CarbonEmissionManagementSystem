@@ -1,7 +1,8 @@
 <template>
-	<div class="logo !flex !items-center">
-		<!-- <img src="@/assets/images/logo.svg" alt="logo" /> -->
-		<span>Geeker Admin</span>
+	<div class="logo">
+		<!-- 放logo和名字的地方 -->
+		<img src="@/assets/logo.svg" alt="logo" />
+		<span>碳排放信息管理系统</span>
 	</div>
 </template>
 
