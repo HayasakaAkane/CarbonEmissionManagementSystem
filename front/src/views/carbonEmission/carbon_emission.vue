@@ -1,99 +1,240 @@
 <template>
   <div class="emissionSourceSketch" style="margin: 0;padding: 0;height: 100%;width: auto;">
     <!-- 工具栏 -->
-    <el-form :inline="true" style="width: auto;height: auto;">
-      <el-row>
-        <el-col :span="8" style="text-align: left;">
-          <el-form-item label="请输入查询条件：">
-            <el-input placeholder="输入条件"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="16" style="text-align: right;">
-          <el-button-group>
-            <el-button type="primary" icon="el-icon-search">查询</el-button>
-            <el-button type="primary" icon="el-icon-tickets">全部</el-button>
-            <el-button type="primary" icon="el-icon-circle-plus-outline">添加</el-button>
-          </el-button-group>
-        </el-col>
-      </el-row>
-    </el-form>
+    <el-card :border="false">
+      <el-form :inline="true" style="width: auto;height: auto;">
+        <el-row>
+          <el-col :span="8" style="text-align: left;">
+            <el-form-item label="请输入查询条件：">
+              <el-input v-model="inputStr" placeholder="输入条件"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="16" style="text-align: right;">
+            <el-button-group>
+              <el-button type="primary" @click="queryEmission()"><el-icon><Search /></el-icon>查询</el-button>
+              <el-button type="primary" @click="getAllData()"><el-icon><Document /></el-icon>全部</el-button>
+              <el-button type="primary" @click="addEmission()"><el-icon><CirclePlus /></el-icon>添加</el-button>
+            </el-button-group>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-card>
     <!-- 展示数据的表格 -->
-    <el-table :data="tableData" style="width: 100%;height: auto;">
-      <el-table-column prop="data_origin" label="排放地区" />
-      <el-table-column prop="emission_type" label="排放源类型" />
-      <el-table-column prop="source" label="排放源" />
-      <el-table-column prop="emission_date" label="排放日期" />
-      <el-table-column prop="emission_amount" label="排放量" />
-      <el-table-column prop="unit" label="单位" />
-      <el-table-column prop="verification_status" label="验证状态">
-        <template #default="scope">
-          <span :style="{ color: getStatusColor(scope.row.verification_status) }">
-            {{ getStatus(scope.row.verification_status) }}
-          </span>
-        </template>
-      </el-table-column>
+    <el-card :border="false" style="margin-top: 10px;">
+      <div style="margin-bottom: 10px;">
+        <el-button @click="deleteEmission" type="danger" size="mini">批量删除</el-button>
+      </div>
+      <el-table :data="tableData" style="width: 100%;" height="770" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" />
+        <el-table-column prop="dataOrigin" label="排放地区" />
+        <el-table-column prop="emissionType" label="排放源类型" />
+        <el-table-column prop="source" label="排放源" />
+        <el-table-column prop="emissionDate" label="排放日期" />
+        <el-table-column prop="emissionAmount" label="排放量" />
+        <el-table-column prop="unit" label="单位" />
+        <el-table-column prop="verificationStatus" label="验证状态">
+          <template #default="scope">
+            <span :style="{ color: getStatusColor(scope.row.verificationStatus) }">
+              {{ getStatus(scope.row.verificationStatus) }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="150px" align="center">
+          <template v-slot="scope">
+            <div style="display: flex;justify-content: space-around;">
+              <el-button @click="viewEmission(scope.row)" type="success">编辑</el-button>
+              <el-button @click="updateEmission(scope.row)" type="primary">查看</el-button>
+            </div>
+          </template>
+        </el-table-column>
 
-    </el-table>
-      <el-pagination  style="position: fixed; bottom: 0; left: 50%; align-items: center;justify-content: center;" v-model:current-page="currentPage"
-      v-model:page-size="pageSize" :page-sizes="[10, 20, 30]" layout="total, sizes, prev, pager, next, jumper"
-      :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
-  
-    
+      </el-table>
+      <!-- 分页器 -->
+      <el-row style="width: 100%; align-items: center;justify-content: flex-end;height: 5%;margin-top: 20px;">
+        <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 30]"
+          layout="total, sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange"
+          @current-change="handleCurrentChange" />
+      </el-row>
+    </el-card>
+
+    <!-- emission表单 -->
+    <!-- 弹出框的学生明细表单 -->
+    <!-- <el-dialog :title="dialogTitle" v-model:value="dialogVisible" style="text-align: left; width:60%;"
+      :close-on-click-modal="false" @close="closeDialogForm('emissionForm')">
+      <h1>
+        hello
+      </h1>
+
+      <el-form :model="emissionForm" :inline="true" :rules="rules" style="margin-left: 20px;" ref="studentForm"
+        label-width="100px" label-position="right" size="mini">
+
+        <el-form-item label="排放地点：" prop="dataOrigin">
+          <el-input v-model="emissionForm.dataOrigin" :disabled="isEdit || isView"
+            suffix-icon="el-icon-edit"></el-input>
+        </el-form-item>
+
+        <el-form-item label="排放量" prop="emissionAmount">
+          <el-input v-model="emissionForm.emissionAmount" :disabled="isView" suffix-icon="el-icon-edit"></el-input>
+        </el-form-item>
+
+        <el-form-item label="验证状态：" prop="verificationStatus">
+          <el-input v-model="emissionForm.verificationStatus" :disabled="isView" suffix-icon="el-icon-edit"></el-input>
+        </el-form-item>
+
+        <el-form-item label="排放类型：" prop="emissionType">
+          <el-select v-model="emissionForm.emissionType" :disabled="isView" placeholder="请选择排放类型">
+            <el-option label="二氧化碳" value="CO2"></el-option>
+            <el-option label="其他气体" value="ghg"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="排放日期：" prop="emissionDate">
+          <el-date-picker v-model="emissionForm.emissionDate" value-format="yyyy-MM-dd" :disabled="isView" type="date"
+            placeholder="选择日期" style="width: 93%;">
+          </el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="排放源：" prop="source">
+          <el-input v-model="emissionForm.source" :disabled="isView" suffix-icon="el-icon-edit"></el-input>
+        </el-form-item>
+
+        <el-form-item label="排放单位：" prop="unit">
+          <el-input v-model="emissionForm.unit" :disabled="isView" suffix-icon="el-icon-edit"></el-input>
+        </el-form-item>
+        <el-table-column label="操作" width="150px" align="center">
+          <template v-slot="scope">
+            <el-button @click="viewEmission(scope.row)" type="success" icon="el-icon-more" size="mini"
+              circle></el-button>
+            <el-button @click="updateEmission(scope.row)" type="primary" icon="el-icon-edit" size="mini"
+              circle></el-button>
+            <el-button @click="deleteOneRowEmission(scope.row)" type="danger" icon="el-icon-delete" size="mini"
+              circle></el-button>
+          </template>
+        </el-table-column>
+
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" size="mini" v-show="!isView"
+          @click="submitEmissionForm('emissionForm')">确定</el-button>
+        <el-button type="info" size="mini" @click="closeDialogForm('emissionForm')">取消</el-button>
+      </span>
+    </el-dialog> -->
+    <el-dialog
+      v-model="dialogVisible"
+      :title="dialogTitle"
+      width="40%"
+      :close-on-click-modal="false" 
+      @close="closeDialogForm('emissionForm')"
+    >
+    <el-form :model="emissionForm" :rules="rules" style="margin-left: 20px;" ref="studentForm"
+      label-width="100px" label-position="right" size="mini">
+
+      <el-form-item label="排放地点：" prop="dataOrigin">
+        <el-input v-model="emissionForm.dataOrigin" :disabled="isEdit || isView"
+          suffix-icon="el-icon-edit"></el-input>
+      </el-form-item>
+
+      <el-form-item label="排放量" prop="emissionAmount">
+        <el-input v-model="emissionForm.emissionAmount" :disabled="isView" suffix-icon="el-icon-edit"></el-input>
+      </el-form-item>
+
+      <el-form-item label="验证状态：" prop="verificationStatus">
+        <el-input v-model="emissionForm.verificationStatus" :disabled="isView" suffix-icon="el-icon-edit"></el-input>
+      </el-form-item>
+
+      <el-form-item label="排放类型：" prop="emissionType">
+        <el-select v-model="emissionForm.emissionType" :disabled="isView" placeholder="请选择排放类型">
+          <el-option label="二氧化碳" value="CO2"></el-option>
+          <el-option label="其他气体" value="ghg"></el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="排放日期：" prop="emissionDate">
+        <el-date-picker v-model="emissionForm.emissionDate" value-format="yyyy-MM-dd" :disabled="isView" type="date"
+          placeholder="选择日期" style="width: 93%;">
+        </el-date-picker>
+      </el-form-item>
+
+      <el-form-item label="排放源：" prop="source">
+        <el-input v-model="emissionForm.source" :disabled="isView" suffix-icon="el-icon-edit"></el-input>
+      </el-form-item>
+
+      <el-form-item label="排放单位：" prop="unit">
+        <el-input v-model="emissionForm.unit" :disabled="isView" suffix-icon="el-icon-edit"></el-input>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">
+          确定
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
   </div>
 </template>
 
 <script lang="ts" setup>
 
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import * as echarts from 'echarts';
+import { ElMessage, ElMessageBox } from "element-plus";
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
 
 //1、引入 axios 模块
 import axios from 'axios'
 const currentPage = ref(1)
 const pageSize = ref(10)
+//记录请求返回数据的集合
 const msg = ref([
-  { "data_origin": "北京", "emission_amount": 500.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-11", "source": "北京化工厂", "unit": "吨" },
-  { "data_origin": "北京", "emission_amount": 450.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-12", "source": "北京电子厂", "unit": "吨" },
-  { "data_origin": "北京", "emission_amount": 400.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-13", "source": "北京机械厂", "unit": "吨" },
-  { "data_origin": "北京", "emission_amount": 550.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-14", "source": "北京钢铁厂", "unit": "吨" },
-  { "data_origin": "北京", "emission_amount": 600.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-15", "source": "北京纺织厂", "unit": "吨" },
-  { "data_origin": "北京", "emission_amount": 520.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-16", "source": "北京食品厂", "unit": "吨" },
-  { "data_origin": "北京", "emission_amount": 530.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-17", "source": "北京塑料厂", "unit": "吨" },
-  { "data_origin": "北京", "emission_amount": 510.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-18", "source": "北京制药厂", "unit": "吨" },
-  { "data_origin": "北京", "emission_amount": 540.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-19", "source": "北京环保厂", "unit": "吨" },
-  { "data_origin": "北京", "emission_amount": 550.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-20", "source": "北京建筑材料厂", "unit": "吨" },
-  { "data_origin": "上海", "emission_amount": 300.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-11", "source": "上海汽车厂", "unit": "吨" },
-  { "data_origin": "上海", "emission_amount": 320.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-12", "source": "上海化肥厂", "unit": "吨" },
-  { "data_origin": "上海", "emission_amount": 310.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-13", "source": "上海医药厂", "unit": "吨" },
-  { "data_origin": "上海", "emission_amount": 330.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-14", "source": "上海精密仪器厂", "unit": "吨" },
-  { "data_origin": "上海", "emission_amount": 340.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-15", "source": "上海钢铁厂", "unit": "吨" },
-  { "data_origin": "上海", "emission_amount": 350.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-16", "source": "上海印刷厂", "unit": "吨" },
-  { "data_origin": "上海", "emission_amount": 360.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-17", "source": "上海电子厂", "unit": "吨" },
-  { "data_origin": "上海", "emission_amount": 370.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-18", "source": "上海机械厂", "unit": "吨" },
-  { "data_origin": "上海", "emission_amount": 380.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-19", "source": "上海食品厂", "unit": "吨" },
-  { "data_origin": "上海", "emission_amount": 390.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-20", "source": "上海纺织厂", "unit": "吨" },
-  { "data_origin": "广州", "emission_amount": 450.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-11", "source": "广州塑料厂", "unit": "吨" },
-  { "data_origin": "广州", "emission_amount": 460.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-12", "source": "广州制药厂", "unit": "吨" },
-  { "data_origin": "广州", "emission_amount": 470.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-13", "source": "广州钢铁厂", "unit": "吨" },
-  { "data_origin": "广州", "emission_amount": 480.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-14", "source": "广州汽车厂", "unit": "吨" },
-  { "data_origin": "广州", "emission_amount": 490.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-15", "source": "广州食品厂", "unit": "吨" },
-  { "data_origin": "广州", "emission_amount": 500.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-16", "source": "广州化肥厂", "unit": "吨" },
-  { "data_origin": "广州", "emission_amount": 510.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-17", "source": "广州纸厂", "unit": "吨" },
-  { "data_origin": "广州", "emission_amount": 520.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-18", "source": "广州机械厂", "unit": "吨" },
-  { "data_origin": "广州", "emission_amount": 530.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-19", "source": "广州环保厂", "unit": "吨" },
-  { "data_origin": "广州", "emission_amount": 540.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-20", "source": "广州纺织厂", "unit": "吨" },
-  { "data_origin": "深圳", "emission_amount": 350.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-11", "source": "深圳电子厂", "unit": "吨" },
-  { "data_origin": "深圳", "emission_amount": 360.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-12", "source": "深圳塑料厂", "unit": "吨" },
-  { "data_origin": "深圳", "emission_amount": 370.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-13", "source": "深圳医药厂", "unit": "吨" },
-  { "data_origin": "深圳", "emission_amount": 380.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-14", "source": "深圳钢铁厂", "unit": "吨" },
-  { "data_origin": "深圳", "emission_amount": 390.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-15", "source": "深圳汽车厂", "unit": "吨" },
-  { "data_origin": "深圳", "emission_amount": 400.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-16", "source": "深圳环保厂", "unit": "吨" },
-  { "data_origin": "深圳", "emission_amount": 410.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-17", "source": "深圳纸厂", "unit": "吨" },
-  { "data_origin": "深圳", "emission_amount": 420.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-18", "source": "深圳机械厂", "unit": "吨" },
-  { "data_origin": "深圳", "emission_amount": 430.00, "verification_status": "Verified", "emission_type": "CO2", "emission_date": "2024-09-19", "source": "深圳化肥厂", "unit": "吨" },
-  { "data_origin": "深圳", "emission_amount": 440.00, "verification_status": "Pending", "emission_type": "CO2", "emission_date": "2024-09-20", "source": "深圳食品厂", "unit": "吨" }
-]
-)
+  { dataOrigin: "北京", emissionAmount: 500.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-11", source: "北京化工厂", unit: "吨" },
+  { dataOrigin: "北京", emissionAmount: 450.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-12", source: "北京电子厂", unit: "吨" },
+  { dataOrigin: "北京", emissionAmount: 400.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-13", source: "北京机械厂", unit: "吨" },
+  { dataOrigin: "北京", emissionAmount: 550.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-14", source: "北京钢铁厂", unit: "吨" },
+  { dataOrigin: "北京", emissionAmount: 600.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-15", source: "北京纺织厂", unit: "吨" },
+  { dataOrigin: "北京", emissionAmount: 520.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-16", source: "北京食品厂", unit: "吨" },
+  { dataOrigin: "北京", emissionAmount: 530.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-17", source: "北京塑料厂", unit: "吨" },
+  { dataOrigin: "北京", emissionAmount: 510.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-18", source: "北京制药厂", unit: "吨" },
+  { dataOrigin: "北京", emissionAmount: 540.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-19", source: "北京环保厂", unit: "吨" },
+  { dataOrigin: "北京", emissionAmount: 550.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-20", source: "北京建筑材料厂", unit: "吨" },
+  { dataOrigin: "上海", emissionAmount: 300.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-11", source: "上海汽车厂", unit: "吨" },
+  { dataOrigin: "上海", emissionAmount: 320.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-12", source: "上海化肥厂", unit: "吨" },
+  { dataOrigin: "上海", emissionAmount: 310.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-13", source: "上海医药厂", unit: "吨" },
+  { dataOrigin: "上海", emissionAmount: 330.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-14", source: "上海精密仪器厂", unit: "吨" },
+  { dataOrigin: "上海", emissionAmount: 340.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-15", source: "上海钢铁厂", unit: "吨" },
+  { dataOrigin: "上海", emissionAmount: 350.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-16", source: "上海印刷厂", unit: "吨" },
+  { dataOrigin: "上海", emissionAmount: 360.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-17", source: "上海电子厂", unit: "吨" },
+  { dataOrigin: "上海", emissionAmount: 370.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-18", source: "上海机械厂", unit: "吨" },
+  { dataOrigin: "上海", emissionAmount: 380.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-19", source: "上海食品厂", unit: "吨" },
+  { dataOrigin: "上海", emissionAmount: 390.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-20", source: "上海纺织厂", unit: "吨" },
+  { dataOrigin: "广州", emissionAmount: 450.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-11", source: "广州塑料厂", unit: "吨" },
+  { dataOrigin: "广州", emissionAmount: 460.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-12", source: "广州制药厂", unit: "吨" },
+  { dataOrigin: "广州", emissionAmount: 470.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-13", source: "广州钢铁厂", unit: "吨" },
+  { dataOrigin: "广州", emissionAmount: 480.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-14", source: "广州汽车厂", unit: "吨" },
+  { dataOrigin: "广州", emissionAmount: 490.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-15", source: "广州食品厂", unit: "吨" },
+  { dataOrigin: "广州", emissionAmount: 500.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-16", source: "广州化肥厂", unit: "吨" },
+  { dataOrigin: "广州", emissionAmount: 510.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-17", source: "广州纸厂", unit: "吨" },
+  { dataOrigin: "广州", emissionAmount: 520.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-18", source: "广州机械厂", unit: "吨" },
+  { dataOrigin: "广州", emissionAmount: 530.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-19", source: "广州环保厂", unit: "吨" },
+  { dataOrigin: "广州", emissionAmount: 540.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-20", source: "广州纺织厂", unit: "吨" },
+  { dataOrigin: "深圳", emissionAmount: 350.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-11", source: "深圳电子厂", unit: "吨" },
+  { dataOrigin: "深圳", emissionAmount: 360.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-12", source: "深圳塑料厂", unit: "吨" },
+  { dataOrigin: "深圳", emissionAmount: 370.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-13", source: "深圳医药厂", unit: "吨" },
+  { dataOrigin: "深圳", emissionAmount: 380.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-14", source: "深圳钢铁厂", unit: "吨" },
+  { dataOrigin: "深圳", emissionAmount: 390.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-15", source: "深圳汽车厂", unit: "吨" },
+  { dataOrigin: "深圳", emissionAmount: 400.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-16", source: "深圳环保厂", unit: "吨" },
+  { dataOrigin: "深圳", emissionAmount: 410.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-17", source: "深圳纸厂", unit: "吨" },
+  { dataOrigin: "深圳", emissionAmount: 420.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-18", source: "深圳机械厂", unit: "吨" },
+  { dataOrigin: "深圳", emissionAmount: 430.00, verificationStatus: "Verified", emissionType: "CO2", emissionDate: "2024-09-19", source: "深圳化肥厂", unit: "吨" },
+  { dataOrigin: "深圳", emissionAmount: 440.00, verificationStatus: "Pending", emissionType: "CO2", emissionDate: "2024-09-20", source: "深圳食品厂", unit: "吨" }
+]);
+
+//用于记录用户所查询的输入信息 inputStr
+const inputStr = ref()
+
+//用于暂存当前页的数据
 const tableData = ref([])
 tableData.value = msg.value
 
@@ -104,29 +245,27 @@ function getData() {
 
   getPageData()
 
-
-  // // let api = "http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1";
-  // let api = baseUrl + '/getAllEmissionRecords';
-  // //2.使用axios 进行get请求
-  // axios.get(api)
-  //   .then((res) => {
-  //     //请求成功的回调函数
-  //     //把数据传给tableData数组
-  //     console.log(res.data.result)
-  //     msg.value = res.data.result
-  //     //获取数据的总条数
-  //     total = msg.value.length
-  //     //获取当前页的数据
-  //     getPageData()
-  //     // console.log(res)
-  //   }).catch((err) => {
-  //     //请求失败的回调函数
-  //     console.log(err)
-  //   })
+  let api = baseUrl + '/getAllEmissionRecords';
+  //2.使用axios 进行get请求
+  axios.get(api)
+    .then((res) => {
+      //请求成功的回调函数
+      //把数据传给tableData数组
+      msg.value = res.data.result
+      //获取数据的总条数
+      total = msg.value.length
+      //获取当前页的数据
+      getPageData()
+      // console.log(res)
+    }).catch((err) => {
+      //请求失败的回调函数
+      console.log(err)
+    })
 }
 
 //获取全部数据
 function getAllData() {
+  console.log('getAllData')
   //清空输入的imputStr
   //请求全部的数据
   getData()
@@ -136,16 +275,12 @@ function getAllData() {
 function getPageData() {
   //先把当前页面的数据清空
   tableData.value = []
-
   //获取当前页面的数据
   for (let i = (currentPage.value - 1) * pageSize.value; i < total; i++) {
     //遍历数据添加到tableData中
     tableData.value.push(msg.value[i])
-
     console.log(msg.value[i])
-
     console.log(tableData.value[i])
-
     //判断是否达到一页的要求
     if (tableData.value.length == pageSize.value) break
   }
@@ -158,7 +293,6 @@ const handleSizeChange = (val: number) => {
   pageSize.value = val
   //数据重新分页
   getPageData()
-
   console.log(`${val} items per page`)
 }
 
@@ -168,9 +302,240 @@ const handleCurrentChange = (val: number) => {
   currentPage.value = val
   //数据重新分页
   getPageData()
-
   console.log(`current page: ${val}`)
 }
+
+//3.2 实现碳排放信息的查询
+function queryEmission() {
+  console.log("inputMsg:" + inputStr.value)
+  axios
+    .post(
+      baseUrl + "/queryEmission",
+      {
+        inputstr: inputStr.value
+      }
+    )
+    .then(function (res) {
+      if (res.data.code === 1) {
+        //把数据给 msg
+        msg.value = res.data.msg;
+        //获取返回记录的总行数
+        total = res.data.msg.length;
+        //获取当前页的数据
+        getPageData()
+        //提示成功：
+        ElMessage({
+          message: '查询数据加载成功',
+          type: 'success'
+        });
+      } else {
+        ElMessage.error(res.data.msg);
+      }
+    })
+    .catch(function (err) {
+      console.log(err);
+      ElMessage.error("获取后端查询结果出现异常！");
+    });
+}
+
+//----------实现选择功能--------------//
+//记录选择的数据,保存被选择的所有信息
+const selectData = ref([])
+function handleSelectionChange(data) {
+  selectData.value = data
+  console.log(selectData.value)
+}
+
+//3.3 实现删除一群信息功能
+function deleteEmission() {
+  //等待确认删除
+  ElMessageBox.confirm(
+    "确认批量删除" + selectData.value.length + "个排放数据信息?",
+    '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    //确认删除的相应事件
+    //调用后端的接口
+    console.log(selectData.value)
+    axios.post(
+      baseUrl + '/deleteEmission',
+      {
+        emissionRecords: selectData.value
+      }) //左边对应后端参数一致
+      .then(res => {
+        if (res.data.code == 1) {
+          //获取所有的删除后的信息
+          msg.value = res.data.data;
+          //获取记录数
+          total = res.data.data.length;
+          //分页
+          getPageData();
+          //提示
+          ElMessage({
+            message: '数据批量删除成功',
+            type: 'success'
+          });
+        } else {
+          //失败的提示
+          ElMessage.error(res.data.msg);
+        }
+
+      })
+  }).catch(() => {
+    this.$message({
+      type: 'info',
+      message: '已取消删除'
+    });
+  });
+}
+//-----------------------------------//
+
+
+//-----------------------------------//
+//通过表单添加数据
+//定义一个表单的结构体
+const emissionForm = reactive({
+  dataOrigin: '',
+  emissionAmount: '',
+  verificationStatus: '',
+  emissionType: '',
+  emissionDate: '',
+  source: '',
+  unit: ''
+});
+//定义表单的校验规则
+const rules = {
+  dataOrigin: [
+    { require: true, message: '排放地点不能为空', trigger: 'change' },
+  ],
+  emissionAmount: [
+    { require: true, message: '排放地点不能为空', trigger: 'change' },
+  ],
+  verificationStatus: [
+    { require: true, message: '验证状态不能为空', trigger: 'change' },
+  ],
+  emissionType: [
+    { require: true, message: '排放类型不能为空', trigger: 'change' },
+  ],
+  emissionDate: [
+    { require: true, message: '排放日期不能为空', trigger: 'change' },
+  ],
+  source: [
+    { require: true, message: '排放源不能为空', trigger: 'change' },
+  ],
+  unit: [
+    { require: true, message: '排放单位不能为空', trigger: 'change' },
+  ],
+}
+let dialogTitle = ref('') //表单的标题
+const dialogVisible = ref(false)  //控制显示表单
+let isView = ref(false)
+let isEdit = ref(false)
+//关闭表单要处理的操作
+function closeDialogForm(formName) {
+  //重置表单的校验
+
+  //清空表单上一次所展示的内容
+  emissionForm.dataOrigin = ''
+  emissionForm.emissionAmount = ''
+  emissionForm.verificationStatus = ''
+  emissionForm.emissionType = ''
+  emissionForm.emissionDate = ''
+  emissionForm.source = ''
+  emissionForm.unit = ''
+
+  //关闭表单
+  dialogVisible.value = false
+
+  //初始化isView和isEdit的值是false
+  isEdit.value = false
+  isView.value = false
+
+}
+//提交排放记录的表单
+function submitEmissionForm(formName) {
+
+}
+//修改排放数据明细
+function updateEmission(row) {
+  dialogTitle.value = "修改排放数据"
+  //修改isEdit变量为true
+  isEdit.value = true
+  //弹出表单
+  dialogVisible.value = true
+  //将这一行数据深拷贝给表单
+  Object.assign(emissionForm, JSON.parse(JSON.stringify(row)))
+
+}
+//查看一条排放数据明细
+function viewEmission(row){
+  console.log("这一行的数据->row:"+row)
+  //修改标题
+  dialogTitle.value = "排放数据明细"
+  //修改isView变量
+  isView.value = true
+  //弹出表单
+  dialogVisible.value = true
+  //深拷贝表单对象
+  Object.assign(emissionForm,JSON.parse(JSON.stringify(row)))
+}
+//删除一条排放数据记录
+function deleteOneRowEmission(row){
+  console.log("row -> source:" + row.source)
+  //等待确认删除
+  ElMessageBox.confirm(
+    '确认删除？','提示',
+    {
+      confirmButtonText:'确定',
+      cancelButtonText:'取消',
+      type:'warning'
+    }
+  ).then(()=>{
+    //确认删除的相应事件
+    //调用后端接口
+    axios.post(
+      baseUrl+'/deleteOneRowEmission',
+      {
+        emissionRecord: row.source
+      }
+    ).then(res=>{
+      if(res.data.code == 1){
+        //获取所有排放信息
+        msg.value = res.data.data
+        //获取记录数
+        total = res.data.data.length
+        //分页
+        getPageData()
+        //提示信息
+        ElMessage({
+          message:'数据删除成功',
+          type:'success'
+        })
+      }else{
+        ElMessage.error(res.data.msg);
+      }
+    })
+  }).catch(()=>{
+    ElMessage({
+      type:'info',
+      message:'已取消删除'
+    })
+  })
+}
+//添加排放信息——>打开表单
+function addEmission() {
+  //修改表单标题
+  dialogTitle.value = '添加排放信息'
+  dialogVisible.value = true
+
+  console.log('显示表单:'+dialogVisible.value)
+}
+
+
+
+//-----------------------------------//
 
 //渲染状态颜色
 function getStatusColor(status) {
@@ -196,84 +561,6 @@ function getStatus(status) {
 
 }
 
-//柱状图
-function drawChart() {
-  var chartDom = document.getElementById('main');
-  var myChart = echarts.init(chartDom);
-  var option;
-
-  option = {
-    title: {
-      text: 'Rainfall vs Evaporation',
-      subtext: 'Fake Data'
-    },
-    tooltip: {
-      trigger: 'axis'
-    },
-    legend: {
-      data: ['Rainfall', 'Evaporation']
-    },
-    toolbox: {
-      show: true,
-      feature: {
-        dataView: { show: true, readOnly: false },
-        magicType: { show: true, type: ['line', 'bar'] },
-        restore: { show: true },
-        saveAsImage: { show: true }
-      }
-    },
-    calculable: true,
-    xAxis: [
-      {
-        type: 'category',
-        // prettier-ignore
-        data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-      }
-    ],
-    yAxis: [
-      {
-        type: 'value'
-      }
-    ],
-    series: [
-      {
-        name: 'Rainfall',
-        type: 'bar',
-        data: [
-          2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3
-        ],
-        markPoint: {
-          data: [
-            { type: 'max', name: 'Max' },
-            { type: 'min', name: 'Min' }
-          ]
-        },
-        markLine: {
-          data: [{ type: 'average', name: 'Avg' }]
-        }
-      },
-      {
-        name: 'Evaporation',
-        type: 'bar',
-        data: [
-          2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
-        ],
-        markPoint: {
-          data: [
-            { name: 'Max', value: 182.2, xAxis: 7, yAxis: 183 },
-            { name: 'Min', value: 2.3, xAxis: 11, yAxis: 3 }
-          ]
-        },
-        markLine: {
-          data: [{ type: 'average', name: 'Avg' }]
-        }
-      }
-    ]
-  };
-  option && myChart.setOption(option);
-
-}
-
 
 
 onMounted(() => {
@@ -286,3 +573,5 @@ onMounted(() => {
 
 
 </script>
+
+<style scoped></style>
