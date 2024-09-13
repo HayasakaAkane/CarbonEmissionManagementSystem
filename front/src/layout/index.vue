@@ -1,7 +1,14 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header>Header</el-header>
+      <el-header class="header">
+        <Logo />
+        <div style="display: flex;align-items: center;">
+          <p>退出登录</p>
+          <!-- 放用户头像的地方 -->
+          <p ><img style="width: 30px;height:30px;margin: 0 20px;" src="../assets/logo.svg" alt=""></p>
+        </div>
+      </el-header>
       <el-container>
         <el-aside width="200px">
           <div
@@ -10,7 +17,7 @@
             element-loading-svg-view-box="-10, -10, 50, 50"
             element-loading-background="rgba(122, 122, 122, 0.01)"
           >
-            <Logo />
+            
             <el-scrollbar>
               <el-menu
                 :default-active="activeMenu"

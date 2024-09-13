@@ -10,7 +10,7 @@ import { createRouter ,createWebHistory} from 'vue-router'
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import { Axios } from 'axios'
-
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import router from '@/router/index'
 
@@ -41,6 +41,9 @@ import router from '@/router/index'
 //加载路由器
 
 let app = createApp(App)
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
 app.config.globalProperties.Axios = Axios
 app.use(router).use(ElementPlus)
 app.mount('#app')
