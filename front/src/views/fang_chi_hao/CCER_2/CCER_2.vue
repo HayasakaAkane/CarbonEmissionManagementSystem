@@ -123,7 +123,7 @@
         <el-input v-model="form.totalAmount" :disabled="true" placeholder="总金额由系统计算"></el-input>
       </el-form-item>
 
-      <el-button type="primary" @click="submitForm" round>提交</el-button>
+      <div class="button-container"><el-button type="primary" @click="submitForm" round>提交</el-button></div>
     </el-form>
   </div>
 </template>
@@ -133,29 +133,29 @@ import { ref, watch } from 'vue';
 import { FormInstance,ElForm,ElMessage } from 'element-plus';
 import CCERProjects from '../API/CCERProjects';
 
-interface FormData {
-  projectName: string;
-  projectType: string;
-  location: string;
-  registrationDate: string | null;
-  validUntil: string | null;
-  year: number | null;
-  reductionAmount: number | null;
-  verificationDate: string | null;
-  reportDate: string | null;
-  reportDetails: string;
-  registrationNumber: string;
-  issuingAuthority: string;
-  issueDate: string | null;
-  buyer: string;
-  seller: string;
-  transactionDate: string | null;
-  quantity: number | null;
-  pricePerUnit: number | null;
-  totalAmount: number | null;
-}
+ interface formData {
+    projectName: string;
+    projectType: string;
+    location: string;
+    registrationDate: string | null;
+    validUntil: string | null;
+    year: number | null;
+    reductionAmount: number | null;
+    verificationDate: string | null;
+    reportDate: string | null;
+    reportDetails: string;
+    registrationNumber: string;
+    issuingAuthority: string;
+    issueDate: string | null;
+    buyer: string;
+    seller: string;
+    transactionDate: string | null;
+    quantity: number | null;
+    pricePerUnit: number | null;
+    totalAmount: number | null;
+  }
 
-const form = ref<FormData>({
+const form = ref<formData>({
   projectName: '',
   projectType: '',
   location: '',
@@ -239,11 +239,57 @@ const submitForm = () => {
     }
   });
 };
-</script>
+
+</Script>
+
 
 <style scoped>
 .form-container {
   max-width: 800px;
   margin: 0 auto;
+  padding: 20px;
+}
+
+.el-form {
+  font-size: 18px; /* 增大整个表单的字体大小 */
+}
+
+.el-form-item {
+  margin-bottom: 24px; /* 增大表单项的下边距 */
+}
+
+.el-input,
+.el-select .el-input__inner,
+.el-date-picker .el-input__inner,
+.el-button {
+  font-size: 18px; /* 增大输入框、选择器、日期选择器和按钮的字体大小 */
+}
+
+.el-input {
+  height: 40px; /* 增大输入框的高度 */
+}
+
+.el-select .el-input__inner {
+  height: 40px; /* 增大选择器的高度 */
+}
+
+.el-date-picker .el-input__inner {
+  height: 40px; /* 增大日期选择器的高度 */
+}
+
+.el-button {
+  height: 40px; /* 增大按钮的高度 */
+  line-height: 40px; /* 确保按钮文字垂直居中 */
+}
+
+h3 {
+  font-size: 22px; /* 增大标题字体大小 */
+  margin-bottom: 16px; /* 增大标题下边距 */
+}
+
+.button-container {
+  text-align: center; /* 中心对齐按钮 */
+  margin-top: 20px; /* 按钮上边距 */
 }
 </style>
+
