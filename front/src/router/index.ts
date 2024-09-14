@@ -159,14 +159,14 @@ const routes = [
 				}
 			},
 
-			{
-				path: "/module/emissionData",
-				component: () => import("@/views/module/emissionData/emission_data.vue"),
-				meta: {
-					title: "排放数据",
-					hidden: false,
-				}
-			},
+			// {
+			// 	path: "/module/emissionData",
+			// 	component: () => import("@/views/module/emissionData/reduction.vue"),
+			// 	meta: {
+			// 		title: "减排项目",
+			// 		hidden: false,
+			// 	}
+			// },
 			{
 				path: "/module/asset_transaction",
 				component: () => import("@/views/module/asset_transaction/asset_transaction.vue"),

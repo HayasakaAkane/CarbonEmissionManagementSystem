@@ -1,24 +1,26 @@
 <template>
-    <div style="width: 100%; height: 100%; display: flex; flex-direction: row; flex-wrap: wrap;">
-
-        <div style="width: 50%; height: 50%;background-color:bisque;">
-            <h1 style="text-align: center;">交易类型统计图</h1>
-            <div id="tranction_analysis_bar" style="height: 85%;width: 100%;">
+    <div style="width: 100%; height: 98%;">
+        <div style="height: 48%; margin-bottom: 20px;">
+            <div style="height: 100%;width: 100%;background-color:#fff;">
+                <h1 style="margin-left: 20px;">交易类型统计图</h1>
+                <div id="tranction_analysis_bar" style="height: 90%;width: 100%;background-color:#fff;">
+                </div>
             </div>
         </div>
 
+        <div style="height: 48%; display: flex; justify-content: space-between;">
+            <div style="height: 100%;width: 49%;background-color:#fff;">
+                <h1 style="margin-left: 20px;">碳资产交易量堆叠图</h1>
+                <div id="asset_stack_bar" style="height: 90%;width: 100%;background-color:#fff;">
+                </div>
+            </div>
 
-        <div style="width: 50%; height: 50%;background-color:bisque;">
-            <h1 style="text-align: center;">碳资产交易量堆叠图</h1>
-            <div id="asset_stack_bar" style="height: 85%;width: 100%;">
+            <div style="height: 100%;width: 50%;background-color:#fff;">
+                <h1 style="margin-left: 20px;">资产数量与交易量关系图</h1>
+                <div id="asset_transaction_quantity_bar" style="height: 90%;width: 100%;background-color:#fff;">
+                </div>
             </div>
         </div>
-        <div style="width: 50%; height: 50%;background-color:bisque;">
-            <h1 style="text-align: center;">资产数量与交易量关系图</h1>
-            <div id="asset_transaction_quantity_bar" style="height: 85%;width: 100%;">
-            </div>
-        </div>
-
 
     </div>
 </template>
@@ -49,20 +51,20 @@ function init_tranction_analysis() {
     transaction_price.value = [15, 18, 12, 20, 17, 19]
 
 
-    //以下是请求代码
-    // let api = baseUrl + '/getTranctionAnalysis';
-    // //2.使用axios 进行get请求
-    // axios.get(api)
-    //     .then((res) => {
-    //         //请求成功的回调函数
-    //         //把数据传给数组
-    //         transaction.value = res.data.transaction,
-    //             transaction_price.value = res.data.transactionPrice,
-    //             transaction_quantity.value = res.data.transactionQuantity
-    //     }).catch((err) => {
-    //         //请求失败的回调函数
-    //         console.log(err)
-    //     })
+    // 以下是请求代码
+    let api = baseUrl + '/getTranctionAnalysis';
+    //2.使用axios 进行get请求
+    axios.get(api)
+        .then((res) => {
+            //请求成功的回调函数
+            //把数据传给数组
+            transaction.value = res.data.data.transaction,
+                transaction_price.value = res.data.data.transactionPrice,
+                transaction_quantity.value = res.data.data.transactionQuantity
+        }).catch((err) => {
+            //请求失败的回调函数
+            console.log(err)
+        })
 }
 function draw_tranction_analysis_bar() {
 
@@ -176,23 +178,24 @@ function init_asset_time() {
     asset_transaction_quantity4 = ref([24, 26, 28, 30, 32])
     asset_transaction_quantity5 = ref([25, 27, 29, 31, 33])
 
-    // let api = baseUrl + '/getAssetAnalysis';
-    // //2.使用axios 进行get请求
-    // axios.get(api)
-    //     .then((res) => {
-    //         //请求成功的回调函数
-    //         //把数据传给数组
-    //         years.value = res.data.years
-    //         asset_type.value = res.data.assetType
-    //         asset_transaction_quantity1.value = res.data.assetTransactionQuantity1
-    //         asset_transaction_quantity2.value = res.data.assetTransactionQuantity2
-    //         asset_transaction_quantity3.value = res.data.assetTransactionQuantity3
-    //         asset_transaction_quantity4.value = res.data.assetTransactionQuantity4
-    //         asset_transaction_quantity5.value = res.data.assetTransactionQuantity5
-    //     }).catch((err) => {
-    //         //请求失败的回调函数
-    //         console.log(err)
-    //     })
+    let api = baseUrl + '/getAssetAnalysis';
+    //2.使用axios 进行get请求
+    axios.get(api)
+        .then((res) => {
+            //请求成功的回调函数
+            //把数据传给数组
+            years.value = res.data.data.years
+            asset_type.value = res.data.data.assetType
+            asset_type.value = res.data.data.assetType
+            asset_transaction_quantity1.value = res.data.data.assetTransactionQuantity1
+            asset_transaction_quantity2.value = res.data.data.assetTransactionQuantity2
+            asset_transaction_quantity3.value = res.data.data.assetTransactionQuantity3
+            asset_transaction_quantity4.value = res.data.data.assetTransactionQuantity4
+            asset_transaction_quantity5.value = res.data.data.assetTransactionQuantity5
+        }).catch((err) => {
+            //请求失败的回调函数
+            console.log(err)
+        })
 }
 function draw_asset_stack_bar() {
     var chartDom = document.getElementById('asset_stack_bar');
@@ -297,20 +300,19 @@ function init_asset_transaction() {
     asset_quantity.value = [50, 20, 15, 30, 25, 18]
     asset_transaction_quantity.value = [20, 22, 24, 26, 28]
 
-    // let api = baseUrl + '/getAssetQuantityAnalysis';
-    // //2.使用axios 进行get请求
-    // axios.get(api)
-    //     .then((res) => {
-    //         //请求成功的回调函数
-    //         //把数据传给tableData数组
-    //         asset_type_4.value = res.data.assetType,
-    //         asset_quantity.value = res.data.assetQuantity,
-    //         asset_transaction_quantity.value = res.data.assetTransactionQuantity,
-
-    //     }).catch((err) => {
-    //         //请求失败的回调函数
-    //         console.log(err)
-    //     })
+    let api = baseUrl + '/getAssetQuantityAnalysis';
+    //2.使用axios 进行get请求
+    axios.get(api)
+        .then((res) => {
+            //请求成功的回调函数
+            //把数据传给tableData数组
+            asset_type_4.value = res.data.data.assetType,
+            asset_quantity.value = res.data.data.assetQuantity,
+            asset_transaction_quantity.value = res.data.data.assetTransactionQuantity
+        }).catch((err) => {
+            //请求失败的回调函数
+            console.log(err)
+        })
 
 }
 function draw_asset_transaction_quantity_bar() {
