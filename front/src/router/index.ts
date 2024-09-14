@@ -33,13 +33,15 @@ const routes = [
         redirect: "/fang_chi_hao/CCER",
         meta: {
             title: "CCER项目管理",
+            hidden:false,
         },
         children: [
             {
                 path: "/fang_chi_hao/CCER",
                 component: () => import("@/views/fang_chi_hao/CCER/CCER.vue"),
                 meta: {
-                    title: "项目数据分析"
+                    title: "项目数据分析",
+                    hidden:false,
                 }
             },
 
@@ -48,21 +50,24 @@ const routes = [
                 // component: Layout,
                 redirect: "/fang_chi_hao/CCER_3",
                 meta: {
-                    title: "项目管理"
+                    title: "项目管理",
+                    hidden:false,
                 },
                 children: [
                     {
                         path: "/fang_chi_hao/CCER_3",
-                        component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
+                        component: () => import("@/views/fang_chi_hao/CCER_2/CCER_2.vue"),
                         meta: {
-                            title: "项目立项"
+                            title: "项目立项",
+                            hidden:false,
                         }
                     },
                     {
                         path: "/fang_chi_hao/CCER_4",
                         component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
                         meta: {
-                            title: "项目审核"
+                            title: "项目审核",
+                            hidden:false,
                         }
                     },
                 ]
@@ -76,13 +81,15 @@ const routes = [
         redirect: "/data_analysis/emission_data_map",
         meta: {
             title: "碳排放数据统计分析",
+            hidden:false,
         },
         children: [
             {
                 path: "/data_analysis/emission_data_map",
                 component: () => import("@/views/data_analysis/emission_data_map/emission_data_map.vue"),
                 meta: {
-                    title: "全国碳排放量"
+                    title: "全国碳排放量",
+                    hidden:false,
                 }
             },
 
@@ -90,14 +97,16 @@ const routes = [
                 path: "/fang_chi_hao/CCER_2",
                 component: () => import("@/views/fang_chi_hao/CCER_2/CCER_2.vue"),
                 meta: {
-                    title: "about"
+                    title: "about",
+                    hidden:false,
                 }
             },
             {
                 path: "/fang_chi_hao/CCER_3",
                 component: () => import("@/views/fang_chi_hao/CCER_3/CCER_3.vue"),
                 meta: {
-                    title: "排放源概览"
+                    title: "排放源概览",
+                    hidden:false,
                 }
             },
         ]

@@ -8,7 +8,6 @@ import com.example.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -30,9 +29,9 @@ public class UserServiceImpl implements UserService {
     public String login(UserDto userDto) {
         String password = userMapper.getPasswordByUsername(userDto.getUsername());
         if(password == null) {
-            throw new ClientException("用户不存在");
+            return "用户不存在";
         } else if(!userDto.getPassword().equals(password)) {
-            throw new ClientException("密码错误");
+            return "密码错误";
         }
 
         String uuid = UUID.randomUUID().toString();
