@@ -10,7 +10,7 @@
 
         <div style="height: 48%; display: flex; justify-content: space-between;">
             <div style="height: 100%;width: 49%;background-color:#fff;">
-                <h1 style="margin-left: 20px;">减排项目减排占比</h1>
+                <!-- <h1 style="margin-left: 20px;">减排项目减排占比</h1> -->
                 <div id="project_reduction_pie_chart" style="height: 90%;width: 100%;background-color:#fff;">
                 </div>
             </div>
@@ -88,7 +88,6 @@ function init_year_emission() {
             console.log(err)
         })
 }
-
 function draw_year_emission_bar_chart() {
 
     var chartDom = document.getElementById('year_emission_bar_chart');
@@ -184,8 +183,7 @@ function draw_project_reduction_pie_chart() {
 
     option = {
         title: {
-            text: 'Weather Statistics',
-            subtext: 'Fake Data',
+            text: '减排项目减排占比',
             left: 'center'
         },
         // grid: {
@@ -225,20 +223,14 @@ function draw_project_reduction_pie_chart() {
 
 // 4.1.3 展示不同排放源随时间的排放
 const source_emission_times_year = ref(['2016', '2017', '2018', '2019', '2020', '2021'])
-const source_emission_times_name = ref(['A', 'B', 'C', 'D', 'E', 'F'])
+const source_emission_times_name = ref(
+    ['蓝海化工厂', '绿能发电厂', '金山石油精炼厂', '蓝湾水泥厂', '金湾水泥厂', '红树林造纸厂']
+)
 const seriesData1 = ref([56.5, 82.1, 88.7, 70.1, 53.4, 85.1]) as any;
 const seriesData2 = ref([51.1, 51.4, 55.1, 53.3, 73.8, 68.7]) as any;
 const seriesData3 = ref([40.1, 62.2, 69.5, 36.4, 45.2, 32.5]) as any;
 const seriesData4 = ref([25.2, 37.1, 41.2, 18, 33.9, 49.1]) as any;
 const seriesData5 = ref([20.2, 30.1, 48.2, 10, 30.9, 40.1]) as any;
-// const source_emission_times_year = ref([])
-// const source_emission_times_name = ref([])
-// const seriesData1 = ref([]) as any;
-// const seriesData2 = ref([]) as any;
-// const seriesData3 = ref([]) as any;
-// const seriesData4 = ref([]) as any;
-// const seriesData5 = ref([]) as any;
-
 function init_source_emission_times_line() {
     source_emission_times_year.value.unshift('source'),
     seriesData1.value.unshift(source_emission_times_name.value[0]),
@@ -270,14 +262,13 @@ function init_source_emission_times_line() {
             seriesData3.value.unshift(source_emission_times_name.value[2]),
             seriesData4.value.unshift(source_emission_times_name.value[3]),
             seriesData5.value.unshift(source_emission_times_name.value[4]),
-            console.log()
+            console.log("------",res.data.data)
             draw_source_emission_times_line()
         }).catch((err) => {
             //请求失败的回调函数
             console.log(err)
         })
 }
-
 function draw_source_emission_times_line() {
 
     var chartDom = document.getElementById('source_emission_times_line');
@@ -351,6 +342,7 @@ function draw_source_emission_times_line() {
                         value: source_emission_times_year.value[1],
                         tooltip: source_emission_times_year.value[1]
                     }
+                    
                 }
             ]
         };

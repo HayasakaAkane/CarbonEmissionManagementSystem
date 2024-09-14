@@ -4,16 +4,17 @@
     <el-card :border="false">
       <el-form :inline="true" style="width: auto;height: auto;">
         <el-row>
-          <el-col :span="8" style="text-align: left;">
+          <el-col :span="8" style="text-align: left; height: auto;  align-items: center;">
             <el-form-item label="请输入查询条件：">
               <el-input v-model="inputStr" placeholder="输入条件"></el-input>
             </el-form-item>
+            <el-button type="primary" @click="queryEmission()"><el-icon>
+                  <Search />
+                </el-icon>查询
+            </el-button>
           </el-col>
           <el-col :span="16" style="text-align: right;">
             <el-button-group>
-              <el-button type="primary" @click="queryEmission()"><el-icon>
-                  <Search />
-                </el-icon>查询</el-button>
               <el-button type="primary" @click="getAllData()"><el-icon>
                   <Document />
                 </el-icon>全部</el-button>
@@ -32,13 +33,19 @@
       </div>
       <el-table :data="tableData" style="width: 100%;" height="770" @selection-change="handleSelectionChange">
         <el-table-column type="selection" />
-        <el-table-column prop="dataOrigin" label="排放地区" />
+
+        <el-table-column prop="dataOrigin" label="排放地区" :filters="area" :filter-method="filterArea">
+        </el-table-column>
+
         <el-table-column prop="emissionType" label="排放源类型" />
         <el-table-column prop="source" label="排放源" />
         <el-table-column prop="emissionDate" label="排放日期" />
         <el-table-column prop="emissionAmount" label="排放量" />
         <el-table-column prop="unit" label="单位" />
-        <el-table-column prop="verificationStatus" label="验证状态">
+        <el-table-column prop="verificationStatus" label="验证状态" :filters="[
+          { text: '已验证', value: 'Verified' },
+          { text: '未验证', value: 'Pending' }
+        ]" :filter-method="filterVerification">
           <template #default="scope">
             <span :style="{ color: getStatusColor(scope.row.verificationStatus) }">
               {{ getStatus(scope.row.verificationStatus) }}
@@ -49,7 +56,7 @@
           <template v-slot="scope">
             <div style="display: flex;justify-content: space-around;">
               <el-button @click="viewEmission(scope.row)" type="success">查看</el-button>
-              <el-button @click="updateEmission(scope.row)" type="primary">编辑</el-button>
+              <el-button @click="updateEmission(scope.row)" type="primary" :disabled="scope.row.verificationStatus == 'Verified'">编辑</el-button>
               <el-button @click="deleteOneRowEmission(scope.row)" type="danger">删除</el-button>
             </div>
           </template>
@@ -91,9 +98,6 @@
         </el-form-item>
 
         <el-form-item label="排放日期：" prop="emissionDate">
-          <!-- <el-date-picker v-model="emissionForm.emissionDate" value-format="yyyy-MM-dd" :disabled="isView" type="date"
-            placeholder="选择日期" style="width: 93%;">
-          </el-date-picker> -->
           <el-date-picker v-model="emissionForm.emissionDate" type="date" placeholder="Pick a date" style="width: 93%;"
             value-format="YYYY-MM-DD" format="YYYY-MM-DD" :disabled="isView" />
         </el-form-item>
@@ -131,7 +135,34 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 //1、引入 axios 模块
 import axios from 'axios'
-
+//筛选验证状态
+const filterVerification = (value, row) => {
+  return row.verificationStatus === value
+}
+//获取筛选地区的list集合
+interface origin {
+  text: string
+  value: string
+}
+let area: origin[] = [{text:'北京',value:'北京'},{text:'天津',value:'天津'}]
+// 请求获取全部的地区
+function getArea() {
+  let api = baseUrl + '/getDataOrigin';
+  //2.使用axios 进行get请求
+  axios.get(api)
+    .then((res) => {
+      //请求成功的回调函数
+      //把数据传给数组
+      area = res.data.data
+    }).catch((err) => {
+      //请求失败的回调函数
+      console.log(err)
+    })
+}
+//筛选地区
+const filterArea = (value, row) => {
+  return row.dataOrigin === value
+}
 const ruleFormRef = ref<FormInstance>()
 const currentPage = ref(1)
 const pageSize = ref(15)
@@ -530,7 +561,7 @@ function updateEmission(row) {
 }
 //修改更新到数据库
 function submitUpdateEmission() {
-  console.log("submitUpdate->",emissionForm.value)
+  console.log("submitUpdate->", emissionForm.value)
   //执行axios请求
   axios
     .post(baseUrl + 'updateEmission', emissionForm.value)
@@ -592,6 +623,7 @@ function getStatus(status) {
 
 
 onMounted(() => {
+  getArea()
   getData()
   // drawChart()
 })

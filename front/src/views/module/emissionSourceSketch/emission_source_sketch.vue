@@ -6,7 +6,11 @@
         <el-table-column prop="name" label="排放源名称" />
         <el-table-column prop="type" label="排放源类型" />
         <el-table-column prop="location" label="排放源地点" />
-        <el-table-column prop="status" label="排放源状态">
+        <el-table-column prop="status" label="排放源状态" :filters="[
+          { text: '运营中', value: '运营中' },
+          { text: '维护中', value: '维护中' },
+          { text: '关闭', value: '关闭' },
+        ]" :filter-method="filterTag">
           <template #default="scope">
             <span :style="{ color: getStatusColor(scope.row.status) }">
               {{ scope.row.status }}
@@ -14,14 +18,14 @@
           </template>
         </el-table-column>
         <el-table-column prop="complianceYear" label="合规年份" />
-        <el-table-column prop="emissionsRequired" label="所需排放量" />
+        <el-table-column prop="emissionsRequired" label="合规量" />
         <el-table-column prop="latestEmissionDate" label="最新排放日期" />
         <el-table-column prop="latestCO2Emissions" label="排放量" />
       </el-table>
       <div style="display: flex; justify-content: center; margin-top: 20px;">
-        <el-pagination v-model:current-page="currentPage"
-          v-model:page-size="pageSize" :page-sizes="[15, 20, 30]" layout="total, sizes, prev, pager, next, jumper"
-          :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+        <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[15, 20, 30]"
+          layout="total, sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange"
+          @current-change="handleCurrentChange" />
       </div>
     </el-card>
     <div style="height: 45%;width: 55%;" id="main"></div>
@@ -33,7 +37,10 @@
 
 import { ref, onMounted } from "vue";
 import * as echarts from 'echarts';
-
+//过滤表格标签
+const filterTag = (value, row) => {
+  return row.status === value
+}
 //1、引入 axios 模块
 import axios from 'axios'
 const currentPage = ref(1)
