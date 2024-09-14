@@ -13,7 +13,7 @@ import { Axios } from 'axios'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import router from '@/router/index'
-
+import ElForm from "element-plus";
 
 // // 配置路由规则
 // const routes = [

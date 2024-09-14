@@ -1,24 +1,26 @@
 <template>
-    <div style="width: 100%; height: 100%; display: flex; flex-direction: row; flex-wrap: wrap;">
-
-        <div style="width: 50%; height: 50%;background-color:bisque;">
-            <h1 style="text-align: center;">交易类型统计图</h1>
-            <div id="tranction_analysis_bar" style="height: 85%;width: 100%;">
+    <div style="width: 100%; height: 98%;">
+        <div style="height: 48%; margin-bottom: 20px;">
+            <div style="height: 100%;width: 100%;background-color:#fff;">
+                <h1 style="margin-left: 20px;">交易类型统计图</h1>
+                <div id="tranction_analysis_bar" style="height: 90%;width: 100%;background-color:#fff;">
+                </div>
             </div>
         </div>
 
+        <div style="height: 48%; display: flex; justify-content: space-between;">
+            <div style="height: 100%;width: 49%;background-color:#fff;">
+                <h1 style="margin-left: 20px;">碳资产交易量堆叠图</h1>
+                <div id="asset_stack_bar" style="height: 90%;width: 100%;background-color:#fff;">
+                </div>
+            </div>
 
-        <div style="width: 50%; height: 50%;background-color:bisque;">
-            <h1 style="text-align: center;">碳资产交易量堆叠图</h1>
-            <div id="asset_stack_bar" style="height: 85%;width: 100%;">
+            <div style="height: 100%;width: 50%;background-color:#fff;">
+                <h1 style="margin-left: 20px;">资产数量与交易量关系图</h1>
+                <div id="asset_transaction_quantity_bar" style="height: 90%;width: 100%;background-color:#fff;">
+                </div>
             </div>
         </div>
-        <div style="width: 50%; height: 50%;background-color:bisque;">
-            <h1 style="text-align: center;">资产数量与交易量关系图</h1>
-            <div id="asset_transaction_quantity_bar" style="height: 85%;width: 100%;">
-            </div>
-        </div>
-
 
     </div>
 </template>

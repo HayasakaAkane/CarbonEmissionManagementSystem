@@ -161,9 +161,9 @@ const routes = [
 
 			{
 				path: "/module/emissionData",
-				component: () => import("@/views/module/emissionData/emission_data.vue"),
+				component: () => import("@/views/module/emissionData/reduction.vue"),
 				meta: {
-					title: "排放数据",
+					title: "减排项目",
 					hidden: false,
 				}
 			},
