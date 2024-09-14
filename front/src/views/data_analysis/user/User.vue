@@ -6,11 +6,11 @@
 
             <!-- 对话框:点击新增或编辑才会弹出表单 -->
             <!-- :before-close="closeDialog" 点击关闭的x之前要做的事情 -->
-            <el-dialog :title="modalType == 0 ? '新建' : '编辑'" :visible.sync="dialogVisible" width="50%"
+            <el-dialog :title="modalType == 0 ? '新建' : '编辑'" v-model="dialogVisible" width="50%"
                 :before-close="closeDialog">
                 <!-- 表单Form -->
                 <!-- ref=form:为了通过this.$refs调用组件的方法 -->
-                <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="80px">
+                <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="120px" style="height: 170px;">
                     <!-- 每一项表单域:el-form-item -->
                     <el-form-item label="企业名称" prop="name">
                         <el-input placeholder="请输入企业名称" v-model="form.name"></el-input>
@@ -20,8 +20,12 @@
                         <el-input placeholder="请输入行业" v-model="form.age"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="年度碳排放量" prop="addr">
-                        <el-input placeholder="请输入年度碳排放量" v-model="form.addr"></el-input>
+                    <el-form-item label="年度碳排放量" prop="birth">
+                        <el-input placeholder="请输入年度碳排放量" v-model="form.birth"></el-input>
+                    </el-form-item>
+                    
+                    <el-form-item label="碳排放地区" prop="addr">
+                        <el-input placeholder="请输入碳排放地区" v-model="form.addr"></el-input>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -53,7 +57,8 @@
                 </el-table-column>
                 <!-- 自定义列 -->
                 <el-table-column label="操作">
-                    <template slot-scope="scope">
+
+                    <template v-slot="scope">
                         <el-button @click="handleEdit(scope.row)">编辑</el-button>
                         <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
                     </template>
@@ -69,7 +74,7 @@
 </template>
 
 <script>
-import { getUser, createUser, deleteUser, updateUser } from '@/api/index'
+import { getUser, createUser, deleteUser, updateUser } from '../../../api/index'
 export default {
     data() {
         return {
@@ -83,11 +88,11 @@ export default {
             },
             // 表单验证规则
             rules: {
-                name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-                age: [{ required: true, message: '请输入年龄', trigger: 'blur' }],
+                name: [{ required: true, message: '请输入企业名称', trigger: 'blur' }],
+                age: [{ required: true, message: '请输入行业', trigger: 'blur' }],
                 sex: [{ required: true, message: '请输入性别', trigger: 'blur' }],
-                birth: [{ required: true, message: '请输入日期', trigger: 'blur' }],
-                addr: [{ required: true, message: '请输入地址', trigger: 'blur' }],
+                birth: [{ required: true, message: '请输入年度碳排放量', trigger: 'blur' }],
+                addr: [{ required: true, message: '请输入碳排放地区', trigger: 'blur' }],
             },
             // 表单是否打开
             dialogVisible: false,
@@ -115,6 +120,7 @@ export default {
             getUser({ params: { ...this.pageData, ...this.searchForm } }).then((data) => {
                 this.tableData = data.data.list
                 this.total = data.data.count || 0
+            console.log(this.tableData)
             })
         },
         // 表单提交
@@ -150,6 +156,7 @@ export default {
         // 编辑按钮
         handleEdit(index) {
             this.modalType = 1
+            console.log('as');
             this.openForm()
             // 深拷贝
             this.form = JSON.parse(JSON.stringify(index))

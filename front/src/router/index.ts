@@ -190,16 +190,16 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
-    // 验证token，只有存在token的时候，才能跳转到内容页
-    let token = localStorage.getItem("token");
-    if (token || to.path == '/login') {
-        next();
-    }
-    else {
-        next('/login');
-    }
+// router.beforeEach((to, from, next) => {
+//     // 验证token，只有存在token的时候，才能跳转到内容页
+//     let token = localStorage.getItem("token");
+//     if (token || to.path == '/login') {
+//         next();
+//     }
+//     else {
+//         next('/login');
+//     }
 
-})
+// })
 
 export default router;

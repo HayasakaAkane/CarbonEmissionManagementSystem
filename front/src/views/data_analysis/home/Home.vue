@@ -4,7 +4,7 @@
             <!-- user卡片 -->
             <el-card>
                 <div class="user">
-                    <img src="../assets/images/user.jpg" alt="">
+                    <img src="../../../assets/images/user.jpg" alt="">
                     <div class="userInfo">
                         <p div class="name">Admin</p>
                         <p div class="access">超级管理员</p>
@@ -59,15 +59,15 @@
 </template>
 
 <script>
-import TableLabel from '@/data/TableLabel'
-import CountData from '@/data/CountData'
-import { getData } from '@/api/index'
+import TableLabel from '../../../data/TableLabel'
+import CountData from '../../../data/CountData'
+import { getData } from '../../../api/index'
 import * as echarts from 'echarts'
 
 // echarts的配置数据
-import order from '@/data/echartsData/order'
-import user from '@/data/echartsData/user'
-import video from '@/data/echartsData/video'
+import order from '../../../data/echartsData/order'
+import user from '../../../data/echartsData/user'
+import video from '../../../data/echartsData/video'
 
 export default {
     data() {
@@ -83,6 +83,7 @@ export default {
         }
     },
     mounted() {
+        console.log(getData)
         getData().then((data) => {
             // console.log(data);
             console.log(data.data);

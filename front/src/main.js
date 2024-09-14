@@ -12,6 +12,7 @@ import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import { Axios } from 'axios'
 
+import './api/mock'
 
 import router from '@/router/index'
 

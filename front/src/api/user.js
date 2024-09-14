@@ -15,6 +15,7 @@ function param2Obj (url) {
     '"}'
   )
 }
+const industry = Mock.mock('@pick(["科技", "金融", "制造", "教育", "医疗", "电商", "房地产", "旅游", "物流", "传媒"])');
 
 let List = []
 const count = 200
@@ -23,10 +24,10 @@ for (let i = 0; i < count; i++) {
   List.push(
     Mock.mock({
       id: Mock.Random.guid(),
-      name: Mock.Random.cname(),
+      name:  Mock.mock('@cword(2,4)') + '公司',
       addr: Mock.mock('@county(true)'),
-      'age|18-60': 1,
-      birth: Mock.Random.guid(),
+      age:Mock.mock('@pick(["科技", "金融", "制造", "教育", "医疗", "电商", "房地产", "旅游", "物流", "传媒"])'),
+      birth:  Mock.mock('@integer(500, 10000)'),
       sex: Mock.Random.integer(0, 1)
     })
   )

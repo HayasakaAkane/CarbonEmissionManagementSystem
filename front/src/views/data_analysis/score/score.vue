@@ -1,28 +1,27 @@
 <template>
     <div class="manage">
-        <div class="manage-header">
+        <div class="manage-header" style="display:flex;justify-content: flex-start;">
             <!-- 搜索框 -->
-            <el-form :inline="true">
                 请选择搜索
-                <el-select v-model="value" placeholder="请选择" style="margin-right: 30px;">
+                <el-select v-model="value" placeholder="请选择" style="margin-left:30px;margin-right: 30px;width: 240px;">
                     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                     </el-option>
                 </el-select>
-                <el-select v-model="value2" placeholder="请选择" style="margin-right: 30px;">
+                <el-select v-model="value2" placeholder="请选择" style="margin-right: 30px;width: 240px;">
                     <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
                     </el-option>
                 </el-select>
                 <el-button type="primary" @click="search">查询</el-button>
-            </el-form>
         </div>
 
         <div ref="chart" style="width: 1200px; height: 700px;margin-top:40px;margin-bottom:100px"></div>
 
-        请选择年份
-        <el-select v-model="selectedYear" placeholder="请选择年份" @change="updateChart"
-            style="margin-left:10px;margin-right: 10px;">
+        <div style="display: flex;align-items: center;">
+            请选择年份
+        <el-select v-model="selectedYear" placeholder="请选择年份" @change="updateChart" style="margin-left:30px;margin-right: 30px;width: 240px;">
             <el-option v-for="year in Object.keys(emissionsData2)" :key="year" :label="year" :value="year" />
         </el-select>年
+        </div>
         <div ref="lineChart" style="width:1800px; height: 400px;margin-left: -100px;"></div>
 
     </div>

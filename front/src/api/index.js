@@ -1,4 +1,4 @@
-import http from '@/utils/request'
+import http from '../utils/request.js'
 
 // 请求首页数据,直接把这个对象导出
 export const getData = () => {
