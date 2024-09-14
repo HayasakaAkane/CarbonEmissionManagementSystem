@@ -263,7 +263,7 @@ const msg = ref([
 const tableData = ref([])
 tableData.value = msg.value
 
-let total = tableData.value.length
+let total = msg.value.length
 let baseUrl = 'http://localhost:8080'
 //获取所有的数据
 function getData() {
@@ -275,8 +275,8 @@ function getData() {
     .then((res) => {
       //请求成功的回调函数
       //把数据传给tableData数组
-      console.log(res.data.result)
-      msg.value = res.data.result
+      // console.log(res.data.result)
+      msg.value = res.data.data.result
       //获取数据的总条数
       total = msg.value.length
       //获取当前页的数据
@@ -430,7 +430,7 @@ function drawChart() {
 
 
 onMounted(() => {
-  // getData()
+  getData()
   // drawChart()
 })
 

@@ -71,19 +71,23 @@ const complianceYear_emissionRequired = ref([
     { "ComplianceYear": 2015, "EmissionsRequired": 620.0 },
     { "ComplianceYear": 2014, "EmissionsRequired": 600.0 },
 ])
-// function init_year_emission() {
-//     let api = baseUrl + "/getYearReq"
-//     //2.使用axios 进行get请求
-//     axios.get(api)
-//         .then((res) => {
-//             //请求成功的回调函数
-//             //把数据传给complianceYear_emissionRequired数组
-//             complianceYear_emissionRequired.value = res.data.complianceYearEmissionRequired
+function init_year_emission() {
+    let api = baseUrl + "/getYearReq"
+    //2.使用axios 进行get请求
+    axios.get(api)
+        .then((res) => {
+            //请求成功的回调函数
+            //把数据传给complianceYear_emissionRequired数组
+            complianceYear_emissionRequired.value = res.data.data.complianceYearEmissionRequired
+            console.log("data_analysis->complianceYear_emissionRequired:",complianceYear_emissionRequired.value)
+            // draw_year_emission_bar_chart()
 
-//         }).catch((err) => {
-//             console.log(err)
-//         })
-// }
+            // draw_year_emission_bar_chart()
+
+        }).catch((err) => {
+            console.log(err)
+        })
+}
 
 function draw_year_emission_bar_chart() {
 
@@ -150,21 +154,26 @@ function init_project_reductions() {
         project_reductions_name.value[i] = project_reductions.value[i].name
     }
 
-    // let api = baseUrl + "/getProjectReduction";
-    // //2.使用axios 进行get请求
-    // axios.get(api)
-    //     .then((res) => {
-    //         //请求成功的回调函数
-    //         //把数据传给 project_reductions 数组,并把name字段赋值给 ->project_reductions_name数组
-    //         project_reductions.value = res.data.projectReductions
-    //         let len = project_reductions.value.length
-    //         for (let i = 0; i < len; i++) {
-    //             project_reductions_name.value[i] = project_reductions.value[i].name
-    //         }
-    //     }).catch((err) => {
-    //         //请求失败的回调函数
-    //         console.log(err)
-    //     })
+    let api = baseUrl + "/getProjectReduction";
+    //2.使用axios 进行get请求
+    axios.get(api)
+        .then((res) => {
+            //请求成功的回调函数
+            //把数据传给 project_reductions 数组,并把name字段赋值给 ->project_reductions_name数组
+            project_reductions.value = res.data.data.projectReductions
+            // console.log("projections：",res.data.data.projectReductions)
+            // console.log("projections：",project_reductions.value)
+            let len = project_reductions.value.length
+            for (let i = 0; i < len; i++) {
+                project_reductions_name.value[i] = project_reductions.value[i].name
+            }
+
+
+            // draw_project_reduction_pie_chart()
+        }).catch((err) => {
+            //请求失败的回调函数
+            console.log(err)
+        })
 
 }
 function draw_project_reduction_pie_chart() {
@@ -222,6 +231,13 @@ const seriesData2 = ref([51.1, 51.4, 55.1, 53.3, 73.8, 68.7]) as any;
 const seriesData3 = ref([40.1, 62.2, 69.5, 36.4, 45.2, 32.5]) as any;
 const seriesData4 = ref([25.2, 37.1, 41.2, 18, 33.9, 49.1]) as any;
 const seriesData5 = ref([20.2, 30.1, 48.2, 10, 30.9, 40.1]) as any;
+// const source_emission_times_year = ref([])
+// const source_emission_times_name = ref([])
+// const seriesData1 = ref([]) as any;
+// const seriesData2 = ref([]) as any;
+// const seriesData3 = ref([]) as any;
+// const seriesData4 = ref([]) as any;
+// const seriesData5 = ref([]) as any;
 
 function init_source_emission_times_line() {
     source_emission_times_year.value.unshift('source'),
@@ -232,32 +248,34 @@ function init_source_emission_times_line() {
     seriesData5.value.unshift(source_emission_times_name.value[4])
 
     //     console.log(source_emission_times_year.value)
-    // let api = baseUrl + "/getSourceEmissionTimes";
-    // //2.使用axios 进行get请求
-    // axios.get(api)
-    //     .then((res) => {
-    //         //请求成功的回调函数
+    let api = baseUrl + "/getSourceEmissionTimes";
+    //2.使用axios 进行get请求
+    axios.get(api)
+        .then((res) => {
+            //请求成功的回调函数
 
-    //         //把数据传给数组
-    //         source_emission_times_year.value = res.data.years;
-    //         source_emission_times_name.value = res.data.names;
-    //         seriesData1.value = res.data.data1;
-    //         seriesData2.value = res.data.data2;
-    //         seriesData3.value = res.data.data3;
-    //         seriesData4.value = res.data.data4;
-    //         seriesData5.value = res.data.data5;
+            //把数据传给数组
+            source_emission_times_year.value = res.data.data.years;
+            source_emission_times_name.value = res.data.data.names;
+            seriesData1.value = res.data.data.data1;
+            seriesData2.value = res.data.data.data2;
+            seriesData3.value = res.data.data.data3;
+            seriesData4.value = res.data.data.data4;
+            seriesData5.value = res.data.data.data5;
 
-    //         //数据初始化
-    //         source_emission_times_year.value.unshift('source'),
-    //             seriesData1.value.unshift(source_emission_times_name.value[0]),
-    //             seriesData2.value.unshift(source_emission_times_name.value[1]),
-    //             seriesData3.value.unshift(source_emission_times_name.value[2]),
-    //             seriesData4.value.unshift(source_emission_times_name.value[3]),
-    //             seriesData5.value.unshift(source_emission_times_name.value[4])
-    //     }).catch((err) => {
-    //         //请求失败的回调函数
-    //         console.log(err)
-    //     })
+            //数据初始化
+            source_emission_times_year.value.unshift('source'),
+            seriesData1.value.unshift(source_emission_times_name.value[0]),
+            seriesData2.value.unshift(source_emission_times_name.value[1]),
+            seriesData3.value.unshift(source_emission_times_name.value[2]),
+            seriesData4.value.unshift(source_emission_times_name.value[3]),
+            seriesData5.value.unshift(source_emission_times_name.value[4]),
+            console.log()
+            draw_source_emission_times_line()
+        }).catch((err) => {
+            //请求失败的回调函数
+            console.log(err)
+        })
 }
 
 function draw_source_emission_times_line() {
@@ -364,7 +382,7 @@ function draw_source_emission_times_line() {
 onMounted(() => {
     // 1.1 展示不同合规年分的排放要求 首先把这一部分的数据初始化
     //函数：
-    // init_year_emission()
+    init_year_emission()
     draw_year_emission_bar_chart()
 
 

@@ -197,7 +197,7 @@ function getData() {
     .then((res) => {
       //请求成功的回调函数
       //把数据传给tableData数组
-      msg.value = res.data.result
+      msg.value = res.data.data.result
       //获取数据的总条数
       total = msg.value.length
       //获取当前页的数据
@@ -466,7 +466,7 @@ function submitEmissionForm() {
   console.log(emissionForm.value, '表单数据')
 
   ruleFormRef.value?.validate((errors) => {
-    console.log(errors, 'sssss')
+    // console.log(errors, 'sssss')
     if (errors) {
       console.log(errors, 'eeee')
       console.log('校验成功')
