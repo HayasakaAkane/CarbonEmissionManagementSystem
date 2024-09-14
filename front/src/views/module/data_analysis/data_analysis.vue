@@ -1,25 +1,29 @@
 <template>
-    <div style="width: 100%; height: 100%; display: flex; flex-direction: row; flex-wrap: wrap;">
-
-        <div style="height: 49%;width: 49%;background-color:bisque;">
-            <h1>合规年分排放要求</h1>
-            <div id="year_emission_bar_chart" style="height: 80%;width: 80%;background-color:bisque;">
+    <div style="width: 100%; height: 98%;">
+        <div style="height: 48%; margin-bottom: 20px;">
+            <div style="height: 100%;width: 100%;background-color:#fff;">
+                <h1 style="margin-left: 20px;">合规年分排放要求</h1>
+                <div id="year_emission_bar_chart" style="height: 90%;width: 100%;background-color:#fff;">
+                </div>
             </div>
         </div>
 
-        <div style="height: 50%;width: 50%;background-color:bisque;">
-            <h1>减排项目减排占比</h1>
-            <div id="project_reduction_pie_chart" style="height: 90%;width: 100%;background-color:bisque;">
+        <div style="height: 48%; display: flex; justify-content: space-between;">
+            <div style="height: 100%;width: 49%;background-color:#fff;">
+                <h1 style="margin-left: 20px;">减排项目减排占比</h1>
+                <div id="project_reduction_pie_chart" style="height: 90%;width: 100%;background-color:#fff;">
+                </div>
             </div>
-        </div>
 
-        <div style="height: 50%;width: 50%;background-color:bisque;">
-            <h1>排放源碳排放随时间情况</h1>
-            <div id="source_emission_times_line" style="height: 90%;width: 100%;background-color:bisque;">
+            <div style="height: 100%;width: 50%;background-color:#fff;">
+                <h1 style="margin-left: 20px;">排放源碳排放随时间情况</h1>
+                <div id="source_emission_times_line" style="height: 90%;width: 100%;background-color:#fff;">
+                </div>
             </div>
         </div>
 
     </div>
+
 </template>
 
 
@@ -103,8 +107,10 @@ function draw_year_emission_bar_chart() {
             }
         ],
         grid: {
-            width: "90%", // 宽度
-            height: "70%" // 高度
+            // width: "100%", // 宽度
+            // height: "0%" // 高度
+            top: '10%',
+            bottom: '10%'
         },
         xAxis: {
             name: "年份",
@@ -211,11 +217,11 @@ function draw_project_reduction_pie_chart() {
 // 4.1.3 展示不同排放源随时间的排放
 const source_emission_times_year = ref(['2016', '2017', '2018', '2019', '2020', '2021'])
 const source_emission_times_name = ref(['A', 'B', 'C', 'D', 'E', 'F'])
-const seriesData1 = ref([56.5, 82.1, 88.7, 70.1, 53.4, 85.1]);
-const seriesData2 = ref([51.1, 51.4, 55.1, 53.3, 73.8, 68.7]);
-const seriesData3 = ref([40.1, 62.2, 69.5, 36.4, 45.2, 32.5]);
-const seriesData4 = ref([25.2, 37.1, 41.2, 18, 33.9, 49.1]);
-const seriesData5 = ref([20.2, 30.1, 48.2, 10, 30.9, 40.1]);
+const seriesData1 = ref([56.5, 82.1, 88.7, 70.1, 53.4, 85.1]) as any;
+const seriesData2 = ref([51.1, 51.4, 55.1, 53.3, 73.8, 68.7]) as any;
+const seriesData3 = ref([40.1, 62.2, 69.5, 36.4, 45.2, 32.5]) as any;
+const seriesData4 = ref([25.2, 37.1, 41.2, 18, 33.9, 49.1]) as any;
+const seriesData5 = ref([20.2, 30.1, 48.2, 10, 30.9, 40.1]) as any;
 
 function init_source_emission_times_line() {
     source_emission_times_year.value.unshift('source'),
