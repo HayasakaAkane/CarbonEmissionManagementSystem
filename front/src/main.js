@@ -11,15 +11,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import { Axios } from 'axios'
-<<<<<<< HEAD
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-=======
 
 import './api/mock'
->>>>>>> jackson
 
 import router from '@/router/index'
-
+import ElForm from "element-plus";
 
 // // 配置路由规则
 // const routes = [

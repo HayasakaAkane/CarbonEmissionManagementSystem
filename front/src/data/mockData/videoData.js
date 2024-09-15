@@ -9,19 +9,19 @@ const videoData = [
         value: 5999
     },
     {
-        name: '固定资产',
+        name: '国家配额',
         value: 1500
     },
     {
-        name: '库存',
+        name: '地方配额',
         value: 1999
     },
     {
-        name: '库存2',
+        name: '自产CCER',
         value: 2200
     },
     {
-        name: '库存3',
+        name: '买入CCER',
         value: 4500
     }
 ]

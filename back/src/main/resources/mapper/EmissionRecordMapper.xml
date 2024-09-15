@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.mapper.EmissionRecordMapper">
+
+
+    <select id="getAllEmissionRecords" resultType="com.example.dto.resp.EmissionRecordDto">
+        select data_origin, emission_amount, verification_status, emission_type, emission_date, source, unit
+        from emission_records
+    </select>
+</mapper>

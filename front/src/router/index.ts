@@ -17,28 +17,19 @@ const routes = [
         children: [
             {
                 path: "/home/home",
-                component: () => import("@/views/home/home.vue"),
+                // component: () => import("@/views/home/home.vue"),
+
+                component: () => import("@/views/data_analysis/emission_data_map/emission_data_map.vue"),
                 meta: {
-                    title: "主页",
+
+                    title: "全国碳排放量",
+                    // title: "主页",
                     hidden: false,
                 }
             },
         ]
     }, // 访问/home url跳到Home界面
-    {
-        path: "/module/about",
-        component: () => import("@/views/AboutView.vue"),
-        meta: {
-            title: "about"
-        }
-    },
-    {
-        path: "/module/data_analysis",
-        component: () => import("@/views/module/data_analysis/data_analysis.vue"),
-        meta: {
-            title: "数据分析"
-        }
-    },
+
 
     // {
     // 	path: "/module/notfound",
@@ -104,21 +95,21 @@ const routes = [
             hidden: false,
         },
         children: [
-            {
-                path: "/data_analysis/emission_data_map",
-                component: () => import("@/views/data_analysis/emission_data_map/emission_data_map.vue"),
-                meta: {
-                    title: "全国碳排放量",
-                    hidden: false,
-                }
-            },
-            {
-                path: "/data_analysis/home",
-                component: () => import("@/views/data_analysis/home/Home.vue"),
-                meta: {
-                    title: "主页"
-                }
-            },
+            // {
+            //     path: "/data_analysis/emission_data_map",
+            //     component: () => import("@/views/data_analysis/emission_data_map/emission_data_map.vue"),
+            //     meta: {
+            //         title: "全国碳排放量",
+            //         hidden: false,
+            //     }
+            // },
+            // {
+            //     path: "/data_analysis/home",
+            //     component: () => import("@/views/data_analysis/home/Home.vue"),
+            //     meta: {
+            //         title: "主页"
+            //     }
+            // },
             {
                 path: "/data_analysis/user",
                 component: () => import("@/views/data_analysis/user/User.vue"),
@@ -167,42 +158,36 @@ const routes = [
             hidden: false,
         },
         children: [
+            {
+                path: "/module/emissionSourceSketch",
+                component: () => import("@/views/module/emissionSourceSketch/emission_source_sketch.vue"),
+                meta: {
+                    title: "排放源概览",
+                    hidden: false,
+                }
+            },
+            {
+                path: "/module/data_analysis",
+                component: () => import("@/views/module/data_analysis/data_analysis.vue"),
+                meta: {
+                    title: "排放数据分析",
+                    hidden: false,
+                }
+            },
+
+            {
+                path: "/module/asset_transaction",
+                component: () => import("@/views/module/asset_transaction/asset_transaction.vue"),
+                meta: {
+                    title: "交易统计",
+                    hidden: false,
+                }
+            },
+
         ]
     },
 
-    {
-        path: "/module/emissionSourceSketch",
-        component: () => import("@/views/module/emissionSourceSketch/emission_source_sketch.vue"),
-        meta: {
-            title: "排放源概览",
-            hidden: false,
-        }
-    },
-    {
-        path: "/module/data_analysis",
-        component: () => import("@/views/module/data_analysis/data_analysis.vue"),
-        meta: {
-            title: "排放数据分析",
-            hidden: false,
-        }
-    },
 
-    {
-        path: "/module/emissionData",
-        component: () => import("@/views/module/emissionData/emission_data.vue"),
-        meta: {
-            title: "排放数据",
-            hidden: false,
-        }
-    },
-    {
-        path: "/module/asset_transaction",
-        component: () => import("@/views/module/asset_transaction/asset_transaction.vue"),
-        meta: {
-            title: "交易统计",
-            hidden: false,
-        }
-    },
 
     {
         path: '/',
@@ -212,6 +197,15 @@ const routes = [
             hidden: true,
         }
     },
+    // {
+    // 	path: "/module/emissionData",
+    // 	component: () => import("@/views/module/emissionData/reduction.vue"),
+    // 	meta: {
+    // 		title: "减排项目",
+    // 		hidden: false,
+    // 	}
+    // },
+
 
     {
 

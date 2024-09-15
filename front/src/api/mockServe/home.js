@@ -6,7 +6,7 @@ import userData from '../../data/mockData/userData'
 import tableData from '../../data/mockData/tableData'
 
 // 图表数据
-let List =[]
+let List = []
 // 直接导出
 export default {
     getStatisticalData: () => {
@@ -14,12 +14,12 @@ export default {
         for (let i = 0; i < 7; i++) {
             List.push(
                 Mock.mock({
-                    '2024-3': Mock.Random.float(100, 8000, 0, 0),
-                    '2024-4': Mock.Random.float(100, 8000, 0, 0),
-                    '2024-5': Mock.Random.float(100, 8000, 0, 0),
-                    '2024-6': Mock.Random.float(100, 8000, 0, 0),
-                    '2024-7': Mock.Random.float(100, 8000, 0, 0),
-                    '2024-8': Mock.Random.float(100, 8000, 0, 0)
+                    '北京': Mock.Random.float(100, 8000, 0, 0),
+                    '上海': Mock.Random.float(100, 8000, 0, 0),
+                    '深圳': Mock.Random.float(100, 8000, 0, 0),
+                    '武汉': Mock.Random.float(100, 8000, 0, 0),
+                    '广州': Mock.Random.float(100, 8000, 0, 0),
+                    '重庆': Mock.Random.float(100, 8000, 0, 0)
                 })
             )
         }

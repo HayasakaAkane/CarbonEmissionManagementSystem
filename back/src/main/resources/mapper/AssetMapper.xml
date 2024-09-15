@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.mapper.AssetMapper">
+
+
+    <select id="getAllEmissionSource" resultType="com.example.dto.resp.EmissionSourceDto">
+        SELECT es.source_id, name, type, location, status, compliance_year,
+        emissions_required, DATE_FORMAT(emission_date, '%Y-%m-%d') as latestEmissionDate,
+        co2_emissions as latestCO2Emissions
+        from emission_sources es
+        join compliance_records cr on es.source_id = cr.source_id
+        join emission_data ed on es.source_id = ed.source_id
+        where compliance_year = year(emission_date)
+    </select>
+
+    <select id="getYearReq" resultType="com.example.dto.resp.ComplianceYearEmissionRequiredDto">
+        select compliance_year, emissions_required
+        from compliance_records
+        where source_id = 1
+    </select>
+    <select id="getProjectReduction" resultType="com.example.dto.resp.ProjectReductionDto">
+        select distinct project_name as name, expected_emissions_reduction as value
+        from reduction_projects
+    </select>
+    <select id="getEmissionSourceName" resultType="java.lang.String">
+        select name
+        from emission_sources
+        limit 5
+    </select>
+    <select id="getEmissionSourceYear" resultType="java.lang.Integer">
+        select distinct year(emission_date)
+        from emission_data
+    </select>
+    <select id="getCO2Emissions" resultType="java.lang.Double">
+        select co2_emissions
+        from emission_data ed
+        join emission_sources es on ed.source_id = es.source_id
+        where name = #{name}
+        order by ed.emission_date
+    </select>
+    <select id="getTransactionType" resultType="java.lang.String">
+        select transaction_type
+        from transactions
+        where year(transaction_date) = 2020
+        order by(transaction_type)
+    </select>
+    <select id="getTransactionQuantity" resultType="java.lang.Double">
+        select quantity
+        from transactions
+        where year(transaction_date) = 2020
+        order by(transaction_type)
+    </select>
+    <select id="getTransactionPrice" resultType="java.lang.Double">
+        select price
+        from transactions
+        where year(transaction_date) = 2020
+        order by(transaction_type)
+    </select>
+    <select id="getAssetAnalysisYear" resultType="java.lang.Integer">
+        select distinct year(transaction_date)
+        from transactions
+    </select>
+    <select id="getAssetAnalysisAssetType" resultType="java.lang.String">
+        select distinct asset_type
+        from assets
+        limit 5
+    </select>
+    <select id="getAssetTransactionQuantity" resultType="java.lang.Double">
+        select transactions.quantity
+        from transactions
+        join assets on transactions.asset_id = assets.asset_id
+        where transaction_type = #{assetType}
+        order by transaction_date
+    </select>
+    <select id="getAssetType" resultType="java.lang.String">
+        select transaction_type
+        from transactions
+        where year(transaction_date) = 2016
+    </select>
+    <select id="getAssetQuantity" resultType="java.lang.Double">
+        select assets.quantity
+        from assets
+        join transactions on assets.asset_id = transactions.asset_id
+        where year(transaction_date) = 2016
+    </select>
+    <select id="getAssetTransactionQuantity2" resultType="java.lang.Double">
+        select transactions.quantity
+        from transactions
+        join assets on transactions.asset_id = assets.asset_id
+        where year(transaction_date) = 2016
+    </select>
+
+</mapper>

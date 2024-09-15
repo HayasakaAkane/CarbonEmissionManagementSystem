@@ -21,10 +21,19 @@ export function getProjectReductionAmounts() {
     })
 }
 
+export function putProject(data){
+    return request({
+        method:"POST",
+        url:"/ccer/putProject",
+        params:data
+    })
+}
+
 const CCERProjects = {
     getProjects,
     getProjectAmounts,
-    getProjectReductionAmounts
+    getProjectReductionAmounts,
+    putProject
 };
 
 export default CCERProjects;
