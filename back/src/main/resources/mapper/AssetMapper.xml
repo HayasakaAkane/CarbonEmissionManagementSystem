@@ -7,11 +7,12 @@
 
     <select id="getAllEmissionSource" resultType="com.example.dto.resp.EmissionSourceDto">
         SELECT es.source_id, name, type, location, status, compliance_year,
-        emissions_required, emission_date as latestEmissionDate,
+        emissions_required, DATE_FORMAT(emission_date, '%Y-%m-%d') as latestEmissionDate,
         co2_emissions as latestCO2Emissions
         from emission_sources es
         join compliance_records cr on es.source_id = cr.source_id
         join emission_data ed on es.source_id = ed.source_id
+        where compliance_year = year(emission_date)
     </select>
 
     <select id="getYearReq" resultType="com.example.dto.resp.ComplianceYearEmissionRequiredDto">
