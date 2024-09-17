@@ -1,5 +1,7 @@
 package com.example.service;
 
+import com.example.dto.req.EmissionRecordRequestDto;
+import com.example.dto.resp.DataOriginDto;
 import com.example.dto.resp.EmissionRecordDto;
 
 import java.util.List;
@@ -15,4 +17,16 @@ import java.util.List;
  */
 public interface EmissionRecordService {
     List<EmissionRecordDto> getAllEmissionRecords();
+
+    List<EmissionRecordDto> queryEmission(String inputStr);
+
+    List<EmissionRecordDto> deleteEmission(EmissionRecordRequestDto requestParam);
+
+    List<EmissionRecordDto> deleteOneRowEmission(EmissionRecordDto emissionRecordDto);
+
+    List<EmissionRecordDto> addEmission(EmissionRecordDto emissionRecordDto);
+
+    List<EmissionRecordDto> updateEmission(EmissionRecordDto emissionRecordDto);
+
+    List<DataOriginDto> getDataOrigin();
 }

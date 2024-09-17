@@ -2,13 +2,14 @@ package com.example.controller;
 
 import com.example.common.convention.result.Result;
 import com.example.common.convention.result.Results;
+import com.example.dto.req.CCERProjectReqDto;
+import com.example.dto.resp.CCERGetProjectDto;
 import com.example.dto.resp.CCERProjectAmountsDto;
 import com.example.dto.resp.CCERProjectDto;
 import com.example.dto.resp.CCERProjectReductionAmountsDto;
 import com.example.service.CCERService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,5 +41,17 @@ public class CCERController {
     @RequestMapping("/ccer/projectReductionAmounts")
     public Result<List<CCERProjectReductionAmountsDto>> getProjectReductionAmount(){
         return Results.success(ccerService.getReductionAmounts());
+    }
+
+    @PostMapping("/ccer/putProject")
+    public Result<Void> putProject(@RequestBody CCERGetProjectDto requestParam) {
+        ccerService.putProject(requestParam);
+        return Results.success();
+    }
+
+
+    @GetMapping("/ccer/getProject")
+    public Result<List<CCERProjectReqDto>> getProject() {
+        return Results.success(ccerService.getProject());
     }
 }

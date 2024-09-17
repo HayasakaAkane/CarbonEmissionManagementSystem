@@ -1,6 +1,8 @@
 package com.example.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.dto.req.CCERProjectReqDto;
+import com.example.dto.resp.CCERGetProjectDto;
 import com.example.dto.resp.CCERProjectAmountsDto;
 import com.example.dto.resp.CCERProjectDto;
 import com.example.dto.resp.CCERProjectReductionAmountsDto;
@@ -23,4 +25,14 @@ public interface CCERMapper extends BaseMapper<CCERProjectDto> {
     List<CCERProjectAmountsDto> getProjectAmounts();
 
     List<CCERProjectReductionAmountsDto> getReductionAmounts();
+
+    void insertCCERProject(CCERGetProjectDto requestParam);
+    void insertCCERProjectEmissionProject(CCERGetProjectDto requestParam);
+    void insertCCERProjectMonitoringReports(CCERGetProjectDto requestParam);
+    void insertCCERProjectRegistrationInfo(CCERGetProjectDto requestParam);
+    void insertCCERProjectTransaction(CCERGetProjectDto requestPrams);
+
+    List<CCERProjectReqDto> getProject();
+
+    int getProjectIdFromCCERProject(CCERGetProjectDto requestParam);
 }

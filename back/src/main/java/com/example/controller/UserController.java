@@ -4,12 +4,10 @@ import com.example.common.convention.result.Result;
 import com.example.common.convention.result.Results;
 import com.example.dto.req.UserDto;
 import com.example.dto.req.UserRegisterDto;
+import com.example.dto.resp.CompanyDto;
 import com.example.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,6 +39,11 @@ public class UserController {
     public Result<Void> register(@RequestBody UserRegisterDto requestParam) {
         userService.register(requestParam);
         return Results.success();
+    }
+
+    @GetMapping("/user/getCompaniesData")
+    public Result<List<CompanyDto>> getCompaniesData() {
+        return Results.success(userService.getCompaniesData());
     }
 
 }
