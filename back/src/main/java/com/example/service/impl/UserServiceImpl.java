@@ -4,10 +4,12 @@ import com.example.common.convention.exception.ClientException;
 import com.example.dto.req.UserDto;
 import com.example.dao.mapper.UserMapper;
 import com.example.dto.req.UserRegisterDto;
+import com.example.dto.resp.CompanyDto;
 import com.example.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -51,5 +53,10 @@ public class UserServiceImpl implements UserService {
         if(insert < 1){
             throw new ClientException("用户记录新增失败");
         }
+    }
+
+    @Override
+    public List<CompanyDto> getCompaniesData() {
+        return userMapper.getCompaniesData();
     }
 }

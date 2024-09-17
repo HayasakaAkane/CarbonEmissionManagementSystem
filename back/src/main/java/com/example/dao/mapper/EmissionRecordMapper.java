@@ -1,5 +1,7 @@
 package com.example.dao.mapper;
 
+import com.example.dto.req.EmissionRecordRequestDto;
+import com.example.dto.resp.DataOriginDto;
 import com.example.dto.resp.EmissionRecordDto;
 
 import java.util.List;
@@ -15,4 +17,14 @@ import java.util.List;
  */
 public interface EmissionRecordMapper {
     List<EmissionRecordDto> getAllEmissionRecords();
+
+    List<EmissionRecordDto> queryEmission(String inputStr);
+
+    void deleteEmission(EmissionRecordDto requestParam);
+
+    void addEmission(EmissionRecordDto emissionRecordDto);
+
+    void updateEmission(EmissionRecordDto emissionRecordDto);
+
+    List<DataOriginDto> getDataOrigin();
 }
