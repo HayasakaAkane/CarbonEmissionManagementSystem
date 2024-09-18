@@ -26,5 +26,9 @@
         from companies
         where company_name = #{companyName}
     </select>
+    <select id="getCompaniesData" resultType="com.example.dto.resp.CompanyDto">
+        select company_id, company_name
+        from companies
+    </select>
 
 </mapper>

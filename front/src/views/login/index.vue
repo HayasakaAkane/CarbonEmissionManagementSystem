@@ -1,5 +1,6 @@
 <template>
     <div class="login-container">
+
         <el-card class="box-card">
             <h2 class="login-title">登录</h2>
             <el-form :model="form" :rules="rules" ref="form" label-width="100px">
@@ -34,6 +35,11 @@ export default {
             }
         };
         return {
+            loginForm: {
+                username: '',
+                password: '',
+                code: '',
+            },
             form: {
                 username: '',
                 password: ''
@@ -54,14 +60,15 @@ export default {
         handleLogin() {
             this.$refs.form.validate(valid => {
                 if (valid) {
-                    let api = "http://localhost:8080/user/login"
                     //2.使用axios 进行get请求
                     // let url = '';
+                    console.log(res.data);
+                    let api = "http://localhost:8080/"
+                    api += 'user/login'
                     axios.post(api, this.form)
                         .then((res) => {
-                            console.log(res)
-                            if (res.data.code == "200") {
-                                console.log(res.data);
+                            if (res.data.code == "200") { // console.log(this.form);
+
                                 const token = '123';
                                 localStorage.setItem('token', token);
                                 this.$router.push('/module');

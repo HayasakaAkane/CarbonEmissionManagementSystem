@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.dto.req.UserDto;
 import com.example.dto.req.UserRegisterDto;
+import com.example.dto.resp.CompanyDto;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface UserService {
     String login(UserDto userDto);
 
     void register(UserRegisterDto requestParam);
+
+    List<CompanyDto> getCompaniesData();
 }

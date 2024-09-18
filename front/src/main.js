@@ -3,14 +3,17 @@ import './assets/main.css'
 import Home from "@/views/module/home/Home.vue"
 import NotFound from "@/views/NotFound.vue"
 import emissionSourceSketch from "@/views/module/emissionSourceSketch/emission_source_sketch.vue"
-import { createApp} from 'vue'
+import { createApp } from 'vue'
+
 
 import App from './App.vue'
-import { createRouter ,createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import { Axios } from 'axios'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
+import './api/mock'
 
 import router from '@/router/index'
 import ElForm from "element-plus";
@@ -45,5 +48,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
   }
 app.config.globalProperties.Axios = Axios
+// app.config.productionTip = false
 app.use(router).use(ElementPlus)
 app.mount('#app')
