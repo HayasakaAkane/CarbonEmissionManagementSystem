@@ -42,11 +42,11 @@
       <h3>减排信息</h3>
 
       <el-form-item label="年度" prop="year">
-        <el-input v-model="form.year" type="number" placeholder="请输入年度"></el-input>
+        <el-input v-model.number="form.year" type="number" placeholder="请输入年度"></el-input>
       </el-form-item>
 
       <el-form-item label="减排量" prop="reductionAmount">
-        <el-input v-model="form.reductionAmount" type="number" placeholder="请输入减排量" step="0.01"></el-input>
+        <el-input v-model.number="form.reductionAmount" type="number" placeholder="请输入减排量" step="0.01"></el-input>
       </el-form-item>
 
       <el-form-item label="核查日期" prop="verificationDate">
@@ -112,11 +112,11 @@
       </el-form-item>
 
       <el-form-item label="交易量" prop="quantity">
-        <el-input v-model="form.quantity" type="number" placeholder="请输入交易量" step="0.01"></el-input>
+        <el-input v-model.number="form.quantity" type="number" placeholder="请输入交易量" step="0.01"></el-input>
       </el-form-item>
 
       <el-form-item label="单价" prop="pricePerUnit">
-        <el-input v-model="form.pricePerUnit" type="number" placeholder="请输入单价" step="0.01"></el-input>
+        <el-input v-model.number="form.pricePerUnit" type="number" placeholder="请输入单价" step="0.01"></el-input>
       </el-form-item>
 
       <el-form-item label="总金额" prop="totalAmount">
@@ -228,11 +228,11 @@ const rules = {
   
 
 const formRef = ref<FormInstance>();
-const submitForm = () => {
+const submitForm =   () => {
 
-  formRef.value.validate((valid) => {
+   formRef.value.validate( (valid) => {
     if (valid) {
-      CCERProjects.putProject(form)
+     CCERProjects.putProject(form.value)
     } else {
       ElMessage.error("表单校验失败，请检查输入！");
       return false;
