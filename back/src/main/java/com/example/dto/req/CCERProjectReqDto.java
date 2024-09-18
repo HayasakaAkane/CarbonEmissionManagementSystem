@@ -18,8 +18,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CCERProjectReqDto {
+    private int projectId;
     private String projectName;
     private String projectType;
+    private String status;
     private String location;
     private Date registrationDate;
     private Date validUntil;

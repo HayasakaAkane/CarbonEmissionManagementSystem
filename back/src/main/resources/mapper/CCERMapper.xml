@@ -42,7 +42,7 @@
         group by project_type
     </select>
     <select id="getProject" resultType="com.example.dto.req.CCERProjectReqDto">
-        select project_name, project_type, status, location, registration_date, valid_until, year, reduction_amount, verification_date, report_date, report_details, registration_number, issuing_authority, issue_date, buyer, seller, transaction_date, quantity, price_per_unit, total_amount
+        select cp.project_id, project_name, project_type, status, location, registration_date, valid_until, year, reduction_amount, verification_date, report_date, report_details, registration_number, issuing_authority, issue_date, buyer, seller, transaction_date, quantity, price_per_unit, total_amount
         from ccer_projects cp
         join ccer_project_emission_reductions cper on cp.project_id = cper.project_id
         join ccer_project_monitoring_reports cpmr on cp.project_id = cpmr.project_id
