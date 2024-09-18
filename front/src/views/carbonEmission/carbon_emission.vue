@@ -384,7 +384,7 @@ function deleteOneRowEmission(row) {
     axios.post(
       baseUrl + '/deleteOneRowEmission',
       {
-        emission: row
+        ...row
       }
     ).then(res => {
       if (res.data.code == "200") {
