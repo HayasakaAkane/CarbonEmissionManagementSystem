@@ -62,7 +62,7 @@ export default {
                 if (valid) {
                     console.log("success");
                     //2.使用axios 进行get请求
-                    // let url = '';
+                    // let url = ''message;
                     let api = "http://localhost:8080/"
                     api += 'user/login'
                     axios.post(api, this.form)
@@ -72,7 +72,7 @@ export default {
                             if (res.data.code == "200") { // console.log(this.form);
                                 const token = res.data.token;
                                 localStorage.setItem('token', token);
-                                this.$router.push('/register');
+                                this.$router.push('/home/home');
                                 this.$message.success('登录成功');
                             }
                             else {
@@ -81,7 +81,6 @@ export default {
                         }).catch((err) => {
                             //请求失败的回调函数
                             console.log(err)
-                            console.log("asdfas")
                         })
 
                 } else {

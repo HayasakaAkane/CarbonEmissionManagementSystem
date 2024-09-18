@@ -15,9 +15,9 @@
                 </el-form-item>
 
                 <el-form-item label="选择你的公司" prop="company">
-                    <el-select v-model="companyId" :rules="rules.companyId" placeholder="请选择">
+                    <el-select v-model="companyName" :rules="rules.companyId" placeholder="请选择">
                         <el-option v-for="item in companies" :key="item.companyId" :label="item.companyName"
-                            :value="item.companyId">
+                            :value="item.companyName">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -68,7 +68,7 @@ export default {
             rules: {
                 username: [
                     { required: true, message: '请确认你的用户名', trigger: 'blur' },
-                    { pattern: /^1[3-9]\d{9}$/, message: '用户名格式不对', trigger: 'blur' }
+                    // { pattern: /^1[3-9]\d{9}$/, message: '用户名格式不对', trigger: 'blur' }
                 ],
                 password: [
                     { required: true, message: '请输入你的密码', trigger: 'blur' },
@@ -131,7 +131,8 @@ export default {
 
 
             ],
-            companyId: ''
+            companyId: '',
+            companyName: '',
         };
     },
     mounted() {
@@ -163,9 +164,9 @@ export default {
                     api += 'user/register'
 
                     console.log(this.companyId);
-                    axios.post(api, { username: this.form.username, password: this.form.password, company: this.companyId })
+                    axios.post(api, { username: this.form.username, password: this.form.password, company: this.companyName })
                         .then((res) => {
-                            // console.log(res)
+                            console.log(res)
                             if (res.data.code == "200") {
                                 this.$router.push('/login');
                                 this.$message.success('注册成功');
