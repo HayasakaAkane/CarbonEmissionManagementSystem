@@ -23,7 +23,7 @@
         from emission_records
     </select>
     <select id="queryEmission" resultType="com.example.dto.resp.EmissionRecordDto">
-        select data_origin, emission_amount, verification_status, emission_type, emission_date, source, unit
+        select data_origin, emission_amount, verification_status, emission_type, DATE_FORMAT(emission_date, '%Y-%m-%d') as emission_date, source, unit
         from emission_records
         where data_origin like CONCAT('%', #{inputStr}, '%')
         or emission_amount like CONCAT('%', #{inputStr}, '%')

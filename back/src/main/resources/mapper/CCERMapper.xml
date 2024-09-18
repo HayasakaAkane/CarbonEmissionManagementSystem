@@ -52,6 +52,6 @@
     <select id="getProjectIdFromCCERProject" resultType="java.lang.Integer">
         select project_id
         from ccer_projects
-        where project_name = #{projectName} and project_type = #{projectType} and location = #{location} and status = '进行中' and registration_date = DATE_FORMAT(#{registrationDate}, '%Y-%m-%d') and valid_until = DATE_FORMAT(#{validUntil}, '%Y-%m-%d')
+        where project_name = #{projectName} and project_type = #{projectType} and location = #{location} and status = '待审核' and registration_date = DATE_FORMAT(#{registrationDate}, '%Y-%m-%d') and valid_until = DATE_FORMAT(#{validUntil}, '%Y-%m-%d')
     </select>
 </mapper>

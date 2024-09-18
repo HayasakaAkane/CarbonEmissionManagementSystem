@@ -25,7 +25,7 @@ public class EmissionRecordDto {
     private double emissionAmount;
     private String verificationStatus;
     private String emissionType;
-    private Date emissionDate;
+    private String emissionDate;
     private String source;
     private String unit;
 }
