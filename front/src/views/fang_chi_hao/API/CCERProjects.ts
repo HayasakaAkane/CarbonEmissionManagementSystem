@@ -25,16 +25,16 @@ export function getProjectReductionAmounts() {
 export async function putProject(data) {
     console.log(data)
 
-    return await request.post("/ccer/putProject",JSON.stringify(data))
-    // return request({
-    //     method: "POST",
-    //     url: "/ccer/putProject",
-    //     // 正确设置请求体
-    //     data: rData, // 或者 body: JSON.stringify(rData), 如果使用的是 fetch 或某些其他库
-    //     headers: {
-    //         'Content-Type': 'application/json' // 确保发送的格式是 JSON
-    //     }
-    // });
+    // return await request.post("/ccer/putProject",JSON.stringify(data))
+    return request({
+        method: "POST",
+        url: "/ccer/putProject",
+        // 正确设置请求体
+        data: data, // 或者 body: JSON.stringify(rData), 如果使用的是 fetch 或某些其他库
+        headers: {
+            'Content-Type': 'application/json' // 确保发送的格式是 JSON
+        }
+    });
 }
 
 
