@@ -17,10 +17,9 @@
                 <el-form-item label="选择你的公司" prop="company">
                     <el-select v-model="companyId" :rules="rules.companyId" placeholder="请选择">
                         <el-option v-for="item in companies" :key="item.companyId" :label="item.companyName"
-                            :formCompanyId="item.companyId">
+                            :value="item.companyId">
                         </el-option>
                     </el-select>
-
                 </el-form-item>
 
                 <el-form-item>
@@ -82,39 +81,64 @@ export default {
                     { required: true, message: '请选择你的公司', trigger: 'blur' }
                 ]
             },
+
             // companies: [],
             companies: [
                 {
                     companyId: 'company1',
-                    companyName: '百度'
+                    companyName: '凌云科技有限公司'
                 },
                 {
-                    companyId: 'company1',
-                    companyName: '百度'
+                    companyId: 'company2',
+                    companyName: '启航数据系统股份有限公司'
                 },
                 {
-                    companyId: 'company1',
-                    companyName: '百度'
+                    companyId: 'company3',
+                    companyName: '星辰智能科技有限公司'
                 },
                 {
-                    companyId: 'company1',
-                    companyName: '百度'
+                    companyId: 'company4',
+                    companyName: '宏达创新技术有限公司'
                 },
                 {
-                    companyId: 'company1',
-                    companyName: '百度'
+                    companyId: 'company5',
+                    companyName: '华盛网络科技有限公司'
+                },
+                {
+                    companyId: 'company6',
+                    companyName: '天际信息技术有限公司'
+
+                },
+                {
+                    companyId: 'company7',
+                    companyName: '睿智软件系统有限公司'
+
+                },
+                {
+                    companyId: 'company8',
+                    companyName: '博瑞人工智能有限公司'
+
+                }, {
+                    companyId: 'company9',
+                    companyName: '恒新科技发展有限公司'
+
+                },
+                {
+                    companyId: 'company10',
+                    companyName: '云帆大数据股份有限公司'
+
                 },
 
+
             ],
-            selectCompanyId: ''
+            companyId: ''
         };
     },
     mounted() {
-        this.getCompanis()
+        // this.getCompanis()
     },
     methods: {
         getCompanis() {
-
             let api = "http://localhost:8080/"
             api += 'user/register'
             // 向给定ID的用户发起请求
@@ -129,7 +153,6 @@ export default {
                 .finally(function () {
                     // 总是会执行
                 });
-
         },
         handleRegister() {
             this.$refs.form.validate(valid => {
@@ -143,7 +166,7 @@ export default {
                     axios.post(api, { username: this.form.username, password: this.form.password, company: this.companyId })
                         .then((res) => {
                             // console.log(res)
-                            if (res.code == "200") {
+                            if (res.data.code == "200") {
                                 this.$router.push('/login');
                                 this.$message.success('注册成功');
                             }

@@ -60,18 +60,19 @@ export default {
         handleLogin() {
             this.$refs.form.validate(valid => {
                 if (valid) {
+                    console.log("success");
                     //2.使用axios 进行get请求
                     // let url = '';
-                    console.log(res.data);
                     let api = "http://localhost:8080/"
                     api += 'user/login'
                     axios.post(api, this.form)
                         .then((res) => {
+                            console.log('hello');
+                            console.log(res.data);
                             if (res.data.code == "200") { // console.log(this.form);
-
-                                const token = '123';
+                                const token = res.data.token;
                                 localStorage.setItem('token', token);
-                                this.$router.push('/module');
+                                this.$router.push('/register');
                                 this.$message.success('登录成功');
                             }
                             else {
