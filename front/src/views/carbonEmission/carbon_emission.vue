@@ -288,7 +288,7 @@ function queryEmission() {
     .post(
       baseUrl + "/queryEmission",
       {
-        inputstr: inputStr.value
+        inputStr: inputStr.value
       }
     )
     .then(function (res) {
