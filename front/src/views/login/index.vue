@@ -71,7 +71,7 @@ export default {
 
                                 const token = '123';
                                 localStorage.setItem('token', token);
-                                this.$router.push('/module');
+                                this.$router.push('/register');
                                 this.$message.success('登录成功');
                             }
                             else {
