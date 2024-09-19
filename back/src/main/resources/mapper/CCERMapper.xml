@@ -28,6 +28,7 @@
     <select id="getAllProject" resultType="com.example.dto.resp.CCERProjectDto">
         select project_id, project_name, project_type, location, status, registration_date, valid_until
         from ccer_projects
+        order by project_id desc
     </select>
     <select id="getProjectAmounts" resultType="com.example.dto.resp.CCERProjectAmountsDto">
         select project_type, count(1) as projectAmount
@@ -48,6 +49,7 @@
         join ccer_project_monitoring_reports cpmr on cp.project_id = cpmr.project_id
         join ccer_project_registration_info cpri on cp.project_id = cpri.project_id
         join ccer_project_transactions cpt on cp.project_id = cpt.project_id
+        order by cp.project_id desc
     </select>
     <select id="getProjectIdFromCCERProject" resultType="java.lang.Integer">
         select project_id
