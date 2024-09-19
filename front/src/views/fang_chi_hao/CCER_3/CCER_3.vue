@@ -16,8 +16,8 @@
     <el-card :border="false" style="margin-top: 10px">
       <el-table :data="tableData" style="width: 100%" height="770">
         <el-table-column prop="projectId" label="项目ID" />
-        <el-table-column prop="name" label="项目名称" />
-        <el-table-column prop="type" label="项目类型" />
+        <el-table-column prop="projectName" label="项目名称" />
+        <el-table-column prop="projectType" label="项目类型" />
         <el-table-column
           prop="status"
           label="状态"
@@ -262,7 +262,7 @@
 import { ref, onMounted, reactive } from "vue";
 
 //1、引入 axios 模块
-import axios from "axios";
+import axios, { all } from "axios";
 const currentPage = ref(1);
 const pageSize = ref(10);
 
@@ -338,8 +338,8 @@ const form = ref<formData>({
 
 interface User {
   projectId: number;
-  name: string;
-  type: string;
+  projectName: string;
+  projectType: string;
   status: string;
 }
 
@@ -355,7 +355,7 @@ const tableData = ref([]);
 let allData: perfcetType[]=[];
 tableData.value = msg.value;
 
-let total = tableData.value.length;
+let total = ref(tableData.value.length);
 let baseUrl = "http://localhost:8080";
 //获取所有的数据
 function getData() {
@@ -369,7 +369,8 @@ function getData() {
       allData = res.data.data;
       getmsgData();
       //获取数据的总条数
-      total = msg.value.length;
+      total = allData.length;
+
       //获取当前页的数据
       getPageData();
     })
@@ -380,43 +381,30 @@ function getData() {
 }
 
 function getmsgData() {
-  console.log(allData[0].projectId);
 
   let tempArray: User[] = [];
   for (let i in allData) {
     let d: User = {
       projectId: allData[i].projectId,
-      name: allData[i].projectName,
-      type: allData[i].projectType,
+      projectName: allData[i].projectName,
+      projectType: allData[i].projectType,
       status: allData[i].status,
     };
 
     tempArray.push(d);
   }
   msg.value = [...tempArray];
+  total.value = msg.value.length;
+  console.log(total)
 
-
-  console.log(msg.value[0]);
-}
-//获取全部数据
-function getAllData() {
-  console.log("getAllData");
-  //清空输入的imputStr
-  //请求全部的数据
-  getData();
 }
 
 //获取当前页的数据
 function getPageData() {
-  //先把当前页面的数据清空
-  tableData.value = [];
-  //获取当前页面的数据
-  for (let i = (currentPage.value - 1) * pageSize.value; i < total; i++) {
-    //遍历数据添加到tableData中
-    tableData.value.push(msg.value[i]);
-    //判断是否达到一页的要求
-    if (tableData.value.length == pageSize.value) break;
-  }
+  tableData.value = msg.value.slice(
+    (currentPage.value - 1) * pageSize.value,
+    currentPage.value * pageSize.value
+  );
 }
 
 //分页时修改每一页所展示的数据量
@@ -512,8 +500,8 @@ function getStatus(status) {
   switch (status) {
     case "批准":
       return "批准";
-    case "Pending":
-      return "Pending";
+    case "驳回":
+      return "驳回";
     default:
       return "待审核";
   }
@@ -524,6 +512,7 @@ const approveProject = (id: number) => {
   const project = msg.value.find((p) => p.projectId === id);
   if (project) {
     project.status = "批准";
+    getPageData()
   }
 };
 
@@ -532,12 +521,24 @@ const rejectProject = (id: number) => {
   const project = msg.value.find((p) => p.projectId === id);
   if (project) {
     project.status = "驳回";
+    getPageData()
   }
 };
 
 // 应用搜索筛选功能，重置页码到第一页
 const applyFilters = () => {
-  currentPage.value = 1;
+  // 如果有搜索关键字，则根据项目名称过滤
+  if (searchQuery.value!=null) {
+    msg.value = allData.filter((item) =>
+      item.projectName.includes(searchQuery.value)
+    );
+  } else {
+    getmsgData() // 重置为所有项目数据
+  }
+  console.log(msg.value)
+  total= msg.value.length; // 更新总条数
+  currentPage.value = 1; // 搜索后重置到第一页
+  getPageData(); // 更新当前页数据
 };
 
 
@@ -591,7 +592,6 @@ div.emissionSourceSketch {
 .search-filter {
   margin-bottom: 20px;
   display: flex;
-  justify-content: space-between;
 }
 
 input {
