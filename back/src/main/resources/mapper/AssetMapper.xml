@@ -6,7 +6,7 @@
 
 
     <select id="getAllEmissionSource" resultType="com.example.dto.resp.EmissionSourceDto">
-        SELECT es.source_id, name, type, location, status, compliance_year,
+        SELECT distinct es.source_id, name, type, location, status, compliance_year,
         emissions_required, DATE_FORMAT(emission_date, '%Y-%m-%d') as latestEmissionDate,
         co2_emissions as latestCO2Emissions
         from emission_sources es
