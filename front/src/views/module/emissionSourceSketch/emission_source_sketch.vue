@@ -437,7 +437,7 @@ function drawChart() {
 
 
 onMounted(() => {
-  // getData()
+  getData()
   // drawChart()
 })
 
