@@ -624,8 +624,8 @@ function getStatus(status) {
 
 
 onMounted(() => {
-  // getArea()
-  // getData()
+  getArea()
+  getData()
   // drawChart()
 })
 

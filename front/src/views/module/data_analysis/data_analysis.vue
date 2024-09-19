@@ -1,6 +1,6 @@
 <template>
     <div style="width: 100%; height: 98%;">
-        <div style="height: 48%; margin-bottom: 20px;">
+        <div style="height: 500px; margin-bottom: 20px;">
             <div style="height: 100%;width: 100%;background-color:#fff;">
                 <h1 style="margin-left: 20px;">合规年分排放要求</h1>
                 <div id="year_emission_bar_chart" style="height: 90%;width: 100%;background-color:#fff;">
@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <div style="height: 48%; display: flex; justify-content: space-between;">
+        <div style="height: 600px; display: flex; justify-content: space-between;">
             <div style="height: 100%;width: 49%;background-color:#fff;">
                 <!-- <h1 style="margin-left: 20px;">减排项目减排占比</h1> -->
                 <div id="project_reduction_pie_chart" style="height: 90%;width: 100%;background-color:#fff;">
