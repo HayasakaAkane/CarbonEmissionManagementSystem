@@ -68,7 +68,7 @@ export default {
             rules: {
                 username: [
                     { required: true, message: '请确认你的用户名', trigger: 'blur' },
-                    { pattern: /^1[3-9]\d{9}$/, message: '用户名格式不对', trigger: 'blur' }
+                    // { pattern: /^1[3-9]\d{9}$/, message: '用户名格式不对', trigger: 'blur' }
                 ],
                 password: [
                     { required: true, message: '请输入你的密码', trigger: 'blur' },
