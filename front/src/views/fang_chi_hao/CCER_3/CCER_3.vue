@@ -15,8 +15,8 @@
     <!-- 展示数据的表格 -->
     <el-card :border="false" style="margin-top: 10px">
       <el-table :data="tableData" style="width: 100%" height="770">
-        <el-table-column prop="projectId" label="项目" />
-        <el-table-column prop="name" label="项目名称2" />
+        <el-table-column prop="projectId" label="项目ID" />
+        <el-table-column prop="name" label="项目名称" />
         <el-table-column prop="type" label="项目类型" />
         <el-table-column
           prop="status"
@@ -87,7 +87,7 @@
       :close-on-click-modal="false"
       @close="closeDialogForm('emissionForm')"
     >
-      <el-form :model="form" :rules="rules" ref="formRef" label-width="150px">
+      <el-form :model="form"  ref="formRef" label-width="150px">
         <!-- ccer_project_emission_reductions -->
         <h3>项目信息</h3>
         <el-form-item label="项目名称" prop="projectName">
@@ -449,26 +449,7 @@ const emissionForm = reactive({
   source: "",
   unit: "",
 });
-//定义表单的校验规则
-const rules = {
-  dataOrigin: [
-    { require: true, message: "排放地点不能为空", trigger: "change" },
-  ],
-  emissionAmount: [
-    { require: true, message: "排放地点不能为空", trigger: "change" },
-  ],
-  verificationStatus: [
-    { require: true, message: "验证状态不能为空", trigger: "change" },
-  ],
-  emissionType: [
-    { require: true, message: "排放类型不能为空", trigger: "change" },
-  ],
-  emissionDate: [
-    { require: true, message: "排放日期不能为空", trigger: "change" },
-  ],
-  source: [{ require: true, message: "排放源不能为空", trigger: "change" }],
-  unit: [{ require: true, message: "排放单位不能为空", trigger: "change" }],
-};
+
 let dialogTitle = ref(""); //表单的标题
 const dialogVisible = ref(false); //控制显示表单
 let isView = ref(false);
@@ -493,29 +474,24 @@ function closeDialogForm(formName) {
   isEdit.value = false;
   isView.value = false;
 }
-//提交排放记录的表单
-function submitEmissionForm(formName) {}
-//修改排放数据明细
-function updateEmission(row) {
-  dialogTitle.value = "修改排放数据";
-  //修改isEdit变量为true
-  isEdit.value = true;
-  //弹出表单
-  dialogVisible.value = true;
-  //将这一行数据深拷贝给表单
-  Object.assign(emissionForm, JSON.parse(JSON.stringify(row)));
-}
+
 //查看一条排放数据明细
 function viewEmission(row) {
   console.log("这一行的数据->row:" + row);
   //修改标题
-  dialogTitle.value = "排放数据明细";
+  dialogTitle.value = "项目详细";
   //修改isView变量
   isView.value = true;
   //弹出表单
   dialogVisible.value = true;
-  //深拷贝表单对象
-  Object.assign(emissionForm, JSON.parse(JSON.stringify(row)));
+
+
+   for(let i in allData){
+    if(row.projectId==allData[i].projectId){
+      form.value=allData[i]
+    }
+   }
+
 }
 
 //-----------------------------------//
