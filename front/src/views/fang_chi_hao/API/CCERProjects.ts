@@ -37,12 +37,24 @@ export async function putProject(data) {
     });
 }
 
+export function modifyStatus(id:number,s:string){
+    return request({
+        method:"PUT",
+        url: "/ccer/modifyStatus",
+        data : {
+            projectid: id,
+            status: s
+        }
+    })
+}
+
 
 const CCERProjects = {
     getProjects,
     getProjectAmounts,
     getProjectReductionAmounts,
-    putProject
+    putProject,
+    modifyStatus
 };
 
 export default CCERProjects;

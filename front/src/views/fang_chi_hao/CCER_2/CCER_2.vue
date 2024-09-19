@@ -22,21 +22,12 @@
       </el-form-item>
 
       <el-form-item label="注册日期" prop="registrationDate">
-        <el-date-picker
-          v-model="form.registrationDate"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择注册日期"
-        ></el-date-picker>
+        <el-date-picker v-model="form.registrationDate" type="date" format="YYYY-MM-DD"
+          placeholder="请选择注册日期"></el-date-picker>
       </el-form-item>
 
       <el-form-item label="有效期至" prop="validUntil">
-        <el-date-picker
-          v-model="form.validUntil"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择有效期"
-        ></el-date-picker>
+        <el-date-picker v-model="form.validUntil" type="date" format="YYYY-MM-DD" placeholder="请选择有效期"></el-date-picker>
       </el-form-item>
 
       <h3>减排信息</h3>
@@ -50,23 +41,15 @@
       </el-form-item>
 
       <el-form-item label="核查日期" prop="verificationDate">
-        <el-date-picker
-          v-model="form.verificationDate"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择核查日期"
-        ></el-date-picker>
+        <el-date-picker v-model="form.verificationDate" type="date" format="YYYY-MM-DD"
+          placeholder="请选择核查日期"></el-date-picker>
       </el-form-item>
 
       <!-- ccer_project_monitoring_reports -->
       <h3>监测报告</h3>
       <el-form-item label="报告日期" prop="reportDate">
-        <el-date-picker
-          v-model="form.reportDate"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择报告日期"
-        ></el-date-picker>
+        <el-date-picker v-model="form.reportDate" type="date" format="YYYY-MM-DD"
+          placeholder="请选择报告日期"></el-date-picker>
       </el-form-item>
 
       <el-form-item label="报告详情" prop="reportDetails">
@@ -84,12 +67,7 @@
       </el-form-item>
 
       <el-form-item label="颁发日期" prop="issueDate">
-        <el-date-picker
-          v-model="form.issueDate"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择颁发日期"
-        ></el-date-picker>
+        <el-date-picker v-model="form.issueDate" type="date" format="YYYY-MM-DD" placeholder="请选择颁发日期"></el-date-picker>
       </el-form-item>
 
       <!-- ccer_project_transactions -->
@@ -103,12 +81,8 @@
       </el-form-item>
 
       <el-form-item label="交易日期" prop="transactionDate">
-        <el-date-picker
-          v-model="form.transactionDate"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择交易日期"
-        ></el-date-picker>
+        <el-date-picker v-model="form.transactionDate" type="date" format="YYYY-MM-DD"
+          placeholder="请选择交易日期"></el-date-picker>
       </el-form-item>
 
       <el-form-item label="交易量" prop="quantity">
@@ -130,30 +104,30 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { FormInstance,ElForm,ElMessage } from 'element-plus';
+import { FormInstance, ElForm, ElMessage } from 'element-plus';
 import CCERProjects from '../API/CCERProjects';
 
- interface formData {
-    projectName: string;
-    projectType: string;
-    location: string;
-    registrationDate: string | null;
-    validUntil: string | null;
-    year: number | null;
-    reductionAmount: number | null;
-    verificationDate: string | null;
-    reportDate: string | null;
-    reportDetails: string;
-    registrationNumber: string;
-    issuingAuthority: string;
-    issueDate: string | null;
-    buyer: string;
-    seller: string;
-    transactionDate: string | null;
-    quantity: number | null;
-    pricePerUnit: number | null;
-    totalAmount: number | null;
-  }
+interface formData {
+  projectName: string;
+  projectType: string;
+  location: string;
+  registrationDate: string | null;
+  validUntil: string | null;
+  year: number | null;
+  reductionAmount: number | null;
+  verificationDate: string | null;
+  reportDate: string | null;
+  reportDetails: string;
+  registrationNumber: string;
+  issuingAuthority: string;
+  issueDate: string | null;
+  buyer: string;
+  seller: string;
+  transactionDate: string | null;
+  quantity: number | null;
+  pricePerUnit: number | null;
+  totalAmount: number | null;
+}
 
 const form = ref<formData>({
   projectName: '',
@@ -207,7 +181,7 @@ const rules = {
     { required: true, message: '请输入有效的年度', trigger: 'blur', pattern: /^\d{4}$/ }
   ],
   reductionAmount: [
-    { required: true, message: '请输入有效的减排量', trigger: 'blur',  }
+    { required: true, message: '请输入有效的减排量', trigger: 'blur', }
   ],
   verificationDate: [
     { required: true, message: '请选择核查日期', trigger: 'change' }
@@ -219,20 +193,23 @@ const rules = {
     { required: true, message: '请输入有效的交易量', trigger: 'blur' }
   ],
   pricePerUnit: [
-    { required: true, message: '请输入有效的单价', trigger: 'blur'}
+    { required: true, message: '请输入有效的单价', trigger: 'blur' }
   ],
   transactionDate: [
     { required: true, message: '请选择交易日期', trigger: 'change' }
   ],
 };
-  
+
 
 const formRef = ref<FormInstance>();
-const submitForm =   () => {
+const submitForm = () => {
 
-   formRef.value.validate( (valid) => {
+  formRef.value.validate((valid) => {
     if (valid) {
-     CCERProjects.putProject(form.value)
+      CCERProjects.putProject(form.value)
+      ElMessage.success("提交成功！");
+      // 清空表单
+      formRef.value.resetFields();
     } else {
       ElMessage.error("表单校验失败，请检查输入！");
       return false;
@@ -251,45 +228,56 @@ const submitForm =   () => {
 }
 
 .el-form {
-  font-size: 18px; /* 增大整个表单的字体大小 */
+  font-size: 18px;
+  /* 增大整个表单的字体大小 */
 }
 
 .el-form-item {
-  margin-bottom: 24px; /* 增大表单项的下边距 */
+  margin-bottom: 24px;
+  /* 增大表单项的下边距 */
 }
 
 .el-input,
 .el-select .el-input__inner,
 .el-date-picker .el-input__inner,
 .el-button {
-  font-size: 18px; /* 增大输入框、选择器、日期选择器和按钮的字体大小 */
+  font-size: 18px;
+  /* 增大输入框、选择器、日期选择器和按钮的字体大小 */
 }
 
 .el-input {
-  height: 40px; /* 增大输入框的高度 */
+  height: 40px;
+  /* 增大输入框的高度 */
 }
 
 .el-select .el-input__inner {
-  height: 40px; /* 增大选择器的高度 */
+  height: 40px;
+  /* 增大选择器的高度 */
 }
 
 .el-date-picker .el-input__inner {
-  height: 40px; /* 增大日期选择器的高度 */
+  height: 40px;
+  /* 增大日期选择器的高度 */
 }
 
 .el-button {
-  height: 40px; /* 增大按钮的高度 */
-  line-height: 40px; /* 确保按钮文字垂直居中 */
+  height: 40px;
+  /* 增大按钮的高度 */
+  line-height: 40px;
+  /* 确保按钮文字垂直居中 */
 }
 
 h3 {
-  font-size: 22px; /* 增大标题字体大小 */
-  margin-bottom: 16px; /* 增大标题下边距 */
+  font-size: 22px;
+  /* 增大标题字体大小 */
+  margin-bottom: 16px;
+  /* 增大标题下边距 */
 }
 
 .button-container {
-  text-align: center; /* 中心对齐按钮 */
-  margin-top: 20px; /* 按钮上边距 */
+  text-align: center;
+  /* 中心对齐按钮 */
+  margin-top: 20px;
+  /* 按钮上边距 */
 }
 </style>
-

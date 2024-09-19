@@ -263,6 +263,7 @@ import { ref, onMounted, reactive } from "vue";
 
 //1、引入 axios 模块
 import axios, { all } from "axios";
+import CCERProjects from "../API/CCERProjects";
 const currentPage = ref(1);
 const pageSize = ref(10);
 
@@ -507,11 +508,14 @@ function getStatus(status) {
   }
 }
 
+
+
 // 批准项目，改变项目状态为 "批准"
 const approveProject = (id: number) => {
   const project = msg.value.find((p) => p.projectId === id);
   if (project) {
     project.status = "批准";
+    CCERProjects.modifyStatus(id,"批准")
     getPageData()
   }
 };
@@ -521,6 +525,7 @@ const rejectProject = (id: number) => {
   const project = msg.value.find((p) => p.projectId === id);
   if (project) {
     project.status = "驳回";
+    CCERProjects.modifyStatus(id,"驳回")
     getPageData()
   }
 };
