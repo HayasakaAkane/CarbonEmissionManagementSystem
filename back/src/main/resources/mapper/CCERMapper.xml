@@ -23,6 +23,11 @@
         insert into ccer_project_transactions(project_id, buyer, seller, transaction_date, quantity, price_per_unit, total_amount)
         values(#{projectId}, #{buyer}, #{seller}, DATE_FORMAT(#{transactionDate}, '%Y-%m-%d'), #{quantity}, #{pricePerUnit}, #{totalAmount})
     </insert>
+    <update id="modifyStatus">
+        update ccer_projects
+        set status = #{status}
+        where project_id = #{projectId}
+    </update>
 
 
     <select id="getAllProject" resultType="com.example.dto.resp.CCERProjectDto">

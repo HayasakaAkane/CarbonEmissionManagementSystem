@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.common.convention.result.Result;
 import com.example.common.convention.result.Results;
 import com.example.dto.req.CCERProjectReqDto;
+import com.example.dto.req.ModifyStatusDto;
 import com.example.dto.resp.CCERGetProjectDto;
 import com.example.dto.resp.CCERProjectAmountsDto;
 import com.example.dto.resp.CCERProjectDto;
@@ -53,5 +54,11 @@ public class CCERController {
     @GetMapping("/ccer/getProject")
     public Result<List<CCERProjectReqDto>> getProject() {
         return Results.success(ccerService.getProject());
+    }
+
+    @PutMapping("/ccer/modifyStatus")
+    public Result<Void> modifyStatus(@RequestBody ModifyStatusDto requestParam) {
+        ccerService.modifyStatus(requestParam);
+        return Results.success();
     }
 }
