@@ -2,27 +2,28 @@
     <div class="manage">
         <div class="manage-header" style="display:flex;justify-content: flex-start;">
             <!-- 搜索框 -->
-                请选择搜索
-                <el-select v-model="value" placeholder="请选择" style="margin-left:30px;margin-right: 30px;width: 240px;">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
-                <el-select v-model="value2" placeholder="请选择" style="margin-right: 30px;width: 240px;">
-                    <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
-                <el-button type="primary" @click="search">查询</el-button>
+            请选择搜索
+            <el-select v-model="value" placeholder="请选择" style="margin-left:30px;margin-right: 30px;width: 240px;">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+            </el-select>
+            <el-select v-model="value2" placeholder="请选择" style="margin-right: 30px;width: 240px;">
+                <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+            </el-select>
+            <el-button type="primary" @click="search">查询</el-button>
         </div>
 
         <div ref="chart" style="width: 1200px; height: 700px;margin-top:40px;margin-bottom:100px"></div>
 
         <div style="display: flex;align-items: center;">
             请选择年份
-        <el-select v-model="selectedYear" placeholder="请选择年份" @change="updateChart" style="margin-left:30px;margin-right: 30px;width: 240px;">
-            <el-option v-for="year in Object.keys(emissionsData2)" :key="year" :label="year" :value="year" />
-        </el-select>年
+            <el-select v-model="selectedYear" placeholder="请选择年份" @change="updateChart"
+                style="margin-left:30px;margin-right: 30px;width: 240px;">
+                <el-option v-for="year in Object.keys(emissionsData2)" :key="year" :label="year" :value="year" />
+            </el-select>年
         </div>
-        <div ref="lineChart" style="width:1800px; height: 400px;margin-left: -100px;"></div>
+        <div ref="lineChart" style="width:1400px; height: 400px;margin-left: -100px;"></div>
 
     </div>
 </template>
@@ -30,60 +31,60 @@
 <script>
 const emissionsData = {
     2023: [
-        { month: 'January', value: 100 },
-        { month: 'February', value: 120 },
-        { month: 'March', value: 130 },
-        { month: 'April', value: 125 },
-        { month: 'May', value: 135 },
-        { month: 'June', value: 145 },
-        { month: 'July', value: 150 },
-        { month: 'August', value: 140 },
-        { month: 'September', value: 155 },
-        { month: 'October', value: 160 },
-        { month: 'November', value: 165 },
-        { month: 'December', value: 170 },
+        { month: '一月', value: 100 },
+        { month: '二月', value: 120 },
+        { month: '三月', value: 130 },
+        { month: '四月', value: 125 },
+        { month: '五月', value: 135 },
+        { month: '六月', value: 145 },
+        { month: '七月', value: 150 },
+        { month: '八月', value: 140 },
+        { month: '九月', value: 155 },
+        { month: '十月', value: 160 },
+        { month: '十一月', value: 165 },
+        { month: '十二月', value: 170 },
     ],
     2022: [
-        { month: 'January', value: 90 },
-        { month: 'February', value: 110 },
-        { month: 'March', value: 120 },
-        { month: 'April', value: 115 },
-        { month: 'May', value: 125 },
-        { month: 'June', value: 135 },
-        { month: 'July', value: 140 },
-        { month: 'August', value: 130 },
-        { month: 'September', value: 145 },
-        { month: 'October', value: 150 },
-        { month: 'November', value: 155 },
-        { month: 'December', value: 160 },
+        { month: '一月', value: 90 },
+        { month: '二月', value: 110 },
+        { month: '三月', value: 120 },
+        { month: '四月', value: 115 },
+        { month: '五月', value: 125 },
+        { month: '六月', value: 135 },
+        { month: '七月', value: 140 },
+        { month: '八月', value: 130 },
+        { month: '九月', value: 145 },
+        { month: '十月', value: 150 },
+        { month: '十一月', value: 155 },
+        { month: '十二月', value: 160 },
     ],
     2021: [
-        { month: 'January', value: 190 },
-        { month: 'February', value: 320 },
-        { month: 'March', value: 1320 },
-        { month: 'April', value: 1315 },
-        { month: 'May', value: 525 },
-        { month: 'June', value: 735 },
-        { month: 'July', value: 940 },
-        { month: 'August', value: 130 },
-        { month: 'September', value: 1045 },
-        { month: 'October', value: 350 },
-        { month: 'November', value: 755 },
-        { month: 'December', value: 960 },
+        { month: '一月', value: 190 },
+        { month: '二月', value: 320 },
+        { month: '三月', value: 1320 },
+        { month: '四月', value: 1315 },
+        { month: '五月', value: 525 },
+        { month: '六月', value: 735 },
+        { month: '七月', value: 940 },
+        { month: '八月', value: 130 },
+        { month: '九月', value: 1045 },
+        { month: '十月', value: 350 },
+        { month: '十一月', value: 755 },
+        { month: '十二月', value: 960 },
     ],
     2020: [
-        { month: 'January', value: 190 },
-        { month: 'February', value: 610 },
-        { month: 'March', value: 820 },
-        { month: 'April', value: 415 },
-        { month: 'May', value: 565 },
-        { month: 'June', value: 905 },
-        { month: 'July', value: 440 },
-        { month: 'August', value: 730 },
-        { month: 'September', value: 445 },
-        { month: 'October', value: 950 },
-        { month: 'November', value: 355 },
-        { month: 'December', value: 260 },
+        { month: '一月', value: 190 },
+        { month: '二月', value: 610 },
+        { month: '三月', value: 820 },
+        { month: '四月', value: 415 },
+        { month: '五月', value: 565 },
+        { month: '六月', value: 905 },
+        { month: '七月', value: 440 },
+        { month: '八月', value: 730 },
+        { month: '九月', value: 445 },
+        { month: '十月', value: 950 },
+        { month: '十一月', value: 355 },
+        { month: '十二月', value: 260 },
     ],
     // 可以继续添加更多年份的数据
 };
@@ -175,6 +176,7 @@ export default {
                 },
                 xAxis: {
                     type: 'category',
+                    
                     data: months,
                     name: '月份',
                 },
@@ -211,7 +213,6 @@ export default {
             console.log(this.value);
             console.log(this.value2);
             this.drawChart()
-            console.log('asd')
         },
         drawChart() {
             // 初始化 echarts 实例
