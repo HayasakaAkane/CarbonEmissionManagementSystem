@@ -1,5 +1,5 @@
 <template>
-    <div id="chart-panel" style="width: calc(90%);height:calc(80vh); padding: 50px; margin: 0 auto;">
+    <div id="chart-panel" style="width: calc(100%);height:calc(85vh); padding: 0px; margin: 0 auto;">
     </div>
 
     <!-- <div id="main-panel" style="width: calc(80vw);height:calc(80vh); padding: 100px; margin: 0 auto;">
