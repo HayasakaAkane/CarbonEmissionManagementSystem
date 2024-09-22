@@ -1,4 +1,5 @@
 import request from "../utils/request";
+import { toRaw } from 'vue';
 
 export function getProjects() {
     return request({
@@ -21,19 +22,39 @@ export function getProjectReductionAmounts() {
     })
 }
 
-export function putProject(data){
+export async function putProject(data) {
+    console.log(data)
+
+    // return await request.post("/ccer/putProject",JSON.stringify(data))
     return request({
-        method:"POST",
-        url:"/ccer/putProject",
-        params:data
+        method: "POST",
+        url: "/ccer/putProject",
+        // 正确设置请求体
+        data: data, // 或者 body: JSON.stringify(rData), 如果使用的是 fetch 或某些其他库
+        headers: {
+            'Content-Type': 'application/json' // 确保发送的格式是 JSON
+        }
+    });
+}
+
+export function modifyStatus(id:number,s:string){
+    return request({
+        method:"PUT",
+        url: "/ccer/modifyStatus",
+        data : {
+            projectid: id,
+            status: s
+        }
     })
 }
+
 
 const CCERProjects = {
     getProjects,
     getProjectAmounts,
     getProjectReductionAmounts,
-    putProject
+    putProject,
+    modifyStatus
 };
 
 export default CCERProjects;

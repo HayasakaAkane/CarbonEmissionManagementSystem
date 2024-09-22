@@ -74,6 +74,7 @@
     <el-dialog v-model="dialogVisible" :title="dialogTitle" width="40%" :close-on-click-modal="false"
       @close="closeDialogForm('ruleFormRef')">
       <el-form ref="ruleFormRef" :model="emissionForm" :rules="rules" label-width="auto" style="max-width: 600px">
+        
 
         <el-form-item label="排放地点：" prop="dataOrigin">
           <el-input v-model="emissionForm.dataOrigin" :disabled="isView" suffix-icon="el-icon-edit"></el-input>
@@ -288,15 +289,15 @@ function queryEmission() {
     .post(
       baseUrl + "/queryEmission",
       {
-        inputstr: inputStr.value
+        inputStr: inputStr.value
       }
     )
     .then(function (res) {
-      if (res.data.code === 1) {
+      if (res.data.code === "200") {
         //把数据给 msg
-        msg.value = res.data.msg;
+        msg.value = res.data.data;
         //获取返回记录的总行数
-        total = res.data.msg.length;
+        total = res.data.data.length;
         //获取当前页的数据
         getPageData()
         //提示成功：
@@ -305,7 +306,7 @@ function queryEmission() {
           type: 'success'
         });
       } else {
-        ElMessage.error(res.data.msg);
+        ElMessage.error('响应失败');
       }
     })
     .catch(function (err) {
@@ -341,7 +342,7 @@ function deleteEmission() {
         emissionRecords: selectData.value
       }) //左边对应后端参数一致
       .then(res => {
-        if (res.data.code == 1) {
+        if (res.data.code == 200) {
           //获取所有的删除后的信息
           msg.value = res.data.data;
           //获取记录数
@@ -368,7 +369,7 @@ function deleteEmission() {
 }
 //删除一条排放数据记录
 function deleteOneRowEmission(row) {
-  console.log("row -> source:" + row.source)
+  console.log("row -> source:" , row)
   //等待确认删除
   ElMessageBox.confirm(
     '确认删除？', '提示',
@@ -383,10 +384,10 @@ function deleteOneRowEmission(row) {
     axios.post(
       baseUrl + '/deleteOneRowEmission',
       {
-        emissionRecord: row.source
+        ...row
       }
     ).then(res => {
-      if (res.data.code == 1) {
+      if (res.data.code == "200") {
         //获取所有排放信息
         msg.value = res.data.data
         //获取记录数
@@ -521,7 +522,7 @@ function submitAddEmission() {
     .post(baseUrl + '/addEmission', emissionForm.value)
     .then(res => {
       //执行成功
-      if (res.data.code == 1) {
+      if (res.data.code == 200) {
         //获取所有的信息 msg
         msg.value = res.data.data;
         //获取记录的条数
@@ -564,10 +565,10 @@ function submitUpdateEmission() {
   console.log("submitUpdate->", emissionForm.value)
   //执行axios请求
   axios
-    .post(baseUrl + 'updateEmission', emissionForm.value)
+    .post(baseUrl + '/updateEmission', emissionForm.value)
     .then(res => {
       //执行成功
-      if (res.data.code == 1) {
+      if (res.data.code == 200) {
         //获取所有的信息 msg
         msg.value = res.data.data;
         //获取记录的条数

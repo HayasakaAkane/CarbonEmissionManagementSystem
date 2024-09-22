@@ -4,8 +4,8 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.mapper.UserMapper">
     <insert id="insertUser">
-        insert into users(role_id, password, user_name, company_id)
-        values(2, #{password}, #{username}, #{companyId})
+        insert into users(password, user_name, company_id)
+        values(#{password}, #{username}, #{companyId})
     </insert>
 
     <select id="getAllUser" resultType="com.example.dto.req.UserDto">
@@ -25,6 +25,10 @@
         select company_id
         from companies
         where company_name = #{companyName}
+    </select>
+    <select id="getCompaniesData" resultType="com.example.dto.resp.CompanyDto">
+        select company_id, company_name
+        from companies
     </select>
 
 </mapper>

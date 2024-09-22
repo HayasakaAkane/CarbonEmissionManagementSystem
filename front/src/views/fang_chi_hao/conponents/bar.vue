@@ -93,7 +93,7 @@ function GetProjectReductionAmounts(){
       Object.assign(data,result.data.data)
       for(let d in data){
         valueData.push({value:data[d].projectReductionAmount,itemStyle:colorData[d]})
-        typeData[d]=data[d].projectType   
+        typeData[d]=data[d].projectType     
       }
 
   }).catch((err)=>{

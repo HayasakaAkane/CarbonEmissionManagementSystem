@@ -1,6 +1,9 @@
 package com.example.service.impl;
 
 import com.example.dao.mapper.CCERMapper;
+import com.example.dto.req.CCERProjectReqDto;
+import com.example.dto.req.ModifyStatusDto;
+import com.example.dto.resp.CCERGetProjectDto;
 import com.example.dto.resp.CCERProjectAmountsDto;
 import com.example.dto.resp.CCERProjectDto;
 import com.example.dto.resp.CCERProjectReductionAmountsDto;
@@ -38,5 +41,26 @@ public class CCERServiceImpl implements CCERService {
     @Override
     public List<CCERProjectReductionAmountsDto> getReductionAmounts() {
         return ccerMapper.getReductionAmounts();
+    }
+
+    @Override
+    public void putProject(CCERGetProjectDto requestParam) {
+        ccerMapper.insertCCERProject(requestParam);
+        int projectId = ccerMapper.getProjectIdFromCCERProject(requestParam);
+        requestParam.setProjectId(projectId);
+        ccerMapper.insertCCERProjectEmissionProject(requestParam);
+        ccerMapper.insertCCERProjectMonitoringReports(requestParam);
+        ccerMapper.insertCCERProjectRegistrationInfo(requestParam);
+        ccerMapper.insertCCERProjectTransaction(requestParam);
+    }
+
+    @Override
+    public List<CCERProjectReqDto> getProject() {
+        return ccerMapper.getProject();
+    }
+
+    @Override
+    public void modifyStatus(ModifyStatusDto requestParam) {
+        ccerMapper.modifyStatus(requestParam);
     }
 }

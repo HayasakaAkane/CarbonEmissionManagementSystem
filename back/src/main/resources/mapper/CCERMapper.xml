@@ -3,11 +3,37 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.mapper.CCERMapper">
+    <insert id="insertCCERProject">
+        insert ccer_projects(user_id, project_name, project_type, location, status, registration_date, valid_until)
+        values(1, #{projectName}, #{projectType}, #{location}, '待审核', DATE_FORMAT(#{registrationDate}, '%Y-%m-%d'), DATE_FORMAT(#{validUntil}, '%Y-%m-%d'))
+    </insert>
+    <insert id="insertCCERProjectEmissionProject">
+        insert into ccer_project_emission_reductions(project_id, `year`, reduction_amount, verification_date)
+        values(#{projectId}, #{year}, #{reductionAmount}, DATE_FORMAT(#{verificationDate}, '%Y-%m-%d'))
+    </insert>
+    <insert id="insertCCERProjectMonitoringReports">
+        insert into ccer_project_monitoring_reports(project_id, report_date, report_details)
+        values(#{projectId}, DATE_FORMAT(#{reportDate}, '%Y-%m-%d'), #{reportDetails})
+    </insert>
+    <insert id="insertCCERProjectRegistrationInfo">
+        insert into ccer_project_registration_info(project_id, registration_number, issuing_authority, issue_date)
+        values(#{projectId}, #{registrationNumber}, #{issuingAuthority}, DATE_FORMAT(#{issueDate}, '%Y-%m-%d'))
+    </insert>
+    <insert id="insertCCERProjectTransaction">
+        insert into ccer_project_transactions(project_id, buyer, seller, transaction_date, quantity, price_per_unit, total_amount)
+        values(#{projectId}, #{buyer}, #{seller}, DATE_FORMAT(#{transactionDate}, '%Y-%m-%d'), #{quantity}, #{pricePerUnit}, #{totalAmount})
+    </insert>
+    <update id="modifyStatus">
+        update ccer_projects
+        set status = #{status}
+        where project_id = #{projectId}
+    </update>
 
 
     <select id="getAllProject" resultType="com.example.dto.resp.CCERProjectDto">
         select project_id, project_name, project_type, location, status, registration_date, valid_until
         from ccer_projects
+        order by project_id desc
     </select>
     <select id="getProjectAmounts" resultType="com.example.dto.resp.CCERProjectAmountsDto">
         select project_type, count(1) as projectAmount
@@ -20,5 +46,19 @@
         join ccer_project_emission_reductions emi
         where pro.project_id = emi.project_id
         group by project_type
+    </select>
+    <select id="getProject" resultType="com.example.dto.req.CCERProjectReqDto">
+        select cp.project_id, project_name, project_type, status, location, registration_date, valid_until, year, reduction_amount, verification_date, report_date, report_details, registration_number, issuing_authority, issue_date, buyer, seller, transaction_date, quantity, price_per_unit, total_amount
+        from ccer_projects cp
+        join ccer_project_emission_reductions cper on cp.project_id = cper.project_id
+        join ccer_project_monitoring_reports cpmr on cp.project_id = cpmr.project_id
+        join ccer_project_registration_info cpri on cp.project_id = cpri.project_id
+        join ccer_project_transactions cpt on cp.project_id = cpt.project_id
+        order by cp.project_id desc
+    </select>
+    <select id="getProjectIdFromCCERProject" resultType="java.lang.Integer">
+        select project_id
+        from ccer_projects
+        where project_name = #{projectName} and project_type = #{projectType} and location = #{location} and status = '待审核'
     </select>
 </mapper>

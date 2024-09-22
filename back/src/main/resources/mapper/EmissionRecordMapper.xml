@@ -3,10 +3,38 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.mapper.EmissionRecordMapper">
+    <insert id="addEmission">
+        insert into emission_records(user_id, data_origin, emission_amount, verification_status, emission_type, emission_date, source, unit)
+        values(1, #{dataOrigin}, #{emissionAmount}, #{verificationStatus}, #{emissionType}, #{emissionDate}, #{source}, #{unit})
+    </insert>
+    <update id="updateEmission">
+        update emission_records
+        set data_origin = #{dataOrigin}, emission_amount = #{emissionAmount}, verification_status = #{verificationStatus}, emission_type = #{emissionType}, unit = #{unit}
+        where emission_date = DATE_FORMAT(#{emissionDate}, '%Y-%m-%d') and source = #{source}
+    </update>
+    <delete id="deleteEmission" parameterType="com.example.dto.resp.EmissionRecordDto">
+        delete from emission_records
+        where source = #{source} and emission_date = DATE_FORMAT(#{emissionDate}, '%Y-%m-%d')
+    </delete>
 
 
     <select id="getAllEmissionRecords" resultType="com.example.dto.resp.EmissionRecordDto">
         select data_origin, emission_amount, verification_status, emission_type, emission_date, source, unit
+        from emission_records
+    </select>
+    <select id="queryEmission" resultType="com.example.dto.resp.EmissionRecordDto">
+        select data_origin, emission_amount, verification_status, emission_type, DATE_FORMAT(emission_date, '%Y-%m-%d') as emission_date, source, unit
+        from emission_records
+        where data_origin like CONCAT('%', #{inputStr}, '%')
+        or emission_amount like CONCAT('%', #{inputStr}, '%')
+        or verification_status like CONCAT('%', #{inputStr}, '%')
+        or emission_type like CONCAT('%', #{inputStr}, '%')
+        or emission_date like CONCAT('%', #{inputStr}, '%')
+        or source like CONCAT('%', #{inputStr}, '%')
+        or unit like CONCAT('%', #{inputStr}, '%')
+    </select>
+    <select id="getDataOrigin" resultType="com.example.dto.resp.DataOriginDto">
+        select distinct data_origin as text, data_origin as value
         from emission_records
     </select>
 </mapper>

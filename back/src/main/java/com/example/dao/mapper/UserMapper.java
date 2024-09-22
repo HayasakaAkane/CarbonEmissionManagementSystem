@@ -3,6 +3,7 @@ package com.example.dao.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.dto.req.UserDto;
 import com.example.dto.req.UserRegisterDto;
+import com.example.dto.resp.CompanyDto;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface UserMapper extends BaseMapper<UserDto> {
     int insertUser(UserRegisterDto requestParam);
 
     int getCompanyIdByCompanyName(String company);
+
+    List<CompanyDto> getCompaniesData();
 }

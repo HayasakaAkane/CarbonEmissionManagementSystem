@@ -1,8 +1,6 @@
 <template>
-  <div
-    class="emissionSourceSketch"
-  >
-  <div class="header">
+  <div class="emissionSourceSketch">
+    <div class="header">
       <h1>项目审核</h1>
     </div>
 
@@ -14,14 +12,12 @@
       <button @click="applyFilters">搜索</button>
     </div>
 
-
-
     <!-- 展示数据的表格 -->
     <el-card :border="false" style="margin-top: 10px">
       <el-table :data="tableData" style="width: 100%" height="770">
-        <el-table-column prop="projectId" label="项目id" />
-        <el-table-column prop="name" label="项目名称2" />
-        <el-table-column prop="type" label="项目类型" />
+        <el-table-column prop="projectId" label="项目ID" />
+        <el-table-column prop="projectName" label="项目名称" />
+        <el-table-column prop="projectType" label="项目类型" />
         <el-table-column
           prop="status"
           label="状态"
@@ -33,9 +29,7 @@
           :filter-method="filterTag"
         >
           <template #default="scope">
-            <span
-              :style="{ color: getStatusColor(scope.row.status) }"
-            >
+            <span :style="{ color: getStatusColor(scope.row.status) }">
               {{ getStatus(scope.row.status) }}
             </span>
           </template>
@@ -48,11 +42,15 @@
               >查看</el-button
             >
             <!-- 批准按钮，只有在状态为“待审核”时启用 -->
-            <el-button @click="approveProject(scope.row.projectId)" :disabled="scope.row.status!='待审核'? true : false" 
+            <el-button
+              @click="approveProject(scope.row.projectId)"
+              :disabled="scope.row.status != '待审核' ? true : false"
               >批准</el-button
             >
             <!-- 拒绝按钮，只有在状态为“待审核”时启用 -->
-            <el-button @click="rejectProject(scope.row.projectId)" :disabled="scope.row.status!='待审核'? true : false"
+            <el-button
+              @click="rejectProject(scope.row.projectId)"
+              :disabled="scope.row.status != '待审核' ? true : false"
               >拒绝</el-button
             >
           </template>
@@ -89,129 +87,165 @@
       :close-on-click-modal="false"
       @close="closeDialogForm('emissionForm')"
     >
-    <el-form :model="form" :rules="rules" ref="formRef" label-width="150px">
-      <!-- ccer_project_emission_reductions -->
-      <h3>项目信息</h3>
-      <el-form-item label="项目名称" prop="projectName">
-        <el-input v-model="form.projectName" placeholder="请输入项目名称"></el-input>
-      </el-form-item>
+      <el-form :model="form"  ref="formRef" label-width="150px">
+        <!-- ccer_project_emission_reductions -->
+        <h3>项目信息</h3>
+        <el-form-item label="项目名称" prop="projectName">
+          <el-input
+            v-model="form.projectName"
+            placeholder="请输入项目名称"
+          ></el-input>
+        </el-form-item>
 
-      <el-form-item label="项目类型" prop="projectType">
-        <el-select v-model="form.projectType" placeholder="请选择项目类型">
-          <el-option label="可再生能源" value="可再生能源"></el-option>
-          <el-option label="林业碳汇" value="林业碳汇"></el-option>
-          <el-option label="甲烷利用" value="甲烷利用"></el-option>
-          <el-option label="能源效率提升" value="能源效率提升"></el-option>
-          <el-option label="碳捕集与封存" value="碳捕集与封存"></el-option>
-        </el-select>
-      </el-form-item>
+        <el-form-item label="项目类型" prop="projectType">
+          <el-select v-model="form.projectType" placeholder="请选择项目类型">
+            <el-option label="可再生能源" value="可再生能源"></el-option>
+            <el-option label="林业碳汇" value="林业碳汇"></el-option>
+            <el-option label="甲烷利用" value="甲烷利用"></el-option>
+            <el-option label="能源效率提升" value="能源效率提升"></el-option>
+            <el-option label="碳捕集与封存" value="碳捕集与封存"></el-option>
+          </el-select>
+        </el-form-item>
 
-      <el-form-item label="位置" prop="location">
-        <el-input v-model="form.location" placeholder="请输入地址"></el-input>
-      </el-form-item>
+        <el-form-item label="位置" prop="location">
+          <el-input v-model="form.location" placeholder="请输入地址"></el-input>
+        </el-form-item>
 
-      <el-form-item label="注册日期" prop="registrationDate">
-        <el-date-picker
-          v-model="form.registrationDate"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择注册日期"
-        ></el-date-picker>
-      </el-form-item>
+        <el-form-item label="注册日期" prop="registrationDate">
+          <el-date-picker
+            v-model="form.registrationDate"
+            type="date"
+            format="YYYY-MM-DD"
+            placeholder="请选择注册日期"
+          ></el-date-picker>
+        </el-form-item>
 
-      <el-form-item label="有效期至" prop="validUntil">
-        <el-date-picker
-          v-model="form.validUntil"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择有效期"
-        ></el-date-picker>
-      </el-form-item>
+        <el-form-item label="有效期至" prop="validUntil">
+          <el-date-picker
+            v-model="form.validUntil"
+            type="date"
+            format="YYYY-MM-DD"
+            placeholder="请选择有效期"
+          ></el-date-picker>
+        </el-form-item>
 
-      <h3>减排信息</h3>
+        <h3>减排信息</h3>
 
-      <el-form-item label="年度" prop="year">
-        <el-input v-model="form.year" type="number" placeholder="请输入年度"></el-input>
-      </el-form-item>
+        <el-form-item label="年度" prop="year">
+          <el-input
+            v-model="form.year"
+            type="number"
+            placeholder="请输入年度"
+          ></el-input>
+        </el-form-item>
 
-      <el-form-item label="减排量" prop="reductionAmount">
-        <el-input v-model="form.reductionAmount" type="number" placeholder="请输入减排量" step="0.01"></el-input>
-      </el-form-item>
+        <el-form-item label="减排量" prop="reductionAmount">
+          <el-input
+            v-model="form.reductionAmount"
+            type="number"
+            placeholder="请输入减排量"
+            step="0.01"
+          ></el-input>
+        </el-form-item>
 
-      <el-form-item label="核查日期" prop="verificationDate">
-        <el-date-picker
-          v-model="form.verificationDate"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择核查日期"
-        ></el-date-picker>
-      </el-form-item>
+        <el-form-item label="核查日期" prop="verificationDate">
+          <el-date-picker
+            v-model="form.verificationDate"
+            type="date"
+            format="YYYY-MM-DD"
+            placeholder="请选择核查日期"
+          ></el-date-picker>
+        </el-form-item>
 
-      <!-- ccer_project_monitoring_reports -->
-      <h3>监测报告</h3>
-      <el-form-item label="报告日期" prop="reportDate">
-        <el-date-picker
-          v-model="form.reportDate"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择报告日期"
-        ></el-date-picker>
-      </el-form-item>
+        <!-- ccer_project_monitoring_reports -->
+        <h3>监测报告</h3>
+        <el-form-item label="报告日期" prop="reportDate">
+          <el-date-picker
+            v-model="form.reportDate"
+            type="date"
+            format="YYYY-MM-DD"
+            placeholder="请选择报告日期"
+          ></el-date-picker>
+        </el-form-item>
 
-      <el-form-item label="报告详情" prop="reportDetails">
-        <el-input v-model="form.reportDetails" type="textarea" placeholder="请输入报告详情"></el-input>
-      </el-form-item>
+        <el-form-item label="报告详情" prop="reportDetails">
+          <el-input
+            v-model="form.reportDetails"
+            type="textarea"
+            placeholder="请输入报告详情"
+          ></el-input>
+        </el-form-item>
 
-      <!-- ccer_project_registration_info -->
-      <h3>注册信息</h3>
-      <el-form-item label="注册编号" prop="registrationNumber">
-        <el-input v-model="form.registrationNumber" placeholder="请输入注册编号"></el-input>
-      </el-form-item>
+        <!-- ccer_project_registration_info -->
+        <h3>注册信息</h3>
+        <el-form-item label="注册编号" prop="registrationNumber">
+          <el-input
+            v-model="form.registrationNumber"
+            placeholder="请输入注册编号"
+          ></el-input>
+        </el-form-item>
 
-      <el-form-item label="颁发机构" prop="issuingAuthority">
-        <el-input v-model="form.issuingAuthority" placeholder="请输入颁发机构"></el-input>
-      </el-form-item>
+        <el-form-item label="颁发机构" prop="issuingAuthority">
+          <el-input
+            v-model="form.issuingAuthority"
+            placeholder="请输入颁发机构"
+          ></el-input>
+        </el-form-item>
 
-      <el-form-item label="颁发日期" prop="issueDate">
-        <el-date-picker
-          v-model="form.issueDate"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择颁发日期"
-        ></el-date-picker>
-      </el-form-item>
+        <el-form-item label="颁发日期" prop="issueDate">
+          <el-date-picker
+            v-model="form.issueDate"
+            type="date"
+            format="YYYY-MM-DD"
+            placeholder="请选择颁发日期"
+          ></el-date-picker>
+        </el-form-item>
 
-      <!-- ccer_project_transactions -->
-      <h3>交易信息</h3>
-      <el-form-item label="买方" prop="buyer" style>
-        <el-input v-model="form.buyer" placeholder="请输入买方"></el-input>
-      </el-form-item>
+        <!-- ccer_project_transactions -->
+        <h3>交易信息</h3>
+        <el-form-item label="买方" prop="buyer" style>
+          <el-input v-model="form.buyer" placeholder="请输入买方"></el-input>
+        </el-form-item>
 
-      <el-form-item label="卖方" prop="seller">
-        <el-input v-model="form.seller" placeholder="请输入卖方"></el-input>
-      </el-form-item>
+        <el-form-item label="卖方" prop="seller">
+          <el-input v-model="form.seller" placeholder="请输入卖方"></el-input>
+        </el-form-item>
 
-      <el-form-item label="交易日期" prop="transactionDate">
-        <el-date-picker
-          v-model="form.transactionDate"
-          type="date"
-          format="YYYY-MM-DD"
-          placeholder="请选择交易日期"
-        ></el-date-picker>
-      </el-form-item>
+        <el-form-item label="交易日期" prop="transactionDate">
+          <el-date-picker
+            v-model="form.transactionDate"
+            type="date"
+            format="YYYY-MM-DD"
+            placeholder="请选择交易日期"
+          ></el-date-picker>
+        </el-form-item>
 
-      <el-form-item label="交易量" prop="quantity">
-        <el-input v-model="form.quantity" type="number" placeholder="请输入交易量" step="0.01"></el-input>
-      </el-form-item>
+        <el-form-item label="交易量" prop="quantity">
+          <el-input
+            v-model="form.quantity"
+            type="number"
+            placeholder="请输入交易量"
+            step="0.01"
+          ></el-input>
+        </el-form-item>
 
-      <el-form-item label="单价" prop="pricePerUnit">
-        <el-input v-model="form.pricePerUnit" type="number" placeholder="请输入单价" step="0.01"></el-input>
-      </el-form-item>
+        <el-form-item label="单价" prop="pricePerUnit">
+          <el-input
+            v-model="form.pricePerUnit"
+            type="number"
+            placeholder="请输入单价"
+            step="0.01"
+          ></el-input>
+        </el-form-item>
 
-      <el-form-item label="总金额" prop="totalAmount">
-        <el-input v-model="form.totalAmount" :disabled="true" placeholder="总金额由系统计算"></el-input>
-      </el-form-item>
-    </el-form>
+        <el-form-item label="总金额" prop="totalAmount">
+          <el-input
+            v-model="form.totalAmount"
+            :disabled="true"
+            placeholder="总金额由系统计算"
+          ></el-input>
+        </el-form-item>
+      </el-form>
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
@@ -226,53 +260,77 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, reactive } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
 
 //1、引入 axios 模块
-import axios from "axios";
+import axios, { all } from "axios";
+import CCERProjects from "../API/CCERProjects";
 const currentPage = ref(1);
 const pageSize = ref(10);
 
-const searchQuery = ref(''); // 绑定搜索框的搜索关键字
+const searchQuery = ref(""); // 绑定搜索框的搜索关键字
+
+interface perfcetType {
+  projectId: number;
+  projectName: string;
+  projectType: string;
+  status: string;
+  location: string;
+  registrationDate: string | null;
+  validUntil: string | null;
+  year: number | null;
+  reductionAmount: number | null;
+  verificationDate: string | null;
+  reportDate: string | null;
+  reportDetails: string;
+  registrationNumber: string;
+  issuingAuthority: string;
+  issueDate: string | null;
+  buyer: string;
+  seller: string;
+  transactionDate: string | null;
+  quantity: number | null;
+  pricePerUnit: number | null;
+  totalAmount: number | null;
+}
 
 interface formData {
-    projectName: string;
-    projectType: string;
-    location: string;
-    registrationDate: string | null;
-    validUntil: string | null;
-    year: number | null;
-    reductionAmount: number | null;
-    verificationDate: string | null;
-    reportDate: string | null;
-    reportDetails: string;
-    registrationNumber: string;
-    issuingAuthority: string;
-    issueDate: string | null;
-    buyer: string;
-    seller: string;
-    transactionDate: string | null;
-    quantity: number | null;
-    pricePerUnit: number | null;
-    totalAmount: number | null;
-  }
+  projectName: string;
+  projectType: string;
+  location: string;
+  registrationDate: string | null;
+  validUntil: string | null;
+  year: number | null;
+  reductionAmount: number | null;
+  verificationDate: string | null;
+  reportDate: string | null;
+  reportDetails: string;
+  registrationNumber: string;
+  issuingAuthority: string;
+  issueDate: string | null;
+  buyer: string;
+  seller: string;
+  transactionDate: string | null;
+  quantity: number | null;
+  pricePerUnit: number | null;
+  totalAmount: number | null;
+}
 
 const form = ref<formData>({
-  projectName: '',
-  projectType: '',
-  location: '',
+  projectName: "",
+  projectType: "",
+  location: "",
   registrationDate: null,
   validUntil: null,
   year: null,
   reductionAmount: null,
   verificationDate: null,
   reportDate: null,
-  reportDetails: '',
-  registrationNumber: '',
-  issuingAuthority: '',
+  reportDetails: "",
+  registrationNumber: "",
+  issuingAuthority: "",
   issueDate: null,
-  buyer: '',
-  seller: '',
+  buyer: "",
+  seller: "",
   transactionDate: null,
   quantity: null,
   pricePerUnit: null,
@@ -281,11 +339,10 @@ const form = ref<formData>({
 
 interface User {
   projectId: number;
-  name: string;
-  type: string;
+  projectName: string;
+  projectType: string;
   status: string;
 }
-
 
 const filterTag = (value, row) => {
   return row.status === value;
@@ -293,19 +350,16 @@ const filterTag = (value, row) => {
 
 //记录请求返回数据的集合
 const msg = ref<User[]>([]);
-//用于记录用户所查询的输入信息 inputStr
-const inputStr = ref();
 
 //用于暂存当前页的数据
 const tableData = ref([]);
-const allData = ref([]);
+let allData: perfcetType[]=[];
 tableData.value = msg.value;
 
-let total = tableData.value.length;
+let total = ref(tableData.value.length);
 let baseUrl = "http://localhost:8080";
 //获取所有的数据
 function getData() {
-
   let api = baseUrl + "/ccer/getProject";
   //2.使用axios 进行get请求
   axios
@@ -313,10 +367,11 @@ function getData() {
     .then((res) => {
       //请求成功的回调函数
       //把数据传给tableData数组
-      allData.value = res.data.data;
-      getmsgData()
+      allData = res.data.data;
+      getmsgData();
       //获取数据的总条数
-      total = msg.value.length;
+      total = allData.length;
+
       //获取当前页的数据
       getPageData();
     })
@@ -326,37 +381,31 @@ function getData() {
     });
 }
 
-function getmsgData()
-{
-  for(let i in allData){
-    msg[i].value.projectId=allData.value[i].projectId
-    msg[i].value.name=allData.value[i].projectName
-    msg[i].value.type=allData.value[i].projectType
-    msg[i].value.status=allData.value[i].status
+function getmsgData() {
+
+  let tempArray: User[] = [];
+  for (let i in allData) {
+    let d: User = {
+      projectId: allData[i].projectId,
+      projectName: allData[i].projectName,
+      projectType: allData[i].projectType,
+      status: allData[i].status,
+    };
+
+    tempArray.push(d);
   }
-}
-//获取全部数据
-function getAllData() {
-  console.log("getAllData");
-  //清空输入的imputStr
-  //请求全部的数据
-  getData();
+  msg.value = [...tempArray];
+  total.value = msg.value.length;
+  console.log(total)
+
 }
 
 //获取当前页的数据
 function getPageData() {
-  //先把当前页面的数据清空
-  tableData.value = [];
-  //获取当前页面的数据
-  for (let i = (currentPage.value - 1) * pageSize.value; i < total; i++) {
-    //遍历数据添加到tableData中
-    tableData.value.push(msg.value[i]);
-    console.log(msg.value[i]);
-    console.log(tableData.value[i]);
-    //判断是否达到一页的要求
-    if (tableData.value.length == pageSize.value) break;
-  }
-  console.log(tableData.value);
+  tableData.value = msg.value.slice(
+    (currentPage.value - 1) * pageSize.value,
+    currentPage.value * pageSize.value
+  );
 }
 
 //分页时修改每一页所展示的数据量
@@ -377,44 +426,6 @@ const handleCurrentChange = (val: number) => {
   console.log(`current page: ${val}`);
 };
 
-//3.2 实现碳排放信息的查询
-function queryEmission() {
-  console.log("inputMsg:" + inputStr.value);
-  axios
-    .post(baseUrl + "/queryEmission", {
-      inputstr: inputStr.value,
-    })
-    .then(function (res) {
-      if (res.data.code === 1) {
-        //把数据给 msg
-        msg.value = res.data.msg;
-        //获取返回记录的总行数
-        total = res.data.msg.length;
-        //获取当前页的数据
-        getPageData();
-        //提示成功：
-        ElMessage({
-          message: "查询数据加载成功",
-          type: "success",
-        });
-      } else {
-        ElMessage.error(res.data.msg);
-      }
-    })
-    .catch(function (err) {
-      console.log(err);
-      ElMessage.error("获取后端查询结果出现异常！");
-    });
-}
-
-//----------实现选择功能--------------//
-//记录选择的数据,保存被选择的所有信息
-const selectData = ref([]);
-function handleSelectionChange(data) {
-  selectData.value = data;
-  console.log(selectData.value);
-}
-
 //-----------------------------------//
 //通过表单添加数据
 //定义一个表单的结构体
@@ -427,26 +438,7 @@ const emissionForm = reactive({
   source: "",
   unit: "",
 });
-//定义表单的校验规则
-const rules = {
-  dataOrigin: [
-    { require: true, message: "排放地点不能为空", trigger: "change" },
-  ],
-  emissionAmount: [
-    { require: true, message: "排放地点不能为空", trigger: "change" },
-  ],
-  verificationStatus: [
-    { require: true, message: "验证状态不能为空", trigger: "change" },
-  ],
-  emissionType: [
-    { require: true, message: "排放类型不能为空", trigger: "change" },
-  ],
-  emissionDate: [
-    { require: true, message: "排放日期不能为空", trigger: "change" },
-  ],
-  source: [{ require: true, message: "排放源不能为空", trigger: "change" }],
-  unit: [{ require: true, message: "排放单位不能为空", trigger: "change" }],
-};
+
 let dialogTitle = ref(""); //表单的标题
 const dialogVisible = ref(false); //控制显示表单
 let isView = ref(false);
@@ -471,31 +463,25 @@ function closeDialogForm(formName) {
   isEdit.value = false;
   isView.value = false;
 }
-//提交排放记录的表单
-function submitEmissionForm(formName) {}
-//修改排放数据明细
-function updateEmission(row) {
-  dialogTitle.value = "修改排放数据";
-  //修改isEdit变量为true
-  isEdit.value = true;
-  //弹出表单
-  dialogVisible.value = true;
-  //将这一行数据深拷贝给表单
-  Object.assign(emissionForm, JSON.parse(JSON.stringify(row)));
-}
+
 //查看一条排放数据明细
 function viewEmission(row) {
   console.log("这一行的数据->row:" + row);
   //修改标题
-  dialogTitle.value = "排放数据明细";
+  dialogTitle.value = "项目详细";
   //修改isView变量
   isView.value = true;
   //弹出表单
   dialogVisible.value = true;
-  //深拷贝表单对象
-  Object.assign(emissionForm, JSON.parse(JSON.stringify(row)));
-}
 
+
+   for(let i in allData){
+    if(row.projectId==allData[i].projectId){
+      form.value=allData[i]
+    }
+   }
+
+}
 
 //-----------------------------------//
 
@@ -515,18 +501,22 @@ function getStatus(status) {
   switch (status) {
     case "批准":
       return "批准";
-    case "Pending":
-      return "Pending";
+    case "驳回":
+      return "驳回";
     default:
       return "待审核";
   }
 }
+
+
 
 // 批准项目，改变项目状态为 "批准"
 const approveProject = (id: number) => {
   const project = msg.value.find((p) => p.projectId === id);
   if (project) {
     project.status = "批准";
+    CCERProjects.modifyStatus(id,"批准")
+    getPageData()
   }
 };
 
@@ -535,14 +525,28 @@ const rejectProject = (id: number) => {
   const project = msg.value.find((p) => p.projectId === id);
   if (project) {
     project.status = "驳回";
+    CCERProjects.modifyStatus(id,"驳回")
+    getPageData()
   }
 };
 
-
 // 应用搜索筛选功能，重置页码到第一页
 const applyFilters = () => {
-  currentPage.value = 1;
+  // 如果有搜索关键字，则根据项目名称过滤
+  if (searchQuery.value!=null) {
+    msg.value = allData.filter((item) =>
+      item.projectName.includes(searchQuery.value)
+    );
+  } else {
+    getmsgData() // 重置为所有项目数据
+  }
+  console.log(msg.value)
+  total= msg.value.length; // 更新总条数
+  currentPage.value = 1; // 搜索后重置到第一页
+  getPageData(); // 更新当前页数据
 };
+
+
 
 onMounted(() => {
   getData();
@@ -552,7 +556,13 @@ onMounted(() => {
 
 
 <style scoped>
-body, input, button, .el-table, .el-button, h1, span {
+body,
+input,
+button,
+.el-table,
+.el-button,
+h1,
+span {
   font-size: 20px;
 }
 div.emissionSourceSketch {
@@ -587,7 +597,6 @@ div.emissionSourceSketch {
 .search-filter {
   margin-bottom: 20px;
   display: flex;
-  justify-content: space-between;
 }
 
 input {
@@ -690,14 +699,9 @@ tr:nth-child(even) {
   color: red;
 }
 
-
-
 .el-form-item {
   margin-bottom: 24px; /* 增大表单项的下边距 */
   line-height: 40px;
 }
-
-
-
 </style>
 

@@ -28,6 +28,6 @@ public class EmissionSourceDto {
     private String status;
     private int complianceYear;
     private double emissionsRequired;
-    private Date latestEmissionDate;
+    private String latestEmissionDate;
     private double latestCO2Emissions;
 }
