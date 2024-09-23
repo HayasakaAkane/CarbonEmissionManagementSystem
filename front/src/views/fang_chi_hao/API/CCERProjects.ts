@@ -42,7 +42,7 @@ export function modifyStatus(id:number,s:string){
         method:"PUT",
         url: "/ccer/modifyStatus",
         data : {
-            projectid: id,
+            projectId: id,
             status: s
         }
     })
