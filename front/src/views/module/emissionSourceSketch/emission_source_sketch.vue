@@ -17,6 +17,15 @@
             </span>
           </template>
         </el-table-column>
+
+        <el-table-column prop="" label="违规状态">
+          <template #default="scope">
+            <span :style="{ color: getStaMsgColor(scope.row) }">
+              {{ getStaMsg(scope.row) }}
+            </span>
+          </template>
+        </el-table-column>
+        
         <el-table-column prop="complianceYear" label="合规年份" />
         <el-table-column prop="emissionsRequired" label="合规量" />
         <el-table-column prop="latestEmissionDate" label="最新排放日期" />
@@ -434,7 +443,14 @@ function drawChart() {
 
 }
 
-
+function getStaMsg(row){
+  if(row.emissionsRequired < row.latestCO2Emissions) return "违规"
+  else return "合规"
+}
+function getStaMsgColor(row){
+  if(row.emissionsRequired < row.latestCO2Emissions) return "red"
+  else return "green"
+}
 
 onMounted(() => {
   getData()

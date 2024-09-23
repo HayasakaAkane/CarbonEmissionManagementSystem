@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-chart class="chart" :option="option" />
+    <v-chart style="height: 400px" class="chart" :option="option" />
   </div>
 </template>
 
