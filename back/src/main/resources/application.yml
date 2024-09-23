@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://101.34.58.126:3306/carbon_emission_system
+    url: jdbc:mysql://localhost:3306/carbon_emission_system
     username: root
-    password: 123456
+    password: abc123
   data:
     redis:
       host: localhost

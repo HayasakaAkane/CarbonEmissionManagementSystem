@@ -4,7 +4,7 @@
       <el-header class="header">
         <Logo />
         <div style="display: flex;align-items: center;">
-          <p>退出登录</p>
+          <!-- <p>退出登录</p> -->
           <!-- 放用户头像的地方 -->
           <p ><img style="width: 30px;height:30px;margin: 0 20px;" src="../assets/logo.svg" alt=""></p>
         </div>
